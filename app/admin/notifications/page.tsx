@@ -207,9 +207,7 @@ export default function AdminNotificationsPage() {
                 <div className="bg-[#080d08] border border-[#1a1a1a] rounded-2xl p-8 max-w-[500px] mx-auto shadow-inner">
                   <h2 className="text-[#4ade80] text-xl font-bold mb-6">Vybex Studio Update 🚀</h2>
                   
-                  <div className="text-[#9ca3af] text-sm leading-relaxed mb-8 whitespace-pre-wrap">
-                    {formData.content || 'Your message content will appear here...'}
-                  </div>
+                  <div className="text-[#9ca3af] text-sm leading-relaxed mb-8 whitespace-pre-wrap">{formData.content || 'Your message content will appear here...'}</div>
 
                   {formData.ctaUrl && (
                     <div className="text-center my-10">

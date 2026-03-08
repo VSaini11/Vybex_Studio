@@ -34,9 +34,7 @@ export async function POST(req: NextRequest) {
     const html = `
       <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #080d08; color: #d4e8d4; padding: 40px; border-radius: 16px;">
         <h2 style="color: #4ade80; font-size: 24px; margin-bottom: 20px;">Vybex Studio Update 🚀</h2>
-        <div style="color: #9ca3af; font-size: 16px; line-height: 1.7; margin-bottom: 30px; white-space: pre-wrap;">
-          ${content}
-        </div>
+        <div style="color: #9ca3af; font-size: 16px; line-height: 1.7; margin-bottom: 30px; white-space: pre-wrap;">${content}</div>
         ${ctaUrl ? `
           <div style="text-align: center; margin: 40px 0;">
             <a href="${ctaUrl}" style="background: #4ade80; color: #000; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 15px;">
