@@ -7,25 +7,47 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.app',
+  metadataBase: new URL('https://vybexstudio.vercel.app'),
+  title: 'Vybex Studio | Premium Digital Agency & Software House',
+  description: 'Vybex Studio specializes in building high-performance websites, AI-driven applications, and scalable digital products. From branding to backend, we build it right.',
+  keywords: ['Web Development', 'Digital Agency', 'UI/UX Design', 'Branding', 'Software House', 'Vybex Studio', 'AI Applications'],
+  authors: [{ name: 'Vybex Studio Team' }],
+  creator: 'Vybex Studio',
+  publisher: 'Vybex Studio',
   icons: {
     icon: [
       {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
+        url: '/Vybex.png',
+        type: 'image/png',
+      }
     ],
-    apple: '/apple-icon.png',
+    apple: '/Vybex.png',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://vybexstudio.vercel.app',
+    siteName: 'Vybex Studio',
+    title: 'Vybex Studio | Premium Digital Agency & Software House',
+    description: 'Elevate your digital presence with Vybex Studio. We build scalable, high-performance digital solutions tailored for growth.',
+    images: [
+      {
+        url: '/Vybex.png',
+        width: 800,
+        height: 600,
+        alt: 'Vybex Studio Logo',
+      }
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Vybex Studio | Premium Digital Agency & Software House',
+    description: 'Elevate your digital presence with Vybex Studio. We build scalable, high-performance digital solutions tailored for growth.',
+    images: ['/Vybex.png'],
+    creator: '@vybexstudio',
+  },
+  verification: {
+    google: 'VrEmnNqA7SezugBRvYNegJyz__fvvrpT83slChVPMRo',
   },
 }
 

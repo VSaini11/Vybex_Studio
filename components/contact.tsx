@@ -6,20 +6,40 @@ import { Phone, Mail, MapPin, ArrowRight } from 'lucide-react';
 
 export function Contact() {
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormState((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setFormState({ name: '', email: '', message: '' });
-      setSubmitted(false);
-    }, 3000);
+    setStatus('loading');
+    setErrorMessage('');
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formState),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setStatus('success');
+        setFormState({ name: '', email: '', message: '' });
+        setTimeout(() => setStatus('idle'), 5000);
+      } else {
+        setStatus('error');
+        setErrorMessage(data.error || 'Something went wrong.');
+      }
+    } catch (err) {
+      setStatus('error');
+      setErrorMessage('Failed to connect to the server.');
+    }
   };
 
   const cardStyle = {
@@ -164,20 +184,34 @@ export function Contact() {
                 />
               </div>
 
+              {/* Error Message */}
+              {status === 'error' && (
+                <p className="text-red-500 text-xs mt-2">{errorMessage}</p>
+              )}
+
               {/* Submit */}
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="flex items-center gap-3 px-6 py-3 rounded-full font-semibold text-sm"
+                disabled={status === 'loading'}
+                whileHover={{ scale: status === 'loading' ? 1 : 1.03 }}
+                whileTap={{ scale: status === 'loading' ? 1 : 0.97 }}
+                className="flex items-center gap-3 px-6 py-3 rounded-full font-semibold text-sm transition-all disabled:opacity-70 disabled:cursor-not-allowed"
                 style={
-                  submitted
+                  status === 'success'
                     ? { background: '#16a34a', color: '#fff' }
                     : { background: '#fff', color: '#000' }
                 }
               >
-                {submitted ? 'Sent! ✓' : 'Submit'}
-                {!submitted && (
+                {status === 'loading' ? (
+                  <span className="flex items-center gap-2">
+                    <svg className="animate-spin h-4 w-4 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Sending...
+                  </span>
+                ) : status === 'success' ? 'Sent! ✓' : 'Submit'}
+                {status === 'idle' && (
                   <span
                     className="flex items-center justify-center w-8 h-8 rounded-full flex-shrink-0"
                     style={{ background: '#22c55e' }}
