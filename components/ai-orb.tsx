@@ -8,7 +8,7 @@ interface AIOrbitProps {
     tooltipText?: string;
 }
 
-export function AIOrb({ href = '#', tooltipText = 'Open AI Builder' }: AIOrbitProps) {
+export function AIOrb({ href = 'https://vybexai.vercel.app/', tooltipText = 'Open AI Builder' }: AIOrbitProps) {
     const [hovered, setHovered] = useState(false);
     const [clicked, setClicked] = useState(false);
 
@@ -16,7 +16,7 @@ export function AIOrb({ href = '#', tooltipText = 'Open AI Builder' }: AIOrbitPr
         setClicked(true);
         setTimeout(() => {
             setClicked(false);
-            if (href && href !== '#') {
+            if (href && href !== '') {
                 window.open(href, '_blank', 'noopener,noreferrer');
             }
         }, 400);

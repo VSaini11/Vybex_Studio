@@ -28,7 +28,7 @@ export default function Home() {
       </main>
 
       {/* AI Orb — fixed bottom-right, replace href with your target URL */}
-      <AIOrb href="#" tooltipText="Open AI Builder" />
+      <AIOrb tooltipText="Open AI Builder" />
     </>
   );
 }

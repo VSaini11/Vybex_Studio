@@ -13,15 +13,15 @@ export function About() {
   ];
 
   return (
-    <section id="about" ref={ref} className="py-24" style={{ background: '#080808' }}>
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="about" ref={ref} className="py-14 sm:py-24" style={{ background: '#080808' }}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
         {/* ── Headline ─────────────────────────────────────────── */}
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.65 }}
-          className="text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight mb-14 max-w-4xl"
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight mb-8 sm:mb-14 max-w-4xl"
         >
           From{' '}
           <span style={{ backgroundImage: 'linear-gradient(135deg,#4ade80,#22c55e)', WebkitBackgroundClip: 'text', color: 'transparent' }}>
@@ -35,7 +35,7 @@ export function About() {
         </motion.h2>
 
         {/* ── Two-column layout ─────────────────────────────────── */}
-        <div className="grid lg:grid-cols-2 gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
 
           {/* LEFT — big visual card with orb + stat */}
           <motion.div
@@ -46,7 +46,7 @@ export function About() {
             style={{
               background: 'linear-gradient(145deg,#0f1e10 0%,#081208 50%,#0a0a0a 100%)',
               border: '1px solid #1c1c1c',
-              minHeight: '320px',
+              minHeight: '260px',
             }}
           >
             {/* Subtle grid lines */}
@@ -70,7 +70,7 @@ export function About() {
                 {/* outer glow */}
                 <div className="absolute inset-0 rounded-full blur-2xl" style={{ background: 'radial-gradient(circle,rgba(34,197,94,0.25) 0%,transparent 70%)', transform: 'scale(1.6)' }} />
                 {/* orb */}
-                <div className="w-36 h-36 rounded-full relative"
+                <div className="w-24 sm:w-36 h-24 sm:h-36 rounded-full relative"
                   style={{ background: 'radial-gradient(circle at 35% 30%,#4ade80 0%,#16a34a 35%,#052e16 70%,#010a01 100%)', boxShadow: '0 0 50px rgba(34,197,94,0.35),0 0 100px rgba(34,197,94,0.1),inset 0 0 30px rgba(0,0,0,0.5)' }}>
                   {/* highlight */}
                   <div className="absolute rounded-full" style={{ top: '22%', left: '24%', width: '22%', height: '14%', background: 'rgba(255,255,255,0.3)', filter: 'blur(3px)', transform: 'rotate(-30deg)' }} />
@@ -80,8 +80,8 @@ export function About() {
 
             {/* Stat overlay at bottom */}
             <div className="absolute bottom-0 left-0 right-0 p-6 pt-24" style={{ background: 'linear-gradient(to top,rgba(5,12,5,0.95) 60%,transparent)' }}>
-              <div className="text-4xl font-black text-white">15+</div>
-              <div className="text-sm mt-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>Projects Delivered</div>
+              <div className="text-2xl sm:text-4xl font-black text-white">15+</div>
+              <div className="text-xs sm:text-sm mt-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>Projects Delivered</div>
             </div>
           </motion.div>
 
@@ -109,8 +109,8 @@ export function About() {
                   className="rounded-2xl p-5"
                   style={{ background: '#111111', border: '1px solid #1e1e1e' }}
                 >
-                  <div className="text-3xl font-black text-white mb-1.5">{s.value}</div>
-                  <div className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>{s.label}</div>
+                  <div className="text-2xl sm:text-3xl font-black text-white mb-1.5">{s.value}</div>
+                  <div className="text-[10px] sm:text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>{s.label}</div>
                 </motion.div>
               ))}
             </div>
@@ -123,8 +123,8 @@ export function About() {
               className="rounded-2xl p-5"
               style={{ background: '#111111', border: '1px solid #1e1e1e' }}
             >
-              <div className="text-3xl font-black text-white mb-1.5">100%</div>
-              <div className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>On-time delivery track record</div>
+              <div className="text-2xl sm:text-3xl font-black text-white mb-1.5">100%</div>
+              <div className="text-[10px] sm:text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>On-time delivery track record</div>
             </motion.div>
 
             {/* CTA */}

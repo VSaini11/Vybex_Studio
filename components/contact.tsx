@@ -42,7 +42,7 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative py-24 px-6 overflow-hidden"
+      className="relative py-12 sm:py-24 px-4 sm:px-6 overflow-hidden"
       style={{ background: '#080808' }}
     >
       {/* background glow */}
@@ -55,7 +55,7 @@ export function Contact() {
       />
 
       <div className="relative z-10 max-w-6xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-10 items-start">
 
           {/* ── LEFT COLUMN ── */}
           <motion.div
@@ -65,18 +65,18 @@ export function Contact() {
             transition={{ duration: 0.7 }}
           >
             {/* Heading */}
-            <h2 className="text-5xl md:text-6xl font-black leading-tight mb-3">
+            <h2 className="text-2xl sm:text-5xl md:text-6xl font-black leading-tight mb-2 sm:mb-3">
               <span style={{ color: '#4ade80' }}>Go Ahead</span>
               <br />
               <span className="text-white italic font-light">— Ask us anything</span>
             </h2>
-            <p className="text-gray-500 text-sm mb-10 max-w-xs">
+            <p className="text-gray-500 text-xs sm:text-sm mb-6 sm:mb-10 max-w-xs">
               We&apos;re here to help you build, grow, and scale your digital presence.
             </p>
 
             {/* Contact information card */}
-            <div className="p-6" style={cardStyle}>
-              <p className="text-white font-semibold text-sm mb-5">Contact Information</p>
+            <div className="p-4 sm:p-6" style={cardStyle}>
+              <p className="text-white font-semibold text-sm mb-3 sm:mb-5">Contact Information</p>
 
               {/* Phone + Email row */}
               <div className="flex flex-wrap gap-3 mb-3">
@@ -92,7 +92,7 @@ export function Contact() {
                   style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}
                 >
                   <Mail size={14} color="#4ade80" />
-                  contact@vybexstudio.com
+                  vybex.signal@gmail.com
                 </div>
               </div>
 
@@ -113,14 +113,14 @@ export function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="p-7"
+            className="p-5 sm:p-7"
             style={cardStyle}
           >
-            <p className="text-white font-semibold text-base mb-6">Get in Touch</p>
+            <p className="text-white font-semibold text-base mb-4 sm:mb-6">Get in Touch</p>
 
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Name + Email row */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs text-gray-400 mb-2 font-medium">Name</label>
                   <input

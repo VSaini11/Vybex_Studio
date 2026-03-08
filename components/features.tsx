@@ -28,14 +28,14 @@ export function Features() {
 
   return (
     <section ref={ref} className="py-20">
-      <div className="max-w-6xl mx-auto px-6 w-full">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
           className="mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Why Work With Me</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">Why Work With Me</h2>
           <div className="h-1 w-20 rounded-full" style={{ background: 'linear-gradient(90deg, #4ade80, #22c55e)' }} />
         </motion.div>
 

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 const marqueeItems = [
   'Scalable Digital Products',
@@ -18,7 +19,8 @@ const marqueeItems = [
 
 export function Footer() {
   const [email, setEmail] = useState('');
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [subStatus, setSubStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   return (
     <footer style={{ background: '#060606' }}>
 
@@ -65,8 +67,8 @@ export function Footer() {
       </div>
 
       {/* ── Main footer body ── */}
-      <div className="max-w-6xl mx-auto px-6 py-16">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16 items-start">
 
           {/* LEFT — CTA heading */}
           <motion.div
@@ -75,7 +77,7 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <h2 className="text-5xl md:text-6xl font-black text-white leading-tight mb-6">
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white leading-tight mb-6">
               Let&apos;s Build Your Digital
               <br />
               Growth Engine{' '}
@@ -103,7 +105,30 @@ export function Footer() {
             <div>
               <p className="text-white text-sm font-semibold mb-3">Subscribe now</p>
               <form
-                onSubmit={(e) => { e.preventDefault(); setEmail(''); }}
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  if (!email || isSubmitting) return;
+                  setIsSubmitting(true);
+                  setSubStatus(null);
+                  try {
+                    const res = await fetch('/api/subscribe', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ email }),
+                    });
+                    const data = await res.json();
+                    if (res.ok) {
+                      setSubStatus({ type: 'success', message: data.message });
+                      setEmail('');
+                    } else {
+                      setSubStatus({ type: 'error', message: data.error });
+                    }
+                  } catch {
+                    setSubStatus({ type: 'error', message: 'Network error. Please try again.' });
+                  } finally {
+                    setIsSubmitting(false);
+                  }
+                }}
                 className="flex items-center rounded-xl overflow-hidden"
                 style={{
                   background: 'rgba(255,255,255,0.05)',
@@ -116,31 +141,56 @@ export function Footer() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email address"
                   className="flex-1 bg-transparent px-4 py-3 text-sm text-gray-300 placeholder-gray-600 outline-none"
+                  disabled={isSubmitting}
                 />
                 <button
                   type="submit"
-                  className="flex items-center justify-center w-10 h-10 mr-1 rounded-lg flex-shrink-0"
-                  style={{ background: '#22c55e' }}
+                  disabled={isSubmitting}
+                  className="flex items-center justify-center w-10 h-10 mr-1 rounded-lg flex-shrink-0 transition-opacity"
+                  style={{ background: '#22c55e', opacity: isSubmitting ? 0.5 : 1 }}
                 >
-                  <ArrowRight size={15} color="#000" strokeWidth={2.5} />
+                  {isSubmitting ? (
+                    <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <ArrowRight size={15} color="#000" strokeWidth={2.5} />
+                  )}
                 </button>
               </form>
+              {subStatus && (
+                <p className={`text-xs mt-2 ${subStatus.type === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+                  {subStatus.message}
+                </p>
+              )}
             </div>
 
             {/* Links */}
             <div>
               <p className="text-white text-sm font-semibold mb-3">Links</p>
               <ul className="flex flex-col gap-2">
-                {['Terms and Conditions', 'Privacy Policy', 'Error 404'].map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
-                      className="text-sm text-gray-500 hover:text-green-400 transition-colors"
-                    >
-                      {link}
-                    </a>
-                  </li>
-                ))}
+                <li>
+                  <Link
+                    href="/terms-and-conditions"
+                    className="text-sm text-gray-500 hover:text-green-400 transition-colors"
+                  >
+                    Terms and Conditions
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/privacy-policy"
+                    className="text-sm text-gray-500 hover:text-green-400 transition-colors"
+                  >
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-sm text-gray-500 hover:text-green-400 transition-colors"
+                  >
+                    Error 404
+                  </a>
+                </li>
               </ul>
             </div>
 

@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { useAutoSlide } from '@/hooks/useAutoSlide';
 import { ArrowRight, Check } from 'lucide-react';
 
 /* ── CSS: flip + grain ─────────────────────────────────────────── */
@@ -77,12 +78,13 @@ const services = [
 
 export function Portfolio() {
   const { ref, isInView } = useScrollAnimation();
+  const { scrollRef, activeIndex } = useAutoSlide(services.length);
 
   return (
     <section id="webuild" ref={ref} className="py-24 relative" style={{ background: '#080808' }}>
       <style>{CSS}</style>
 
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
         {/* Header */}
         <motion.div
@@ -92,18 +94,19 @@ export function Portfolio() {
           className="text-center mb-14"
         >
           <p className="text-xs font-semibold tracking-widest uppercase mb-3" style={{ color: '#22c55e' }}>What We Offer</p>
-          <h2 className="text-4xl md:text-5xl font-black text-white leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight">
             Digital solutions that{' '}
             <span style={{ backgroundImage: 'linear-gradient(135deg,#4ade80,#22c55e)', WebkitBackgroundClip: 'text', color: 'transparent' }}>
               solve real problems,
             </span>
             <br />not just look cool.
           </h2>
-          <p className="text-xs mt-4 tracking-widest uppercase" style={{ color: 'rgba(255,255,255,0.18)' }}>Hover to explore each service</p>
+          <p className="text-xs mt-4 tracking-widest uppercase hidden sm:block" style={{ color: 'rgba(255,255,255,0.18)' }}>Hover to explore each service</p>
+          <p className="text-xs mt-4 tracking-widest uppercase sm:hidden" style={{ color: 'rgba(255,255,255,0.18)' }}>Swipe to explore</p>
         </motion.div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        {/* Desktop Cards — grid with flip */}
+        <div className="hidden sm:grid sm:grid-cols-2 xl:grid-cols-4 gap-4">
           {services.map((s, i) => (
             <motion.div
               key={s.num}
@@ -111,59 +114,36 @@ export function Portfolio() {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.5, delay: i * 0.09 }}
               className="flip-card"
-              style={{ height: '360px' }}
+              style={{ height: '320px' }}
             >
               <div className="flip-card-inner">
-
-                {/* ── FRONT ─────────────────────────────────── */}
+                {/* FRONT */}
                 <div
                   className="flip-face grain card-glow flex flex-col justify-between p-7"
-                  style={{
-                    background: '#0a0a0a',
-                    border: '1px solid #1a1a1a',
-                  }}
+                  style={{ background: '#0a0a0a', border: '1px solid #1a1a1a' }}
                 >
-                  {/* number */}
-                  <span
-                    className="text-xs font-mono"
-                    style={{ color: 'rgba(255,255,255,0.12)' }}
-                  >
-                    {s.num}
-                  </span>
-
-                  {/* title block — centered vertically */}
+                  <span className="text-xs font-mono" style={{ color: 'rgba(255,255,255,0.12)' }}>{s.num}</span>
                   <div>
                     <h3 className="text-2xl font-black text-white leading-snug mb-3">{s.title}</h3>
                     <p className="text-xs tracking-widest uppercase" style={{ color: 'rgba(255,255,255,0.22)' }}>{s.short}</p>
                   </div>
-
-                  {/* hint */}
                   <div className="flex items-center gap-2">
                     <div className="h-px flex-1" style={{ background: 'rgba(255,255,255,0.05)' }} />
                     <span className="text-[9px] tracking-widest uppercase" style={{ color: 'rgba(255,255,255,0.14)' }}>flip to explore</span>
                   </div>
                 </div>
 
-                {/* ── BACK ──────────────────────────────────── */}
+                {/* BACK */}
                 <div
                   className="flip-face flip-back grain flex flex-col justify-between p-6"
-                  style={{
-                    background: '#0a0a0a',
-                    border: '1px solid rgba(34,197,94,0.18)',
-                    boxShadow: '0 0 40px rgba(34,197,94,0.05)',
-                  }}
+                  style={{ background: '#0a0a0a', border: '1px solid rgba(34,197,94,0.18)', boxShadow: '0 0 40px rgba(34,197,94,0.05)' }}
                 >
                   <div>
-                    {/* title */}
                     <div className="mb-4">
                       <span className="text-xs font-mono block mb-1" style={{ color: 'rgba(255,255,255,0.15)' }}>{s.num}</span>
                       <h3 className="text-base font-bold text-white">{s.title}</h3>
                     </div>
-
-                    {/* desc */}
                     <p className="text-xs leading-relaxed mb-4" style={{ color: 'rgba(255,255,255,0.35)' }}>{s.desc}</p>
-
-                    {/* features */}
                     <ul className="flex flex-col gap-1.5">
                       {s.features.map((f) => (
                         <li key={f} className="flex items-center gap-2 text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
@@ -178,8 +158,6 @@ export function Portfolio() {
                       ))}
                     </ul>
                   </div>
-
-                  {/* CTA */}
                   <a
                     href="#contact"
                     className="mt-4 flex items-center justify-between px-4 py-2.5 rounded-full text-xs font-semibold text-black"
@@ -191,10 +169,76 @@ export function Portfolio() {
                     </span>
                   </a>
                 </div>
-
               </div>
             </motion.div>
           ))}
+        </div>
+
+        {/* Mobile horizontal auto-slide */}
+        <div className="sm:hidden">
+          <style>{`.scrollbar-hide::-webkit-scrollbar { display: none; }`}</style>
+          <div
+            ref={scrollRef}
+            className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {services.map((s, i) => (
+              <div
+                key={s.num}
+                className="flex-shrink-0 w-[80vw] snap-center rounded-2xl p-6 flex flex-col justify-between scrollbar-hide"
+                style={{
+                  background: '#0a0a0a',
+                  border: i === activeIndex ? '1px solid rgba(34,197,94,0.3)' : '1px solid #1a1a1a',
+                  transition: 'border-color 0.3s',
+                  minHeight: '280px',
+                }}
+              >
+                <div>
+                  <span className="text-xs font-mono" style={{ color: 'rgba(255,255,255,0.12)' }}>{s.num}</span>
+                  <h3 className="text-xl font-black text-white leading-snug mt-3 mb-2">{s.title}</h3>
+                  <p className="text-xs tracking-widest uppercase mb-4" style={{ color: 'rgba(255,255,255,0.22)' }}>{s.short}</p>
+                  <p className="text-xs leading-relaxed mb-4" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.desc}</p>
+                  <ul className="flex flex-col gap-1.5">
+                    {s.features.map((f) => (
+                      <li key={f} className="flex items-center gap-2 text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                        <span
+                          className="flex-shrink-0 w-3.5 h-3.5 rounded-full flex items-center justify-center"
+                          style={{ background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.2)' }}
+                        >
+                          <Check size={8} color="#4ade80" strokeWidth={3} />
+                        </span>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <a
+                  href="#contact"
+                  className="mt-4 flex items-center justify-between px-4 py-2.5 rounded-full text-xs font-semibold text-black"
+                  style={{ background: 'linear-gradient(135deg,#4ade80,#22c55e)' }}
+                >
+                  Start This Project
+                  <span className="w-5 h-5 rounded-full bg-black/20 flex items-center justify-center">
+                    <ArrowRight size={11} />
+                  </span>
+                </a>
+              </div>
+            ))}
+          </div>
+
+          {/* Dots indicator */}
+          <div className="flex justify-center gap-2 mt-4">
+            {services.map((_, i) => (
+              <div
+                key={i}
+                className="w-2 h-2 rounded-full transition-all duration-300"
+                style={{
+                  background: i === activeIndex ? '#4ade80' : 'rgba(255,255,255,0.15)',
+                  transform: i === activeIndex ? 'scale(1.3)' : 'scale(1)',
+                }}
+              />
+            ))}
+          </div>
         </div>
 
       </div>

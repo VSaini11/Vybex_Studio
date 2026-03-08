@@ -20,45 +20,45 @@ export function Hero() {
       opacity: 1,
       transition: { staggerChildren: 0.15, delayChildren: 0.1 },
     },
-  };
+  } as const;
 
   const itemVariants = {
     hidden: { opacity: 0, y: 24 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.7, ease: 'easeOut' },
+      transition: { duration: 0.7, ease: 'easeOut' as const },
     },
-  };
+  } as const;
 
   return (
-    <section className="min-h-screen flex items-center pt-20 relative overflow-hidden">
+    <section className="min-h-screen flex flex-col justify-center pt-16 sm:pt-20 relative overflow-hidden">
       {/* Background glow blobs */}
       <motion.div
-        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl pointer-events-none"
+        className="absolute top-1/4 left-1/4 w-64 md:w-96 h-64 md:h-96 rounded-full blur-3xl pointer-events-none"
         style={{ background: 'radial-gradient(circle, rgba(34,197,94,0.10) 0%, transparent 70%)' }}
         animate={{ x: [0, 40, 0], y: [0, 20, 0] }}
         transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.div
-        className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full blur-3xl pointer-events-none"
+        className="absolute bottom-1/4 right-1/4 w-56 md:w-80 h-56 md:h-80 rounded-full blur-3xl pointer-events-none"
         style={{ background: 'radial-gradient(circle, rgba(34,197,94,0.07) 0%, transparent 70%)' }}
         animate={{ x: [0, -30, 0], y: [0, -20, 0] }}
         transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
       />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center min-h-[80vh]">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 lg:gap-6 items-center lg:min-h-[80vh]">
 
           {/* LEFT — Headline + CTA */}
           <motion.div
-            className="lg:col-span-5 flex flex-col justify-center"
+            className="lg:col-span-5 flex flex-col justify-center text-center lg:text-left pt-2 lg:pt-0"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
           >
             <motion.div variants={itemVariants}>
-              <h1 className="text-5xl md:text-6xl xl:text-7xl font-black leading-tight text-white mb-4">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-black leading-tight text-white mb-4">
                 I Build{' '}
                 <span className="text-green-400">Impactful</span>
                 <br />
@@ -68,17 +68,17 @@ export function Hero() {
 
             <motion.p
               variants={itemVariants}
-              className="text-base md:text-lg text-gray-400 mb-8 max-w-sm leading-relaxed"
+              className="text-sm sm:text-base md:text-lg text-gray-400 mb-6 sm:mb-8 max-w-sm mx-auto lg:mx-0 leading-relaxed"
             >
               I help startups and businesses grow with conversion-focused websites, powerful branding, and scalable digital systems.
             </motion.p>
 
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center lg:items-start">
               <motion.a
                 href="#contact"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm text-black"
+                className="inline-flex items-center gap-2 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full font-semibold text-sm text-black"
                 style={{
                   background: 'linear-gradient(135deg, #4ade80, #22c55e)',
                   boxShadow: '0 0 24px rgba(34,197,94,0.35)',
@@ -91,29 +91,29 @@ export function Hero() {
                 href="#portfolio"
                 whileHover={{ scale: 1.04, borderColor: 'rgba(74,222,128,0.6)' }}
                 whileTap={{ scale: 0.96 }}
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm text-white border border-green-500/30 transition-colors"
+                className="inline-flex items-center gap-2 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full font-semibold text-sm text-white border border-green-500/30 transition-colors"
               >
                 View Work
               </motion.a>
             </motion.div>
 
             {/* Stats row */}
-            <motion.div variants={itemVariants} className="mt-12 flex gap-8">
+            <motion.div variants={itemVariants} className="mt-8 sm:mt-12 flex justify-center lg:justify-start gap-6 sm:gap-8">
               {[
                 { value: '10+', label: 'Projects Delivered' },
                 { value: '5/5', label: 'Client Satisfaction' },
                 { value: '100%', label: 'On-Time Delivery' },
               ].map((s) => (
                 <div key={s.label}>
-                  <div className="text-2xl font-bold text-green-400">{s.value}</div>
-                  <p className="text-xs text-gray-500 mt-0.5">{s.label}</p>
+                  <div className="text-xl sm:text-2xl font-bold text-green-400">{s.value}</div>
+                  <p className="text-[10px] sm:text-xs text-gray-500 mt-0.5">{s.label}</p>
                 </div>
               ))}
             </motion.div>
           </motion.div>
 
-          {/* CENTER + RIGHT — single overlapping zone */}
-          <div className="lg:col-span-7 relative flex items-center" style={{ minHeight: '480px' }}>
+          {/* CENTER + RIGHT — single overlapping zone (hidden on very small, visible from md) */}
+          <div className="hidden md:flex lg:col-span-7 relative items-center" style={{ minHeight: '480px' }}>
 
             {/* ── Abstract geometric sphere (center, bleeds right) ── */}
             <motion.div
@@ -196,7 +196,7 @@ export function Hero() {
               transition={{ duration: 0.85, ease: 'easeOut', delay: 0.35 }}
             >
               <div
-                className="rounded-2xl p-6 relative overflow-hidden"
+                className="rounded-2xl p-5 md:p-6 relative overflow-hidden"
                 style={{
                   background: 'rgba(9,13,9,0.88)',
                   border: '1px solid rgba(34,197,94,0.14)',
@@ -206,12 +206,12 @@ export function Hero() {
               >
 
 
-                <h3 className="text-white font-bold text-lg mb-5 leading-snug relative z-10">
+                <h3 className="text-white font-bold text-base md:text-lg mb-4 md:mb-5 leading-snug relative z-10">
                   Digital isn&apos;t the future.{' '}
                   <span className="text-green-400">It&apos;s the now.</span>
                 </h3>
 
-                <div className="flex flex-wrap gap-2.5 relative z-10">
+                <div className="flex flex-wrap gap-2 md:gap-2.5 relative z-10">
                   {featurePills.map((pill, i) => (
                     <motion.span
                       key={pill}
@@ -219,7 +219,7 @@ export function Hero() {
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.4, delay: 0.55 + i * 0.08 }}
                       whileHover={{ scale: 1.05 }}
-                      className="px-4 py-2 rounded-full text-sm cursor-default"
+                      className="px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm cursor-default"
                       style={{
                         border: '1px solid rgba(34,197,94,0.18)',
                         background: 'rgba(34,197,94,0.05)',
@@ -231,7 +231,7 @@ export function Hero() {
                   ))}
                 </div>
 
-                <div className="mt-6 pt-5 border-t relative z-10" style={{ borderColor: 'rgba(34,197,94,0.08)' }}>
+                <div className="mt-4 md:mt-6 pt-4 md:pt-5 border-t relative z-10" style={{ borderColor: 'rgba(34,197,94,0.08)' }}>
                   <p className="text-xs text-gray-500">
                     Available for freelance &amp; consulting work —{' '}
                     <span className="text-green-400">Currently open</span>
@@ -264,7 +264,7 @@ export function Hero() {
         }
       `}</style>
 
-      <div className="absolute bottom-0 left-0 right-0">
+      <div className="relative mt-8 sm:mt-0 sm:absolute sm:bottom-0 left-0 right-0">
         <div className="py-5">
           {/* Full-width marquee, edge-to-edge */}
           <div
@@ -277,22 +277,22 @@ export function Hero() {
             <div className="hero-mq-track">
               {[
                 /* ── Replace with real client logos / names later ── */
-                { name: '10x Media', icon: '⊕' },
+                { name: 'Vybex.ai', icon: '⊕' },
                 { name: 'GoLinkHub', icon: '✦' },
                 { name: 'IntelliTrack', icon: '◎' },
-                { name: 'WakeUpMedia', icon: '⊛' },
+                { name: 'DwV Brand', icon: '⊛' },
                 { name: 'TechCorp', icon: '◈' },
-                { name: 'Innovate Co', icon: '⬡' },
-                { name: 'LaunchPad', icon: '◆' },
+                { name: 'SafeDrop', icon: '⬡' },
+                { name: 'ZeroDup', icon: '◆' },
                 { name: 'NovaSoft', icon: '◉' },
                 /* ── duplicate for seamless loop ── */
-                { name: '10x Media', icon: '⊕' },
+                { name: 'Vybex.ai', icon: '⊕' },
                 { name: 'GoLinkHub', icon: '✦' },
                 { name: 'IntelliTrack', icon: '◎' },
-                { name: 'WakeUpMedia', icon: '⊛' },
+                { name: 'DwV Brand', icon: '⊛' },
                 { name: 'TechCorp', icon: '◈' },
-                { name: 'Innovate Co', icon: '⬡' },
-                { name: 'LaunchPad', icon: '◆' },
+                { name: 'SafeDrop', icon: '⬡' },
+                { name: 'ZeroDup', icon: '◆' },
                 { name: 'NovaSoft', icon: '◉' },
               ].map(({ name, icon }, i) => (
                 <div
