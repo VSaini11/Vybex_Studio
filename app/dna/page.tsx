@@ -684,14 +684,14 @@ function ShareableCard({ report }: { report: DNAReport }) {
       {/* ── Formal Analysis Certificate (Target for Image) ── */}
       <div 
         ref={cardRef}
-        className="bg-white text-black p-6 sm:p-12 rounded-[2px] border-[6px] border-double border-gray-200 shadow-2xl relative font-serif max-w-2xl mx-auto"
+        className="bg-white text-black p-4 sm:p-12 rounded-[2px] border-[6px] border-double border-gray-200 shadow-2xl relative font-serif max-w-2xl mx-auto"
       >
         {/* Certification Watermark */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03] select-none pointer-events-none">
           <Dna size={300} />
         </div>
 
-        <div className="relative z-10 border border-gray-100 p-6 sm:p-10 h-full flex flex-col items-center">
+        <div className="relative z-10 border border-gray-100 p-4 sm:p-10 h-full flex flex-col items-center">
           <div className="w-16 h-16 rounded-full bg-black flex items-center justify-center mb-6 shadow-xl">
              <Fingerprint size={32} className="text-white" />
           </div>
@@ -703,17 +703,17 @@ function ShareableCard({ report }: { report: DNAReport }) {
             "This document certifies that the aforementioned startup concept has undergone comprehensive genetic sequencing via the Vybex Intelligence Engine."
           </p>
 
-          <div className="grid grid-cols-3 gap-6 sm:gap-12 w-full mb-10">
+          <div className="grid grid-cols-3 gap-2 sm:gap-12 w-full mb-10">
             <div className="text-center">
-               <div className="text-3xl sm:text-4xl font-black text-black font-sans">{report.dnaScore}</div>
+               <div className="text-xl sm:text-4xl font-black text-black font-sans">{report.dnaScore}</div>
                <div className="text-[8px] text-gray-400 font-bold uppercase tracking-widest font-sans mt-1">DNA Score</div>
             </div>
             <div className="text-center">
-               <div className="text-3xl sm:text-4xl font-black text-black font-sans">{report.marketScore}</div>
+               <div className="text-xl sm:text-4xl font-black text-black font-sans">{report.marketScore}</div>
                <div className="text-[8px] text-gray-400 font-bold uppercase tracking-widest font-sans mt-1">Market Scale</div>
             </div>
             <div className="text-center">
-               <div className="text-3xl sm:text-4xl font-black text-black font-sans uppercase">{report.complexity}</div>
+               <div className="text-xl sm:text-4xl font-black text-black font-sans uppercase break-words">{report.complexity}</div>
                <div className="text-[8px] text-gray-400 font-bold uppercase tracking-widest font-sans mt-1">Difficulty</div>
             </div>
           </div>
