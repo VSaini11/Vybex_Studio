@@ -177,6 +177,14 @@ export function Footer() {
                 </li>
                 <li>
                   <Link
+                    href="/ecosystem"
+                    className="text-sm text-gray-500 hover:text-green-400 transition-colors"
+                  >
+                    Ecosystem
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     href="/privacy-policy"
                     className="text-sm text-gray-500 hover:text-green-400 transition-colors"
                   >
