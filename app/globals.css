@@ -116,6 +116,10 @@ body::after {
 }
 
 /* Selection */
+@utility perspective-1000 {
+  perspective: 1000px;
+}
+
 ::selection {
   background: rgba(34, 197, 94, 0.2);
   color: #d4e8d4;

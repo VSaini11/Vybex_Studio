@@ -276,43 +276,106 @@ function InputGroup({ label, placeholder, value, onChange }: { label: string, pl
 function ScanningView() {
   const [step, setStep] = useState(0);
   const steps = [
-    "Scanning idea structure...",
-    "Analyzing market signals...",
-    "Mapping startup genome...",
-    "Sequencing growth vectors...",
-    "Finalizing DNA report..."
+    "Initializing neural DNA probe...",
+    "Scanning genomic structures...",
+    "Analyzing market nucleotides...",
+    "Mapping competitive sequences...",
+    "Sequencing growth trajectories...",
+    "Finalizing startup blueprint..."
   ];
 
   useEffect(() => {
     const timer = setInterval(() => {
       setStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev));
-    }, 800);
+    }, 1200);
     return () => clearInterval(timer);
-  }, []);
+  }, [steps.length]);
 
   return (
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="max-w-xl mx-auto text-center py-20"
+      className="max-w-2xl mx-auto text-center py-8 sm:py-20 px-4 min-h-[70vh] flex flex-col justify-center overflow-hidden"
     >
-      <div className="relative mb-12">
-        <DNAHelixAnimated />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#020202] via-transparent to-transparent h-full w-full z-10" />
-      </div>
-      <h2 className="text-2xl font-mono text-cyan-400 mb-4 h-8">
-        {steps[step]}
-      </h2>
-      <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
+      <div className="relative mb-8 sm:mb-12 flex justify-center items-center">
+        {/* Scanning laser beam effect */}
         <motion.div 
-          initial={{ width: '0%' }}
-          animate={{ width: '100%' }}
-          transition={{ duration: 4, ease: "linear" }}
-          className="h-full bg-cyan-500"
+          animate={{ 
+            top: ['20%', '80%', '20%'],
+            opacity: [0, 1, 0]
+          }}
+          transition={{ 
+            duration: 3, 
+            repeat: Infinity, 
+            ease: "easeInOut" 
+          }}
+          className="absolute left-0 right-0 h-[2px] bg-cyan-500/50 shadow-[0_0_20px_rgba(6,182,212,0.8)] z-20 pointer-events-none w-full max-w-sm mx-auto"
         />
+        
+        <div className="relative z-10 w-full max-w-sm aspect-square flex justify-center items-center">
+          <DNAHelixAnimated />
+          {/* Digital interference overlay */}
+          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none" />
+        </div>
+        
+        {/* Background data stream */}
+        <div className="absolute inset-0 -z-10 opacity-20 overflow-hidden">
+          <DataStream />
+        </div>
+      </div>
+
+      <div className="relative z-10 space-y-4">
+        <motion.div
+          key={step}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex flex-col items-center gap-2"
+        >
+          <Fingerprint size={32} className="text-cyan-500 animate-pulse mb-2" />
+          <h2 className="text-xl sm:text-2xl font-mono text-cyan-400 tracking-tight">
+            {steps[step]}
+          </h2>
+        </motion.div>
+
+        <div className="max-w-xs mx-auto">
+          <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden border border-white/5">
+            <motion.div 
+              initial={{ width: '0%' }}
+              animate={{ width: '100%' }}
+              transition={{ duration: 7, ease: "linear" }}
+              className="h-full bg-gradient-to-r from-cyan-500 to-blue-600 shadow-[0_0_10px_rgba(6,182,212,0.5)]"
+            />
+          </div>
+          <div className="flex justify-between mt-2 font-mono text-[10px] text-cyan-500/60 uppercase tracking-widest">
+            <span>Sequencing</span>
+            <span>{Math.min(100, Math.floor((step / (steps.length - 1)) * 100))}%</span>
+          </div>
+        </div>
       </div>
     </motion.div>
+  );
+}
+
+function DataStream() {
+  const data = "010101011010010101010101001010110".split("");
+  return (
+    <div className="grid grid-cols-8 gap-4 text-[8px] font-mono text-cyan-500/20 w-full break-all leading-tight select-none">
+      {Array.from({ length: 40 }).map((_, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 1, 0] }}
+          transition={{ 
+            duration: Math.random() * 2 + 1, 
+            repeat: Infinity, 
+            delay: Math.random() * 2 
+          }}
+        >
+          {data.sort(() => Math.random() - 0.5).join("")}
+        </motion.div>
+      ))}
+    </div>
   );
 }
 
@@ -780,29 +843,73 @@ function ShareButton({ icon, label, onClick }: { icon: React.ReactNode, label: s
 
 function DNAHelixAnimated() {
   return (
-    <div className="relative w-full h-[300px] flex justify-center items-center">
-       {Array.from({ length: 12 }).map((_, i) => (
-         <motion.div
-           key={i}
-           animate={{
-             y: [0, -150, 0],
-             rotateY: [0, 360],
-             scale: [1, 1.5, 1],
-             opacity: [0.3, 1, 0.3]
-           }}
-           transition={{
-             duration: 3,
-             repeat: Infinity,
-             delay: i * 0.2,
-             ease: "easeInOut"
-           }}
-           className="absolute w-3 h-3 bg-cyan-500 rounded-full shadow-[0_0_15px_rgba(6,182,212,0.8)]"
-           style={{
-             top: `${i * 8}%`,
-             left: `${50 + Math.sin(i * 0.8) * 30}%`
-           }}
-         />
-       ))}
+    <div className="relative w-full h-[300px] flex justify-center items-center perspective-1000">
+       <div className="relative w-40 h-full">
+         {Array.from({ length: 24 }).map((_, i) => (
+           <React.Fragment key={i}>
+             {/* Base Molecule A */}
+             <motion.div
+               animate={{
+                 y: [0, -20, 0],
+                 x: [Math.sin(i * 0.5) * 50, Math.sin(i * 0.5 + Math.PI) * 50, Math.sin(i * 0.5) * 50],
+                 scale: [1, 1.2, 1],
+                 opacity: [0.4, 0.8, 0.4],
+                 zIndex: [10, 0, 10]
+               }}
+               transition={{
+                 duration: 4,
+                 repeat: Infinity,
+                 delay: i * 0.1,
+                 ease: "easeInOut"
+               }}
+               className="absolute w-2 h-2 sm:w-3 sm:h-3 bg-cyan-500 rounded-full shadow-[0_0_15px_rgba(6,182,212,0.8)]"
+               style={{
+                 top: `${(i / 24) * 100}%`,
+                 left: '50%'
+               }}
+             />
+             {/* Base Molecule B (Opposite side) */}
+             <motion.div
+               animate={{
+                 y: [0, -20, 0],
+                 x: [Math.sin(i * 0.5 + Math.PI) * 50, Math.sin(i * 0.5) * 50, Math.sin(i * 0.5 + Math.PI) * 50],
+                 scale: [1, 1.2, 1],
+                 opacity: [0.4, 0.8, 0.4],
+                 zIndex: [0, 10, 0]
+               }}
+               transition={{
+                 duration: 4,
+                 repeat: Infinity,
+                 delay: i * 0.1,
+                 ease: "easeInOut"
+               }}
+               className="absolute w-2 h-2 sm:w-3 sm:h-3 bg-blue-600 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.8)]"
+               style={{
+                 top: `${(i / 24) * 100}%`,
+                 left: '50%'
+               }}
+             />
+             {/* Connecting bridge */}
+             <motion.div 
+                className="absolute h-px bg-white/10 -z-10"
+                animate={{
+                  scaleX: [0.5, 1, 0.5],
+                  opacity: [0.1, 0.3, 0.1]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: i * 0.1
+                }}
+                style={{
+                  top: `${(i / 24) * 100 + 1.5}%`,
+                  left: '25%',
+                  width: '50%'
+                }}
+             />
+           </React.Fragment>
+         ))}
+       </div>
     </div>
   );
 }
