@@ -1,5 +1,7 @@
 'use client';
 
+// Forced redeployment to refresh assets - 2026-03-09
+
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { Navbar } from '@/components/navbar';
