@@ -10,7 +10,7 @@ import {
   Fingerprint, Search, TrendingUp, Cpu, ArrowRight, Dna, 
   Sparkles, Brain, Zap, Globe, BarChart3, ChevronRight,
   Shield, Rocket, Target, Share2, Download, Copy, Check,
-  Coffee, RotateCcw, Moon
+  Coffee, RotateCcw, Moon, BarChart, Lightbulb, Users
 } from 'lucide-react';
 
 import { analyzeStartupDNA } from './actions';
@@ -183,55 +183,61 @@ export default function VybexDNAPage() {
                 <h1 className="text-4xl sm:text-6xl font-black mb-6 bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent">
                   DNA Analyzer
                 </h1>
-                <p className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto">
+                <p className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto mb-12">
                     Map your startup's genetic potential. Enter your idea below to receive a detailed intelligence report and growth trajectory prediction.
                 </p>
+
+                {/* ── Intro Carousel ──────────────────────────────── */}
+                <IntroCarousel />
               </div>
 
               {/* ── Build Form ──────────────────────────────────── */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 bg-white/5 backdrop-blur-3xl p-6 sm:p-8 rounded-[24px] sm:rounded-[32px] border border-white/10 shadow-2xl">
-                <div className="space-y-6">
-                  <InputGroup 
-                    label="Startup Idea *" 
-                    placeholder="e.g. AI Resume Builder for Students" 
-                    value={formData.idea}
-                    onChange={(v) => setFormData({...formData, idea: v})}
-                  />
-                  <InputGroup 
-                    label="Target Users" 
-                    placeholder="e.g. Students, job seekers, developers" 
-                    value={formData.targetUsers}
-                    onChange={(v) => setFormData({...formData, targetUsers: v})}
-                  />
-                  <InputGroup 
-                    label="Problem Being Solved" 
-                    placeholder="e.g. Students struggle with professional resumes" 
-                    value={formData.problem}
-                    onChange={(v) => setFormData({...formData, problem: v})}
-                  />
-                </div>
-                <div className="space-y-6">
-                  <InputGroup 
-                    label="Optional Features" 
-                    placeholder="e.g. AI generator, ATS optimization" 
-                    value={formData.features}
-                    onChange={(v) => setFormData({...formData, features: v})}
-                  />
-                  <InputGroup 
-                    label="Industry Category" 
-                    placeholder="e.g. SaaS, Fintech, Education" 
-                    value={formData.industry}
-                    onChange={(v) => setFormData({...formData, industry: v})}
-                  />
-                  <div className="pt-2">
-                    <button
-                      onClick={handleScan}
-                      disabled={!formData.idea}
-                      className="w-full py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-lg flex items-center justify-center gap-3 hover:shadow-[0_0_30px_rgba(6,182,212,0.4)] transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
-                    >
-                      <Dna size={22} className="group-hover:rotate-180 transition-transform duration-700" />
-                      Scan Idea DNA
-                    </button>
+              <div className="max-w-4xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 bg-white/[0.02] backdrop-blur-3xl p-6 sm:p-10 rounded-[32px] border border-white/10 shadow-2xl relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <div className="relative z-10 space-y-6">
+                    <InputGroup 
+                      label="Startup Idea *" 
+                      placeholder="e.g. AI Resume Builder for Students" 
+                      value={formData.idea}
+                      onChange={(v) => setFormData({...formData, idea: v})}
+                    />
+                    <InputGroup 
+                      label="Target Users" 
+                      placeholder="e.g. Students, job seekers, developers" 
+                      value={formData.targetUsers}
+                      onChange={(v) => setFormData({...formData, targetUsers: v})}
+                    />
+                    <InputGroup 
+                      label="Problem Being Solved" 
+                      placeholder="e.g. Students struggle with professional resumes" 
+                      value={formData.problem}
+                      onChange={(v) => setFormData({...formData, problem: v})}
+                    />
+                  </div>
+                  <div className="relative z-10 space-y-6">
+                    <InputGroup 
+                      label="Optional Features" 
+                      placeholder="e.g. AI generator, ATS optimization" 
+                      value={formData.features}
+                      onChange={(v) => setFormData({...formData, features: v})}
+                    />
+                    <InputGroup 
+                      label="Industry Category" 
+                      placeholder="e.g. SaaS, Fintech, Education" 
+                      value={formData.industry}
+                      onChange={(v) => setFormData({...formData, industry: v})}
+                    />
+                    <div className="pt-2">
+                      <button
+                        onClick={handleScan}
+                        disabled={!formData.idea}
+                        className="w-full py-5 rounded-2xl bg-white text-black font-black text-lg flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-30 disabled:cursor-not-allowed shadow-[0_20px_40px_rgba(255,255,255,0.1)]"
+                      >
+                        <Zap size={22} fill="black" />
+                        Initialize Analysis
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -259,6 +265,78 @@ export default function VybexDNAPage() {
 }
 
 // ── Components ──────────────────────────────────────────────────
+
+function IntroCarousel() {
+  const [index, setIndex] = useState(0);
+  const cards = [
+    {
+      title: "Strategic Blueprint",
+      desc: "Gain a comprehensive understanding of your startup's long-term potential before writing a single line of code.",
+      icon: <Target size={24} className="text-cyan-400" />,
+      tag: "Intelligence"
+    },
+    {
+      title: "Market Nucleotides",
+      desc: "Identify your target audience and competitive landscape with precision using our advanced genomic analysis.",
+      icon: <Search size={24} className="text-purple-400" />,
+      tag: "Validation"
+    },
+    {
+      title: "Investment Readiness",
+      desc: "Receive a professional score and certificate that you can share with investors to prove your concept's clarity.",
+      icon: <Zap size={24} className="text-yellow-400" />,
+      tag: "Growth"
+    }
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % cards.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [cards.length]);
+
+  return (
+    <div className="max-w-6xl mx-auto mb-20 px-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        {cards.map((card, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0,
+              scale: index === i ? 1.02 : 1,
+              borderColor: index === i ? 'rgba(6, 182, 212, 0.4)' : 'rgba(255, 255, 255, 0.1)'
+            }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
+            className={`p-6 sm:p-8 rounded-[32px] bg-white/[0.03] border backdrop-blur-xl transition-all duration-500 text-left relative overflow-hidden group`}
+          >
+            <div className={`absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity`}>
+               {card.icon}
+            </div>
+            <div className="mb-6 p-3 rounded-2xl bg-white/5 w-fit">
+              {card.icon}
+            </div>
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2 block">{card.tag}</span>
+            <h3 className="text-xl font-bold mb-3 text-white group-hover:text-cyan-400 transition-colors">
+              {card.title}
+            </h3>
+            <p className="text-gray-400 text-sm leading-relaxed">
+              {card.desc}
+            </p>
+            {index === i && (
+              <motion.div 
+                layoutId="active-border"
+                className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 to-purple-500"
+              />
+            )}
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 function InputGroup({ label, placeholder, value, onChange }: { label: string, placeholder: string, value: string, onChange: (v: string) => void }) {
   return (
@@ -704,7 +782,7 @@ function ShareableCard({ report }: { report: DNAReport }) {
   };
 
   const handleLinkedInShare = () => {
-    const text = `I just analyzed my startup idea on Vybex DNA! My DNA Score is ${report.dnaScore}.\n\nCheck out your startup's potential at ${window.location.origin}/dna`;
+    const text = `I just analyzed my startup idea on Vybex DNA! My DNA Score is ${report.dnaScore}.\n\nCheck out your startup's potential at ${window.location.origin}/dna\n\n@VybexStudio #StartupDNA #AIAnalysis #Vybex`;
     const shareUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(text)}`;
     window.open(shareUrl, '_blank', 'width=600,height=600');
     toast.info("Don't forget to upload the High-Res DNA Card you just downloaded!");
@@ -718,18 +796,17 @@ function ShareableCard({ report }: { report: DNAReport }) {
     if (cardRef.current === null) return;
     
     try {
-      // Use toPng with explicit options to prevent clipping
       const dataUrl = await toPng(cardRef.current, { 
         cacheBust: true, 
         quality: 1, 
-        pixelRatio: 2,
-        backgroundColor: '#ffffff',
-        // Ensure the element is captured at its full natural size
+        pixelRatio: 3, // Increased for extreme high quality
+        backgroundColor: '#000000', // Black background for a more premium look
         style: {
           transform: 'none',
           margin: '0',
           left: '0',
           top: '0',
+          borderRadius: '0' // Sharp edges for the certificate export
         }
       });
       
@@ -737,7 +814,7 @@ function ShareableCard({ report }: { report: DNAReport }) {
       link.download = `Vybex-DNA-Certificate-${report.dnaScore}.png`;
       link.href = dataUrl;
       link.click();
-      toast.success("High-Res Certificate downloaded!");
+      toast.success("Ultra High-Res Certificate downloaded!");
     } catch (err) {
       console.error("Image Export Error:", err);
       toast.error("Failed to generate certificate image. Please try again.");
@@ -745,59 +822,92 @@ function ShareableCard({ report }: { report: DNAReport }) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
-      {/* ── Formal Analysis Certificate (Target for Image) ── */}
-      <div 
-        ref={cardRef}
-        className="bg-white text-black p-4 sm:p-12 rounded-[2px] border-[6px] border-double border-gray-200 shadow-2xl relative font-serif max-w-2xl mx-auto"
-      >
-        {/* Certification Watermark */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03] select-none pointer-events-none">
-          <Dna size={300} />
-        </div>
+    <div className="max-w-4xl mx-auto space-y-12">
+      <div className="text-center space-y-4">
+          <h3 className="text-2xl font-black text-white">Your Professional DNA Card</h3>
+          <p className="text-gray-400 text-sm max-w-lg mx-auto">Download and share your startup's genetic certificate on LinkedIn to tag us and join the elite builders ecosystem.</p>
+      </div>
 
-        <div className="relative z-10 border border-gray-100 p-4 sm:p-10 h-full flex flex-col items-center">
-          <div className="w-16 h-16 rounded-full bg-black flex items-center justify-center mb-6 shadow-xl">
-             <Fingerprint size={32} className="text-white" />
-          </div>
-          
-          <h4 className="text-[10px] font-bold text-gray-400 tracking-[0.4em] uppercase mb-1 font-sans">Official Intelligence Report</h4>
-          <h5 className="text-2xl sm:text-3xl font-black mb-8 tracking-tight font-sans text-gray-900 border-b-2 border-gray-900 pb-1">Vybex DNA Certificate</h5>
-          
-          <p className="text-center text-gray-600 text-xs sm:text-sm max-w-md mb-10 italic leading-relaxed">
-            "This document certifies that the aforementioned startup concept has undergone comprehensive genetic sequencing via the Vybex Intelligence Engine."
-          </p>
+      {/* ── Premium Certificate ── */}
+      <div className="flex justify-center px-4">
+        <div 
+          ref={cardRef}
+          className="w-full max-w-[600px] min-h-[550px] sm:aspect-[4/5] bg-black text-white p-6 sm:p-12 relative overflow-hidden flex flex-col items-center justify-between border-[1px] border-white/20 shadow-[0_50px_100px_rgba(0,0,0,1)]"
+        >
+          {/* High-end decorative elements */}
+          <div className="absolute top-0 left-0 w-full h-[6px] bg-gradient-to-r from-cyan-500 via-purple-500 to-blue-500" />
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid.svg')] opacity-[0.03] pointer-events-none" />
+          <div className="absolute -top-24 -left-24 w-64 h-64 bg-cyan-500/10 blur-[100px] rounded-full" />
+          <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-purple-500/10 blur-[100px] rounded-full" />
 
-          <div className="grid grid-cols-3 gap-2 sm:gap-12 w-full mb-10">
-            <div className="text-center">
-               <div className="text-xl sm:text-4xl font-black text-black font-sans">{report.dnaScore}</div>
-               <div className="text-[8px] text-gray-400 font-bold uppercase tracking-widest font-sans mt-1">DNA Score</div>
-            </div>
-            <div className="text-center">
-               <div className="text-xl sm:text-4xl font-black text-black font-sans">{report.marketScore}</div>
-               <div className="text-[8px] text-gray-400 font-bold uppercase tracking-widest font-sans mt-1">Market Scale</div>
-            </div>
-            <div className="text-center">
-               <div className="text-xl sm:text-4xl font-black text-black font-sans uppercase break-words">{report.complexity}</div>
-               <div className="text-[8px] text-gray-400 font-bold uppercase tracking-widest font-sans mt-1">Difficulty</div>
-            </div>
+          {/* Header */}
+          <div className="relative z-10 flex flex-col items-center mt-2 sm:mt-4">
+             <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center mb-4 sm:mb-6 backdrop-blur-xl">
+                <Dna size={24} className="sm:text-white" />
+             </div>
+             <h4 className="text-[8px] sm:text-[10px] font-black uppercase tracking-[0.4em] sm:tracking-[0.6em] text-cyan-400 mb-1 sm:mb-2">Vybex Intelligence Engine</h4>
+             <h2 className="text-xl sm:text-3xl font-light tracking-tighter text-white">GENETIC CERTIFICATE</h2>
           </div>
 
-          <div className="w-full border-t border-gray-200 pt-6 flex justify-between items-end">
-            <div className="space-y-0.5">
-              <p className="text-[8px] font-bold text-gray-400 uppercase tracking-widest font-sans">Emission Date</p>
-              <p className="text-xs font-bold text-black font-sans">{new Date().toLocaleDateString()}</p>
-            </div>
-            <div className="text-right">
-               <p className="text-[8px] font-bold text-gray-400 uppercase tracking-widest font-sans">Verified By</p>
-               <p className="text-xs font-serif italic font-bold">Vybex AI Systems</p>
-            </div>
+          {/* Content */}
+          <div className="relative z-10 flex flex-col items-center text-center w-full">
+             <div className="w-full h-px bg-white/10 mb-4 sm:mb-8" />
+             <p className="text-[8px] sm:text-[10px] font-medium text-gray-500 uppercase tracking-widest mb-2 sm:mb-4">Startup Concept Validated</p>
+             <h3 className="text-lg sm:text-2xl font-bold mb-4 sm:mb-8 px-2 sm:px-4 leading-tight">
+                {report.summary.length > 80 ? report.summary.substring(0, 80) + '...' : report.summary}
+             </h3>
+             
+             <div className="grid grid-cols-2 gap-6 sm:gap-12 w-full max-w-sm mb-6 sm:mb-12">
+                <div className="text-center">
+                   <div className="text-3xl sm:text-5xl font-black mb-1 bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent">{report.dnaScore}</div>
+                   <div className="text-[8px] font-black uppercase tracking-widest text-gray-500">DNA Score</div>
+                </div>
+                <div className="text-center">
+                   <div className="text-3xl sm:text-5xl font-black mb-1 bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent">{report.marketScore}</div>
+                   <div className="text-[8px] font-black uppercase tracking-widest text-gray-500">Market Potential</div>
+                </div>
+             </div>
+
+             <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 max-w-xs mb-4">
+                {report.riskFactors.slice(0, 3).map((risk, i) => (
+                  <span key={i} className="px-1.5 py-0.5 sm:px-2 sm:py-1 bg-white/[0.03] border border-white/10 rounded-full text-[7px] sm:text-[8px] text-gray-400 font-bold uppercase tracking-wider text-center">{risk}</span>
+                ))}
+             </div>
+          </div>
+
+          {/* Footer */}
+          <div className="relative z-10 w-full flex justify-between items-end border-t border-white/10 pt-4 sm:pt-8 mt-2 sm:mt-8">
+             <div className="text-left space-y-0.5 sm:space-y-1">
+                <p className="text-[7px] sm:text-[8px] font-black text-gray-500 uppercase tracking-widest">Verification ID</p>
+                <p className="text-[8px] sm:text-[10px] font-mono text-white opacity-50 uppercase">STR-{Math.random().toString(36).substring(7).toUpperCase()}</p>
+             </div>
+             <div className="text-right space-y-0.5 sm:space-y-1">
+                <p className="text-[7px] sm:text-[8px] font-black text-gray-500 uppercase tracking-widest">Validated at</p>
+                <p className="text-[8px] sm:text-[10px] font-bold text-white">{new Date().toLocaleDateString()}</p>
+             </div>
           </div>
         </div>
       </div>
 
-      {/* ── Share Actions ── */}
-      <div className="bg-white/5 border border-white/10 rounded-[24px] p-6 backdrop-blur-xl">
+      {/* ── Action Buttons ── */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto pt-6">
+        <button 
+           onClick={handleDownloadImage}
+           className="h-16 rounded-2xl bg-white text-black font-black flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_20px_40px_rgba(255,255,255,0.1)] group"
+        >
+          <Download size={20} className="group-hover:translate-y-0.5 transition-transform" />
+          Download DNA Card
+        </button>
+        <button 
+           onClick={handleLinkedInShare}
+           className="h-16 rounded-2xl bg-[#0A66C2] text-white font-black flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-[0.98] transition-all border border-white/10 shadow-[0_20px_40px_rgba(10,102,194,0.2)] group"
+        >
+          <Share2 size={20} className="group-hover:scale-110 transition-transform" />
+          Share & Tag Vybex
+        </button>
+      </div>
+
+      <div className="bg-white/5 border border-white/10 rounded-[32px] p-8 text-center backdrop-blur-xl">
          <div className="text-center mb-6">
             <h4 className="text-lg font-bold mb-1">Build Your Reputation</h4>
             <p className="text-xs text-gray-400">Download the high-resolution formal card and share it on LinkedIn.</p>
