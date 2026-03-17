@@ -1,5 +1,6 @@
 import { Navbar } from '@/components/navbar';
 import { Hero } from '@/components/hero';
+import { EarlyAccessPass } from '@/components/early-access-pass';
 import { About } from '@/components/about';
 import { Services } from '@/components/services';
 import { Portfolio } from '@/components/portfolio';
@@ -18,6 +19,7 @@ export default function Home() {
 
         <Navbar />
         <Hero />
+        <EarlyAccessPass />
         <About />
         <Services />
         <Portfolio />
