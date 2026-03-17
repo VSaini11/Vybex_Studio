@@ -37,9 +37,9 @@ export async function POST(request: NextRequest) {
     const { email, code } = body;
 
     // 3. Find the user and verify the code
-    const subscriber = await Subscriber.findOne({ 
+    const subscriber = await Subscriber.findOne({
       email: email.toLowerCase(),
-      active: true 
+      active: true
     });
 
     if (!subscriber) {
