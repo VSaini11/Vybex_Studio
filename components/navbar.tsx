@@ -7,10 +7,9 @@ import { ArrowRight, Menu, X } from 'lucide-react';
 const navItems = [
   { label: 'Home', href: '/' },
   { label: 'Ecosystem', href: '/ecosystem' },
+  { label: 'Merchandise', href: '/merchandise' },
   { label: 'About', href: '/#about' },
   { label: 'Services', href: '/#services' },
-  { label: 'We Build', href: '/#webuild' },
-  { label: 'Pricing', href: '/#pricing' },
 ];
 
 export function Navbar() {

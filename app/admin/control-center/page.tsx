@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Ticket, Gift, Sparkles, Trophy, Loader2, Unlock } from 'lucide-react';
+import { Ticket, Gift, Sparkles, Trophy, Loader2, Unlock, Package, Plus, Trash2, Globe, ExternalLink, Download, Image as ImageIcon, Camera, Shirt, Smartphone, Coffee } from 'lucide-react';
 import { getRandomSubscriber } from './actions';
 import { addAuthorizedTool, getAuthorizedTools, deleteAuthorizedTool } from './tool-actions';
+import { addMerchandiseItem, getMerchandiseItems, deleteMerchandiseItem } from './merchandise-actions';
 import confetti from 'canvas-confetti';
+import { toast } from 'sonner';
 
 interface AuthorizedTool {
   id: string;
@@ -13,6 +15,16 @@ interface AuthorizedTool {
   url: string;
   apiKey: string;
   isActive: boolean;
+}
+
+interface MerchandiseItem {
+  id: string;
+  name: string;
+  category: string;
+  image: string;
+  description: string;
+  isComingSoon: boolean;
+  downloadUrl?: string;
 }
 
 export default function GiveawayAdminPage() {
@@ -26,6 +38,18 @@ export default function GiveawayAdminPage() {
   const [isAddingTool, setIsAddingTool] = useState(false);
   const [addingToolError, setAddingToolError] = useState<string | null>(null);
 
+  const [merchandise, setMerchandise] = useState<MerchandiseItem[]>([]);
+  const [isLoadingMerch, setIsLoadingMerch] = useState(true);
+  const [isUploading, setIsUploading] = useState(false);
+  const [newMerch, setNewMerch] = useState({
+    name: '',
+    category: 'wallpapers',
+    description: '',
+    isComingSoon: false,
+    image: '',
+    downloadUrl: '',
+  });
+
   const targetDate = new Date('2026-03-22T18:00:00');
   const [isLocked, setIsLocked] = useState(true);
 
@@ -38,7 +62,18 @@ export default function GiveawayAdminPage() {
       }
       setIsLoadingTools(false);
     };
+
+    const fetchMerch = async () => {
+        setIsLoadingMerch(true);
+        const result = await getMerchandiseItems();
+        if (result.success && result.items) {
+          setMerchandise(result.items);
+        }
+        setIsLoadingMerch(false);
+    };
+
     fetchTools();
+    fetchMerch();
 
     const checkLockStatus = () => {
       setIsLocked(new Date() < targetDate);
@@ -455,6 +490,236 @@ export default function GiveawayAdminPage() {
           </div>
         </div>
 
+        {/* Merchandise Management Section */}
+        <div className="mt-12 border-t border-white/5 pt-8 mb-20">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center border border-green-500/30">
+              <Package size={20} className="text-green-400" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold">Merchandise Management</h2>
+              <p className="text-gray-400 text-sm">Upload assets and manage your store categories.</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Add Merchandise Form */}
+            <div className="lg:col-span-1 bg-[#0a0a0a] rounded-xl border border-white/5 p-6 h-fit sticky top-24">
+              <h3 className="font-semibold mb-4 text-sm uppercase tracking-wider text-gray-400">Add Item</h3>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1.5">Item Name</label>
+                  <input 
+                    type="text" 
+                    value={newMerch.name}
+                    onChange={(e) => setNewMerch({...newMerch, name: e.target.value})}
+                    placeholder="e.g. Minimalist Wallpaper"
+                    className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-green-500 transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1.5">Category</label>
+                  <select 
+                    value={newMerch.category}
+                    onChange={(e) => setNewMerch({...newMerch, category: e.target.value})}
+                    className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-green-500 transition-colors"
+                  >
+                    <option value="wallpapers">Wallpapers</option>
+                    <option value="logos">Logos</option>
+                    <option value="cups">Cups</option>
+                    <option value="bottles">Bottles</option>
+                    <option value="t-shirts">T-shirts</option>
+                    <option value="phone-covers">Phone Covers</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1.5">Description (Optional)</label>
+                  <textarea 
+                    value={newMerch.description}
+                    onChange={(e) => setNewMerch({...newMerch, description: e.target.value})}
+                    placeholder="Brief details..."
+                    rows={2}
+                    className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-green-500 transition-colors resize-none"
+                  />
+                </div>
+
+                <div className="flex items-center gap-3 bg-white/5 p-3 rounded-lg border border-white/5">
+                  <input 
+                    type="checkbox" 
+                    id="isComingSoon"
+                    checked={newMerch.isComingSoon}
+                    onChange={(e) => setNewMerch({...newMerch, isComingSoon: e.target.checked})}
+                    className="w-4 h-4 rounded border-white/10 text-green-500 focus:ring-green-500 bg-black"
+                  />
+                  <label htmlFor="isComingSoon" className="text-sm text-gray-300 cursor-pointer">Mark as Coming Soon</label>
+                </div>
+
+                {!newMerch.isComingSoon && (
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1.5">Upload Image/Asset</label>
+                    <div className="relative group">
+                      <input 
+                        type="file" 
+                        accept="image/*"
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (!file) return;
+                          
+                          setIsUploading(true);
+                          const formData = new FormData();
+                          formData.append('file', file);
+                          formData.append('category', newMerch.category);
+
+                          try {
+                            const response = await fetch('/api/admin/upload-merchandise', {
+                              method: 'POST',
+                              body: formData,
+                            });
+                            const result = await response.json();
+                            if (result.success) {
+                              setNewMerch({...newMerch, image: result.url, downloadUrl: result.url});
+                              toast.success('File uploaded successfully!');
+                            } else {
+                              toast.error(result.error || 'Upload failed');
+                            }
+                          } catch (err) {
+                            toast.error('Network error during upload');
+                          } finally {
+                            setIsUploading(false);
+                          }
+                        }}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                      />
+                      <div className="w-full bg-black/50 border border-dashed border-white/20 rounded-lg px-3 py-6 text-center group-hover:border-green-500/50 transition-colors">
+                        {isUploading ? (
+                          <Loader2 className="animate-spin mx-auto text-green-500" size={20} />
+                        ) : newMerch.image ? (
+                           <div className="flex flex-col items-center gap-2">
+                             <img src={newMerch.image} alt="Preview" className="w-12 h-12 object-cover rounded" />
+                             <span className="text-[10px] text-green-400">File Selected ✓</span>
+                           </div>
+                        ) : (
+                          <div className="flex flex-col items-center gap-1">
+                            <Plus size={20} className="text-gray-500" />
+                            <span className="text-xs text-gray-500">Choose File</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <button 
+                  onClick={async () => {
+                    if (!newMerch.name || (!newMerch.isComingSoon && !newMerch.image)) {
+                      toast.error('Please fill all required fields');
+                      return;
+                    }
+                    
+                    const result = await addMerchandiseItem(newMerch);
+                    if (result.success && result.item) {
+                      setMerchandise([result.item, ...merchandise]);
+                      setNewMerch({
+                        name: '',
+                        category: 'wallpapers',
+                        description: '',
+                        isComingSoon: false,
+                        image: '',
+                        downloadUrl: '',
+                      });
+                      toast.success('Merchandise added!');
+                    } else {
+                      toast.error(result.error || 'Failed to add item');
+                    }
+                  }}
+                  className="w-full bg-green-600 hover:bg-green-500 text-black font-bold py-3 rounded-lg text-sm transition-colors flex justify-center items-center shadow-lg shadow-green-600/10"
+                >
+                  Save Item
+                </button>
+              </div>
+            </div>
+
+            {/* Merchandise List */}
+            <div className="lg:col-span-2 space-y-4">
+              {isLoadingMerch ? (
+                <div className="flex justify-center py-20">
+                  <Loader2 className="animate-spin text-green-500" />
+                </div>
+              ) : merchandise.length === 0 ? (
+                <div className="bg-[#0a0a0a] rounded-xl border border-white/5 p-12 text-center flex flex-col items-center">
+                  <div className="w-16 h-16 bg-gray-900 rounded-full flex items-center justify-center mb-4">
+                    <Package size={24} className="text-gray-600" />
+                  </div>
+                  <p className="text-gray-400 font-medium">No merchandise items found.</p>
+                  <p className="text-xs text-gray-500 mt-2">Add your first item using the form on the left.</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {merchandise.map((item) => (
+                    <motion.div 
+                      key={item.id} 
+                      layout
+                      className="bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden group hover:border-white/10 transition-colors flex flex-col"
+                    >
+                      <div className="aspect-video relative bg-black/40">
+                         {item.image ? (
+                           <img src={item.image} alt={item.name} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" />
+                         ) : (
+                           <div className="w-full h-full flex items-center justify-center text-gray-700">
+                             <ImageIcon size={48} />
+                           </div>
+                         )}
+                         <div className="absolute top-3 right-3 flex gap-2">
+                           <span className="px-2 py-1 rounded text-[10px] bg-black/60 backdrop-blur-md border border-white/10 uppercase tracking-widest font-bold">
+                             {item.category}
+                           </span>
+                           {item.isComingSoon && (
+                             <span className="px-2 py-1 rounded text-[10px] bg-amber-500/20 text-amber-500 border border-amber-500/20 uppercase tracking-widest font-bold leading-none flex items-center">
+                               Soon
+                             </span>
+                           )}
+                         </div>
+                      </div>
+                      
+                      <div className="p-5 flex flex-col flex-1">
+                        <div className="flex justify-between items-start mb-2">
+                          <h4 className="font-bold text-white group-hover:text-green-400 transition-colors line-clamp-1">{item.name}</h4>
+                          <button 
+                            onClick={async () => {
+                              if (confirm(`Delete ${item.name}?`)) {
+                                await deleteMerchandiseItem(item.id);
+                                setMerchandise(merchandise.filter(m => m.id !== item.id));
+                                toast.success('Item deleted');
+                              }
+                            }}
+                            className="text-gray-500 hover:text-red-400 transition-colors p-1"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                        <p className="text-xs text-gray-500 line-clamp-2 mb-4 leading-relaxed">{item.description || 'No description provided.'}</p>
+                        
+                        <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
+                           <div className="flex gap-3">
+                              {item.downloadUrl && (
+                                <a href={item.downloadUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                                  <ExternalLink size={14} />
+                                </a>
+                              )}
+                           </div>
+                           <span className="text-[10px] text-gray-600 font-mono">ID: {item.id.slice(-6)}</span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { EarlyAccessPass } from '@/components/early-access-pass';
 import { About } from '@/components/about';
 import { Services } from '@/components/services';
 import { Portfolio } from '@/components/portfolio';
-import { Features } from '@/components/features';
+import { MerchandisePreview } from '@/components/merchandise-preview';
 import { Pricing } from '@/components/pricing';
 import { Contact } from '@/components/contact';
 import { Footer } from '@/components/footer';
@@ -23,7 +23,7 @@ export default function Home() {
         <About />
         <Services />
         <Portfolio />
-        <Features />
+        <MerchandisePreview />
         <Pricing />
         <Contact />
         <Footer />
