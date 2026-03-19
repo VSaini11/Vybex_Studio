@@ -25,6 +25,9 @@ interface MerchandiseItem {
   description: string;
   isComingSoon: boolean;
   downloadUrl?: string;
+  price?: number;
+  redirectUrl?: string;
+  gender?: 'male' | 'female' | 'unisex';
 }
 
 export default function GiveawayAdminPage() {
@@ -48,6 +51,9 @@ export default function GiveawayAdminPage() {
     isComingSoon: false,
     image: '',
     downloadUrl: '',
+    price: 0,
+    redirectUrl: '',
+    gender: 'unisex' as 'male' | 'female' | 'unisex',
   });
 
   const targetDate = new Date('2026-03-22T18:00:00');
@@ -535,6 +541,44 @@ export default function GiveawayAdminPage() {
                   </select>
                 </div>
 
+                {newMerch.category === 't-shirts' && (
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1.5">Gender Selection</label>
+                    <select 
+                      value={newMerch.gender}
+                      onChange={(e) => setNewMerch({...newMerch, gender: e.target.value as any})}
+                      className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-green-500 transition-colors"
+                    >
+                      <option value="unisex">Unisex</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1.5">Price (Optional)</label>
+                    <input 
+                      type="number" 
+                      value={newMerch.price}
+                      onChange={(e) => setNewMerch({...newMerch, price: Number(e.target.value)})}
+                      placeholder="e.g. 29"
+                      className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-green-500 transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1.5">Redirect URL (Optional)</label>
+                    <input 
+                      type="text" 
+                      value={newMerch.redirectUrl}
+                      onChange={(e) => setNewMerch({...newMerch, redirectUrl: e.target.value})}
+                      placeholder="e.g. https://shop.com/item"
+                      className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-green-500 transition-colors"
+                    />
+                  </div>
+                </div>
+
                 <div>
                   <label className="block text-xs text-gray-500 mb-1.5">Description (Optional)</label>
                   <textarea 
@@ -629,6 +673,9 @@ export default function GiveawayAdminPage() {
                         isComingSoon: false,
                         image: '',
                         downloadUrl: '',
+                        price: 0,
+                        redirectUrl: '',
+                        gender: 'unisex' as 'male' | 'female' | 'unisex',
                       });
                       toast.success('Merchandise added!');
                     } else {
@@ -672,10 +719,20 @@ export default function GiveawayAdminPage() {
                              <ImageIcon size={48} />
                            </div>
                          )}
-                         <div className="absolute top-3 right-3 flex gap-2">
+                         <div className="absolute top-3 right-3 flex flex-wrap justify-end gap-2">
                            <span className="px-2 py-1 rounded text-[10px] bg-black/60 backdrop-blur-md border border-white/10 uppercase tracking-widest font-bold">
                              {item.category}
                            </span>
+                           {item.gender && item.gender !== 'unisex' && (
+                             <span className="px-2 py-1 rounded text-[10px] bg-blue-500/20 text-blue-400 border border-blue-500/20 uppercase tracking-widest font-bold">
+                               {item.gender}
+                             </span>
+                           )}
+                           {item.price && (
+                             <span className="px-2 py-1 rounded text-[10px] bg-green-500/20 text-green-400 border border-green-500/20 uppercase tracking-widest font-bold">
+                               ${item.price}
+                             </span>
+                           )}
                            {item.isComingSoon && (
                              <span className="px-2 py-1 rounded text-[10px] bg-amber-500/20 text-amber-500 border border-amber-500/20 uppercase tracking-widest font-bold leading-none flex items-center">
                                Soon

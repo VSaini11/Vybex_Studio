@@ -15,7 +15,8 @@ const categories = [
   { id: 'logos', name: 'Logos', icon: <ImageIcon size={18} /> },
   { id: 'cups', name: 'Cups', icon: <Coffee size={18} /> },
   { id: 'bottles', name: 'Bottles', icon: <div className="w-[18px] h-[18px] border-2 border-current rounded-sm" /> }, 
-  { id: 't-shirts', name: 'T-Shirts', icon: <Shirt size={18} /> },
+  { id: 't-shirts-male', name: 'Male T-Shirts', icon: <Shirt size={18} className="text-blue-400" /> },
+  { id: 't-shirts-female', name: 'Female T-Shirts', icon: <Shirt size={18} className="text-pink-400" /> },
   { id: 'phone-covers', name: 'Phone Covers', icon: <Smartphone size={18} /> },
 ];
 
@@ -70,7 +71,11 @@ export default function MerchandisePage() {
 
   const filteredItems = activeCategory === 'all' 
     ? items 
-    : items.filter(item => item.category === activeCategory);
+    : activeCategory === 't-shirts-male'
+      ? items.filter(item => item.category === 't-shirts' && item.gender === 'male')
+      : activeCategory === 't-shirts-female'
+        ? items.filter(item => item.category === 't-shirts' && item.gender === 'female')
+        : items.filter(item => item.category === activeCategory);
 
   return (
     <main className="min-h-screen bg-black text-white">
@@ -143,9 +148,9 @@ export default function MerchandisePage() {
       </section>
 
       {/* Merchandise Grid */}
-      <section className="py-16 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <section className="py-12 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {loading ? (
                 <div className="col-span-full flex flex-col items-center justify-center py-24">
                     <Loader2 className="animate-spin text-green-500 mb-4" size={48} />
@@ -169,7 +174,7 @@ export default function MerchandisePage() {
                   className="group relative flex flex-col rounded-3xl overflow-hidden border border-white/10 bg-white/5 hover:border-green-500/50 transition-all"
                 >
                   {/* Image/Placeholder Area */}
-                  <div className="aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-white/5 to-white/[0.02] flex items-center justify-center">
+                  <div className="aspect-square relative overflow-hidden bg-gradient-to-br from-white/5 to-white/[0.02] flex items-center justify-center">
                     {item.isComingSoon ? (
                       <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm z-20">
                         <div className="p-4 rounded-full bg-white/5 mb-4">
@@ -197,7 +202,7 @@ export default function MerchandisePage() {
                   </div>
 
                   {/* Content Area */}
-                  <div className="p-8 flex flex-col flex-1">
+                  <div className="p-6 flex flex-col flex-1">
                     <div className="flex items-center justify-between mb-2">
                        <span className="text-[10px] uppercase tracking-widest font-bold text-gray-500">{item.category}</span>
                        {!item.isComingSoon && (
@@ -206,22 +211,41 @@ export default function MerchandisePage() {
                                Available
                            </span>
                        )}
-                    </div>
-                     <h3 className="text-xl font-bold text-white mb-2">{item.name}</h3>
-                     <p className="text-gray-400 text-sm mb-6 leading-relaxed">{item.description}</p>
+                     </div>
+                     <h3 className="text-lg font-bold text-white mb-1.5 line-clamp-1">{item.name}</h3>
+                     <div className="flex items-center justify-between mb-4">
+                        <p className="text-gray-400 text-sm leading-relaxed line-clamp-2">{item.description}</p>
+                        {item.price != null && item.price > 0 && (
+                          <span className="text-lg font-black text-green-500 shrink-0 ml-4">₹{item.price}</span>
+                        )}
+                     </div>
                     
                     <div className="mt-auto">
                       {!item.isComingSoon ? (
-                        <motion.a
-                          href={item.downloadUrl}
-                          download
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          className="w-full flex items-center justify-center gap-2 bg-white text-black py-4 rounded-2xl font-bold hover:bg-green-500 transition-colors"
-                        >
-                          <Download size={18} />
-                          Download Asset
-                        </motion.a>
+                        item.redirectUrl ? (
+                          <motion.a
+                            href={item.redirectUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="w-full flex items-center justify-center gap-2 bg-green-500 text-black py-4 rounded-2xl font-bold hover:bg-green-400 transition-colors"
+                          >
+                            Buy Now
+                            <ChevronRight size={18} />
+                          </motion.a>
+                        ) : (
+                          <motion.a
+                            href={item.downloadUrl}
+                            download
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="w-full flex items-center justify-center gap-2 bg-white text-black py-4 rounded-2xl font-bold hover:bg-green-500 transition-colors"
+                          >
+                            <Download size={18} />
+                            Download Asset
+                          </motion.a>
+                        )
                       ) : (
                         <button
                           disabled

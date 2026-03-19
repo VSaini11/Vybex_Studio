@@ -11,6 +11,9 @@ export async function addMerchandiseItem(data: {
   description: string;
   isComingSoon: boolean;
   downloadUrl?: string;
+  price?: number;
+  redirectUrl?: string;
+  gender?: 'male' | 'female' | 'unisex';
 }) {
   try {
     await dbConnect();
@@ -33,6 +36,9 @@ export async function addMerchandiseItem(data: {
         description: newItem.description,
         isComingSoon: newItem.isComingSoon,
         downloadUrl: newItem.downloadUrl,
+        price: newItem.price,
+        redirectUrl: newItem.redirectUrl,
+        gender: newItem.gender,
       }
     };
   } catch (error) {
@@ -56,6 +62,9 @@ export async function getMerchandiseItems() {
         description: item.description,
         isComingSoon: item.isComingSoon,
         downloadUrl: item.downloadUrl,
+        price: item.price,
+        redirectUrl: item.redirectUrl,
+        gender: item.gender,
       }))
     };
   } catch (error) {

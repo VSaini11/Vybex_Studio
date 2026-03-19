@@ -84,14 +84,19 @@ function MerchandiseCard({ item, index, totalItems, scrollProgress }: { item: an
         {/* Text Content */}
         <div className="absolute inset-x-0 bottom-0 p-8 flex items-end justify-between">
           <div className="max-w-xs md:max-w-md">
-            <motion.h3 
-              animate={{ x: isHovered ? 5 : 0 }}
-              className="text-2xl md:text-3xl font-black text-white mb-1 tracking-tighter"
-            >
-              {item.name}
-            </motion.h3>
+            <div className="flex items-center justify-between mb-1">
+              <motion.h3 
+                animate={{ x: isHovered ? 5 : 0 }}
+                className="text-2xl md:text-3xl font-black text-white tracking-tighter"
+              >
+                {item.name}
+              </motion.h3>
+              {item.price && (
+                <span className="text-xl font-black text-green-500">₹{item.price}</span>
+              )}
+            </div>
             <p className="text-gray-500 text-[10px] md:text-xs font-medium tracking-wide">
-              {item.isComingSoon ? "Reserved for the next drop." : "Available for digital download."}
+              {item.isComingSoon ? "Reserved for the next drop." : item.redirectUrl ? "Exclusive physical release." : "Available for digital download."}
             </p>
           </div>
           
@@ -101,7 +106,14 @@ function MerchandiseCard({ item, index, totalItems, scrollProgress }: { item: an
                 y: isHovered ? -3 : 0,
                 backgroundColor: isHovered ? "rgba(34, 197, 94, 1)" : "rgba(255, 255, 255, 0.03)"
               }}
-              className="w-12 h-12 rounded-2xl flex items-center justify-center text-white border border-white/5 transition-colors"
+              onClick={() => {
+                if (item.redirectUrl) {
+                  window.open(item.redirectUrl, '_blank');
+                } else if (!item.isComingSoon) {
+                  window.location.href = '/merchandise';
+                }
+              }}
+              className="w-12 h-12 rounded-2xl flex items-center justify-center text-white border border-white/5 transition-colors cursor-pointer"
             >
               <ArrowRight size={18} className={isHovered ? "text-black" : "text-white"} />
             </motion.div>

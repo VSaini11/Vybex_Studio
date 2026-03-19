@@ -7,6 +7,9 @@ export interface IMerchandise extends Document {
   description: string;
   isComingSoon: boolean;
   downloadUrl?: string;
+  price?: number;
+  redirectUrl?: string;
+  gender?: 'male' | 'female' | 'unisex';
   createdAt: Date;
 }
 
@@ -39,6 +42,20 @@ const MerchandiseSchema = new Schema<IMerchandise>({
     type: String,
     required: false,
     default: '',
+  },
+  price: {
+    type: Number,
+    required: false,
+  },
+  redirectUrl: {
+    type: String,
+    required: false,
+    default: '',
+  },
+  gender: {
+    type: String,
+    enum: ['male', 'female', 'unisex'],
+    default: 'unisex',
   },
   createdAt: {
     type: Date,
