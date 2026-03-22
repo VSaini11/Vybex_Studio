@@ -95,14 +95,24 @@ function ReviewForm() {
                 <div className="grid grid-cols-1 gap-4">
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Identity</label>
-                    <input
-                      required
-                      type="text"
-                      placeholder="Your Name"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-5 py-3.5 rounded-xl bg-white/[0.03] border border-white/5 text-white placeholder:text-gray-800 focus:outline-none focus:border-blue-500/40 focus:bg-white/[0.05] transition-all text-sm font-medium"
-                    />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <input
+                        required
+                        type="text"
+                        placeholder="Your Name"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className="w-full px-5 py-3.5 rounded-xl bg-white/[0.03] border border-white/5 text-white placeholder:text-gray-800 focus:outline-none focus:border-blue-500/40 focus:bg-white/[0.05] transition-all text-sm font-medium"
+                      />
+                      <input
+                        required
+                        type="email"
+                        placeholder="Your Email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="w-full px-5 py-3.5 rounded-xl bg-white/[0.03] border border-white/5 text-white placeholder:text-gray-800 focus:outline-none focus:border-blue-500/40 focus:bg-white/[0.05] transition-all text-sm font-medium"
+                      />
+                    </div>
                   </div>
                 </div>
 
