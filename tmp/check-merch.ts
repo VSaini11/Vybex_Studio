@@ -1,5 +1,5 @@
-import dbConnect from '@/lib/mongodb';
-import Merchandise from '@/models/Merchandise';
+import dbConnect from '../lib/mongodb';
+import Merchandise from '../models/Merchandise';
 
 async function debug() {
   await dbConnect();

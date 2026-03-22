@@ -1,6 +1,6 @@
-import dbConnect from './lib/mongodb';
-import Merchandise from './models/Merchandise';
-import AuthorizedTool from './models/AuthorizedTool';
+import dbConnect from '../lib/mongodb';
+import Merchandise from '../models/Merchandise';
+import AuthorizedTool from '../models/AuthorizedTool';
 
 async function checkData() {
   await dbConnect();

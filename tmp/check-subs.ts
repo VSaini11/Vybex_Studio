@@ -1,5 +1,5 @@
-import dbConnect from './lib/mongodb';
-import Subscriber from './models/Subscriber';
+import dbConnect from '../lib/mongodb';
+import Subscriber from '../models/Subscriber';
 
 async function checkSubscribers() {
   await dbConnect();
