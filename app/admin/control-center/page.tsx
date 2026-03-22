@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Ticket, Gift, Sparkles, Trophy, Loader2, Unlock, Package, Plus, Trash2, Globe, ExternalLink, Download, Image as ImageIcon, Camera, Shirt, Smartphone, Coffee } from 'lucide-react';
-import { getRandomSubscriber } from './actions';
+import { getRandomSubscriber, getGiveawayStatus, updateGiveawayStatus } from './actions';
 import { addAuthorizedTool, getAuthorizedTools, deleteAuthorizedTool } from './tool-actions';
 import { addMerchandiseItem, getMerchandiseItems, deleteMerchandiseItem } from './merchandise-actions';
 import confetti from 'canvas-confetti';
@@ -35,6 +35,12 @@ export default function GiveawayAdminPage() {
   const [winnerEmail, setWinnerEmail] = useState<string | null>(null);
   const [winnerCode, setWinnerCode] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  
+  const [isGiveawayActive, setIsGiveawayActive] = useState(true);
+  const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+  const [nextDrawDate, setNextDrawDate] = useState<string>('2026-03-22T18:00:00');
+  const [prizeDescription, setPrizeDescription] = useState<string>('Vybex VIP Pass');
+  const [showResumeModal, setShowResumeModal] = useState(false);
 
   const [authorizedTools, setAuthorizedTools] = useState<AuthorizedTool[]>([]);
   const [isLoadingTools, setIsLoadingTools] = useState(true);
@@ -78,8 +84,18 @@ export default function GiveawayAdminPage() {
         setIsLoadingMerch(false);
     };
 
+    const fetchGiveawayStatus = async () => {
+      const result = await getGiveawayStatus();
+      if (result.success) {
+        setIsGiveawayActive(result.isActive);
+        if (result.nextDrawDate) setNextDrawDate(new Date(result.nextDrawDate).toISOString().slice(0, 16));
+        if (result.prizeDescription) setPrizeDescription(result.prizeDescription);
+      }
+    };
+
     fetchTools();
     fetchMerch();
+    fetchGiveawayStatus();
 
     const checkLockStatus = () => {
       setIsLocked(new Date() < targetDate);
@@ -119,8 +135,13 @@ export default function GiveawayAdminPage() {
 
   const handleRollWinner = async () => {
     if (isLocked) return;
+    if (!isGiveawayActive) {
+      toast.error('Giveaway is currently inactive. Activate it first.');
+      return;
+    }
     
     setIsRolling(true);
+    // ... rest same
     setError(null);
     setWinnerEmail(null);
     setWinnerCode(null);
@@ -173,12 +194,102 @@ export default function GiveawayAdminPage() {
             className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 lg:p-8 relative overflow-hidden backdrop-blur-xl"
             style={{ alignSelf: 'start' }}
           >
-            <div className="absolute top-0 right-0 p-4">
-              <span className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-semibold uppercase tracking-wider">
-                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                Active Now
+            <div className="absolute top-0 right-0 p-4 flex flex-col items-end gap-2">
+              <span className={`flex items-center gap-2 px-3 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider ${isGiveawayActive ? 'bg-green-500/10 border-green-500/20 text-green-400' : 'bg-red-500/10 border-red-500/20 text-red-400'}`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${isGiveawayActive ? 'bg-green-400 animate-pulse' : 'bg-red-400'}`} />
+                {isGiveawayActive ? 'Giveaway Live' : 'Giveaway Paused'}
               </span>
+              
+              <button 
+                onClick={async () => {
+                  if (isGiveawayActive) {
+                    // Pause directly
+                    setIsUpdatingStatus(true);
+                    const result = await updateGiveawayStatus(false);
+                    if (result.success) {
+                      setIsGiveawayActive(false);
+                      toast.success('Giveaway paused successfully');
+                    } else {
+                      toast.error('Failed to pause giveaway');
+                    }
+                    setIsUpdatingStatus(false);
+                  } else {
+                    // Show modal to resume
+                    setShowResumeModal(true);
+                  }
+                }}
+                disabled={isUpdatingStatus}
+                className={`mt-2 px-3 py-1 rounded-lg text-[10px] font-bold border transition-colors ${isGiveawayActive ? 'bg-red-500/10 border-red-500/20 text-red-400 hover:bg-red-500/20' : 'bg-green-500/10 border-green-500/20 text-green-400 hover:bg-green-500/20'}`}
+              >
+                {isUpdatingStatus ? 'Updating...' : isGiveawayActive ? 'PAUSE GIVEAWAY' : 'RESUME GIVEAWAY'}
+              </button>
             </div>
+            
+            {/* Resume Modal */}
+            <AnimatePresence>
+              {showResumeModal && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    className="bg-zinc-900 border border-white/10 rounded-2xl p-6 w-full max-w-md shadow-2xl"
+                  >
+                    <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                       <Sparkles size={20} className="text-green-400" />
+                       Resume Giveaway
+                    </h3>
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-xs text-gray-400 mb-1">Next Draw Date & Time</label>
+                        <input 
+                          type="datetime-local" 
+                          value={nextDrawDate}
+                          onChange={(e) => setNextDrawDate(e.target.value)}
+                          className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-sm focus:border-green-500 outline-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs text-gray-400 mb-1">Prize Description</label>
+                        <input 
+                          type="text" 
+                          value={prizeDescription}
+                          onChange={(e) => setPrizeDescription(e.target.value)}
+                          placeholder="e.g. Vybex VIP Pass"
+                          className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-sm focus:border-green-500 outline-none"
+                        />
+                      </div>
+                    </div>
+                    <div className="mt-8 flex gap-3">
+                      <button 
+                        onClick={() => setShowResumeModal(false)}
+                        className="flex-1 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition-colors text-sm"
+                      >
+                        Cancel
+                      </button>
+                      <button 
+                        onClick={async () => {
+                          setIsUpdatingStatus(true);
+                          const result = await updateGiveawayStatus(true, new Date(nextDrawDate), prizeDescription);
+                          if (result.success) {
+                            setIsGiveawayActive(true);
+                            setShowResumeModal(false);
+                            toast.success('Giveaway resumed successfully');
+                          } else {
+                            toast.error('Failed to resume giveaway');
+                          }
+                          setIsUpdatingStatus(false);
+                        }}
+                        disabled={isUpdatingStatus}
+                        className="flex-1 py-2 rounded-lg bg-green-500 text-black font-bold hover:bg-green-400 transition-colors text-sm disabled:opacity-50"
+                      >
+                        {isUpdatingStatus ? 'Activating...' : 'Activate Now'}
+                      </button>
+                    </div>
+                  </motion.div>
+                </div>
+              )}
+            </AnimatePresence>
 
             <div className="mb-6">
               <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center mb-4">

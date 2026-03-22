@@ -4,7 +4,83 @@ import { motion } from 'framer-motion';
 import { Ticket, Unlock, Sparkles, Star, CalendarClock, Gift } from 'lucide-react';
 import { CountdownTimer } from './countdown-timer';
 
-export function EarlyAccessPass() {
+export function EarlyAccessPass({ 
+  isActive = true, 
+  nextDrawDate = new Date('2026-03-22T18:00:00'),
+  prizeDescription = 'Vybex VIP Pass'
+}: { 
+  isActive?: boolean;
+  nextDrawDate?: Date;
+  prizeDescription?: string;
+}) {
+  if (!isActive) {
+    return (
+      <section className="relative w-full overflow-hidden py-24 sm:py-32 border-y border-white/5 bg-[#050505] min-h-[600px] flex items-center">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500/5 blur-[120px] rounded-full animate-pulse" />
+          <motion.div 
+            animate={{ rotate: 360 }}
+            transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+            className="absolute top-0 right-0 w-96 h-96 bg-purple-500/5 blur-[100px] rounded-full" 
+          />
+        </div>
+
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 mb-8"
+          >
+            <Sparkles size={16} className="text-blue-400" />
+            <span className="text-xs font-bold text-gray-300 uppercase tracking-[0.2em]">Next Drop Preparation</span>
+          </motion.div>
+          
+          <motion.h2 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ type: "spring", stiffness: 100 }}
+            className="text-4xl sm:text-6xl md:text-7xl font-black text-white mb-8 tracking-tighter"
+          >
+            Something <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Brilliant</span> Is Coming
+          </motion.h2>
+
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed"
+          >
+            The Vybex VIP giveaway is currently transitioning to the next phase. Our algorithms are preparing the next batch of exclusive rewards.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <div className="flex -space-x-3 items-center mb-4 sm:mb-0">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="w-10 h-10 rounded-full border-2 border-black bg-zinc-800 flex items-center justify-center overflow-hidden">
+                  <div className={`w-full h-full bg-gradient-to-br ${i % 2 === 0 ? 'from-blue-500 to-purple-500' : 'from-emerald-500 to-teal-500'} opacity-50`} />
+                </div>
+              ))}
+              <div className="pl-6 text-sm text-gray-500 font-medium">1,200+ Subscribed for the next drop</div>
+            </div>
+          </motion.div>
+          
+          {/* Decorative element */}
+          <div className="mt-20 w-full max-w-3xl mx-auto h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="relative w-full overflow-hidden py-16 sm:py-24 border-y border-white/5 bg-[#050505]/80 backdrop-blur-md">
       <div className="absolute inset-0 pointer-events-none">
@@ -27,15 +103,15 @@ export function EarlyAccessPass() {
               <span className="text-xs font-medium text-blue-300 uppercase tracking-wider">Limited Opportunity</span>
             </motion.div>
             
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 leading-tight"
-            >
-              Win the <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 drop-shadow-sm">Vybex VIP Pass</span> 🎫
-            </motion.h2>
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 leading-tight"
+              >
+                Win the <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 drop-shadow-sm">{prizeDescription}</span> 🎫
+              </motion.h2>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -82,7 +158,7 @@ export function EarlyAccessPass() {
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
                   Results Announcement
                 </p>
-                <CountdownTimer targetDate={new Date('2026-03-22T18:00:00')} />
+                  <CountdownTimer targetDate={nextDrawDate} />
               </div>
             </motion.div>
           </div>
@@ -128,7 +204,7 @@ export function EarlyAccessPass() {
                     <div className="space-y-7 mt-2">
                       <div>
                         <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1.5">Privilege Level</p>
-                        <p className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Founder&apos;s Edition</p>
+                        <p className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">{prizeDescription}</p>
                       </div>
 
                       <div>

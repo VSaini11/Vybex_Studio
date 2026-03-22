@@ -1,0 +1,76 @@
+const vipCodeStr = "VYBEX-VIP-XJ72-K9MQ";
+const emailHtml = `
+  <div style="background-color: #020617; padding: 40px 20px; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #f8fafc;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #0f172a; border-radius: 20px; overflow: hidden; border: 1px solid #1e293b; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+      
+      <!-- Header -->
+      <div style="padding: 40px 40px 20px 40px; text-align: center;">
+        <div style="display: inline-block; padding: 8px 16px; background-color: #064e3b; border: 1px solid #059669; border-radius: 9999px; margin-bottom: 24px;">
+          <span style="color: #34d399; font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;">Mission Accomplished</span>
+        </div>
+        <h1 style="font-size: 32px; font-weight: 900; margin: 0; color: #ffffff; letter-spacing: -0.02em;">VIP Status <span style="color: #10b981;">Unlocked</span></h1>
+        <p style="color: #94a3b8; margin-top: 12px; font-size: 16px; line-height: 1.6;">Your subscriber account has been upgraded to Elite status. Your developer credentials are ready for deployment.</p>
+      </div>
+
+      <!-- VIP Code Block -->
+      <div style="padding: 0 40px 40px 40px;">
+        <div style="background-color: #000000; border-radius: 12px; padding: 24px; border: 1px solid #334155; position: relative;">
+          <div style="font-family: 'JetBrains Mono', 'Source Code Pro', monospace; font-size: 11px; color: #64748b; margin-bottom: 12px; display: flex; justify-content: space-between;">
+            <span>// ACCESS_TOKEN</span>
+            <span>v3.22.26</span>
+          </div>
+          <div style="font-family: 'JetBrains Mono', 'Source Code Pro', monospace; font-size: 24px; font-weight: 700; color: #10b981; letter-spacing: 2px; text-align: center; padding: 12px 0;">
+            ${vipCodeStr}
+          </div>
+        </div>
+      </div>
+
+      <!-- Instructions -->
+      <div style="padding: 0 40px 40px 40px; border-top: 1px solid #1e293b; padding-top: 40px;">
+        <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 20px 0; color: #f1f5f9;">Activation Instructions</h2>
+        <div style="color: #94a3b8; font-size: 15px; line-height: 2;">
+          <div style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="background-color: #10b981; color: #064e3b; width: 20px; height: 20px; border-radius: 50%; display: inline-flex; items-center; justify-content: center; font-size: 11px; font-weight: 800; margin-top: 5px; flex-shrink: 0;">1</span>
+            <span style="margin-left: 8px;">Navigate to <a href="https://vybexai.vercel.app/" style="color: #10b981; text-decoration: none; font-weight: 600;">vybexai.vercel.app</a></span>
+          </div>
+          <div style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="background-color: #10b981; color: #064e3b; width: 20px; height: 20px; border-radius: 50%; display: inline-flex; items-center; justify-content: center; font-size: 11px; font-weight: 800; margin-top: 5px; flex-shrink: 0;">2</span>
+            <span style="margin-left: 8px;">Authenticate your account (Sign up / Login)</span>
+          </div>
+          <div style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="background-color: #10b981; color: #064e3b; width: 20px; height: 20px; border-radius: 50%; display: inline-flex; items-center; justify-content: center; font-size: 11px; font-weight: 800; margin-top: 5px; flex-shrink: 0;">3</span>
+            <span style="margin-left: 8px;">Access the <strong>Redeem Section</strong> in your Dashboard</span>
+          </div>
+          <div style="margin-bottom: 0; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="background-color: #10b981; color: #064e3b; width: 20px; height: 20px; border-radius: 50%; display: inline-flex; items-center; justify-content: center; font-size: 11px; font-weight: 800; margin-top: 5px; flex-shrink: 0;">4</span>
+            <span style="margin-left: 8px;">Inject the VIP code above to activate your benefits</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Merchandise -->
+      <div style="margin: 0 40px 40px 40px; background-color: #1e293b; border-radius: 16px; padding: 24px; border: 1px solid #334155;">
+        <div style="display: flex; align-items: center; gap: 20px;">
+          <div style="flex: 1;">
+            <span style="color: #10b981; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 4px;">Exclusive Drop</span>
+            <h3 style="font-size: 18px; font-weight: 700; margin: 4px 0; color: #ffffff;">Vybex Studio Mug</h3>
+            <p style="color: #94a3b8; font-size: 13px; margin: 4px 0; line-height: 1.5;">A physical collectible has been reserved for you. It's ready to ship.</p>
+          </div>
+          <div style="margin-left: 20px;">
+            <img src="https://vybexstudio.vercel.app/merchandise/cups/3bhr29jqdu771a1p2lvsrx.png" alt="Vybex Mug" style="width: 80px; height: 80px; object-fit: cover; border-radius: 12px; border: 2px solid #334155; display: block;" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div style="padding: 0 40px 40px 40px; text-align: center; border-top: 1px solid #1e293b; padding-top: 32px;">
+        <p style="color: #64748b; font-size: 12px; margin: 0;">© 2026 Vybex Studio Core. All systems operational.</p>
+        <p style="color: #475569; font-size: 11px; margin-top: 8px;">Sent via Vybex OS // Secure Transmission</p>
+      </div>
+
+    </div>
+  </div>
+`;
+
+require('fs').writeFileSync('tmp/email-preview.html', emailHtml);
+console.log('Preview updated in tmp/email-preview.html');
