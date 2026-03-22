@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
         ` : ''}
         <p style="color: #6b7280; font-size: 13px; margin-top: 30px; border-top: 1px solid #1a1a1a; padding-top: 20px;">
           — The Vybex Studio Team<br />
-          <a href="https://vybexstudio.vercel.app" style="color: #4ade80; text-decoration: none;">vybexstudio.vercel.app</a>
+          <a href="https://vybexstudio.in" style="color: #4ade80; text-decoration: none;">vybexstudio.in</a>
         </p>
       </div>
     `;

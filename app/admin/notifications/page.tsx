@@ -220,7 +220,7 @@ export default function AdminNotificationsPage() {
                   <div className="pt-6 border-t border-[#1a1a1a] mt-auto">
                     <p className="text-[#6b7280] text-xs leading-relaxed">
                       — The Vybex Studio Team<br />
-                      <span className="text-[#4ade80]">vybexstudio.vercel.app</span>
+                      <span className="text-[#4ade80]">vybexstudio.in</span>
                     </p>
                   </div>
                 </div>

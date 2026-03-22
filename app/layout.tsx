@@ -7,7 +7,7 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://vybexstudio.vercel.app'),
+  metadataBase: new URL('https://vybexstudio.in'),
   title: 'Vybex Studio | Premium Digital Agency & Software House',
   description: 'Vybex Studio specializes in building high-performance websites, AI-driven applications, and scalable digital products. From branding to backend, we build it right.',
   keywords: ['Web Development', 'Digital Agency', 'UI/UX Design', 'Branding', 'Software House', 'Vybex Studio', 'AI Applications'],
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://vybexstudio.vercel.app',
+    url: 'https://vybexstudio.in',
     siteName: 'Vybex Studio',
     title: 'Vybex Studio | Premium Digital Agency & Software House',
     description: 'Elevate your digital presence with Vybex Studio. We build scalable, high-performance digital solutions tailored for growth.',
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     creator: '@vybexstudio',
   },
   verification: {
-    google: 'VrEmnNqA7SezugBRvYNegJyz__fvvrpT83slChVPMRo',
+    google: 'FyOvDsuM1hZ3CJvP1NHORsvzX2zbyTu-59AemUKkv1E',
   },
 }
 

@@ -139,7 +139,7 @@ export async function getRandomSubscriber() {
                 <span style="color: #10b981; font-weight: 800; margin-right: 8px;">04</span> Inject the VIP code above to activate your benefits
               </div>
               <div style="margin-bottom: 0;">
-                <span style="color: #10b981; font-weight: 800; margin-right: 8px;">05</span> Share your experience at <a href="https://vybexstudio.vercel.app/giveaway/review" style="color: #10b981; text-decoration: none; font-weight: 600;">vybexstudio.vercel.app/giveaway/review</a>
+                <span style="color: #10b981; font-weight: 800; margin-right: 8px;">05</span> Share your experience at <a href="https://vybexstudio.in/giveaway/review" style="color: #10b981; text-decoration: none; font-weight: 600;">vybexstudio.in/giveaway/review</a>
               </div>
             </div>
           </div>
@@ -155,7 +155,7 @@ export async function getRandomSubscriber() {
                   <p style="color: #10b981; font-size: 12px; font-weight: 700; margin-top: 12px; border-top: 1px dashed #334155; padding-top: 12px;">>>> Action: Reply to this email with your shipping address to claim this drop.</p>
                 </td>
                 <td style="width: 80px; vertical-align: middle; padding-left: 20px;">
-                  <img src="https://vybexstudio.vercel.app/merchandise/cups/3bhr29jqdu771a1p2lvsrx.png" alt="Vybex Mug" style="width: 80px; height: 80px; object-fit: cover; border-radius: 12px; border: 2px solid #334155; display: block;" />
+                  <img src="https://vybexstudio.in/merchandise/cups/3bhr29jqdu771a1p2lvsrx.png" alt="Vybex Mug" style="width: 80px; height: 80px; object-fit: cover; border-radius: 12px; border: 2px solid #334155; display: block;" />
                 </td>
               </tr>
             </table>
