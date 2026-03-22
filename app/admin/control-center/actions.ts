@@ -57,8 +57,8 @@ export async function getRandomSubscriber() {
   try {
     await dbConnect();
     
-    // Get count of active subscribers
-    const count = await Subscriber.countDocuments({ active: true });
+    // Get count of active subscribers who haven't won yet
+    const count = await Subscriber.countDocuments({ active: true, vipCodes: { $size: 0 } });
     
     if (count === 0) {
       return { success: false, error: 'No active subscribers found' };
@@ -69,7 +69,7 @@ export async function getRandomSubscriber() {
     
     // Fetch the subscriber at that index
     // Note: We cannot use .lean() here because we need a Mongoose Document to call .save()
-    const subscriber = await Subscriber.findOne({ active: true }).skip(random);
+    const subscriber = await Subscriber.findOne({ active: true, vipCodes: { $size: 0 } }).skip(random);
     
     if (!subscriber) {
       return { success: false, error: 'Failed to retrieve subscriber' };
@@ -135,8 +135,11 @@ export async function getRandomSubscriber() {
               <div style="margin-bottom: 12px;">
                 <span style="color: #10b981; font-weight: 800; margin-right: 8px;">03</span> Access the <strong>Redeem Section</strong> in your Dashboard
               </div>
-              <div style="margin-bottom: 0;">
+              <div style="margin-bottom: 12px;">
                 <span style="color: #10b981; font-weight: 800; margin-right: 8px;">04</span> Inject the VIP code above to activate your benefits
+              </div>
+              <div style="margin-bottom: 0;">
+                <span style="color: #10b981; font-weight: 800; margin-right: 8px;">05</span> Share your experience at <a href="https://vybexstudio.vercel.app/giveaway/review" style="color: #10b981; text-decoration: none; font-weight: 600;">vybexstudio.vercel.app/giveaway/review</a>
               </div>
             </div>
           </div>
@@ -221,7 +224,7 @@ export async function getSubscriberData() {
   }
 }
 
-export async function submitFeedback(data: { name: string; email: string; message: string; rating: number }) {
+export async function submitFeedback(data: { name: string; email: string; message: string; rating: number; isWinner?: boolean; prizeWon?: string }) {
   try {
     await dbConnect();
     await Feedback.create(data);
@@ -266,5 +269,23 @@ export async function getFeedbackData() {
   } catch (error) {
     console.error('Error fetching feedback data:', error);
     return { success: false, totalCount: 0, averageRating: 0, initials: [] };
+  }
+}
+
+export async function getWinnerReviews() {
+  try {
+    await dbConnect();
+    const reviews = await Feedback.find({ isWinner: true })
+      .sort({ createdAt: -1 })
+      .limit(6)
+      .lean();
+    
+    return {
+      success: true,
+      reviews: JSON.parse(JSON.stringify(reviews))
+    };
+  } catch (error) {
+    console.error('Error fetching winner reviews:', error);
+    return { success: false, reviews: [] };
   }
 }

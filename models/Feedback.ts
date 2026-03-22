@@ -5,6 +5,8 @@ export interface IFeedback extends Document {
   email: string;
   message: string;
   rating: number;
+  isWinner: boolean;
+  prizeWon?: string;
   createdAt: Date;
 }
 
@@ -13,6 +15,8 @@ const FeedbackSchema = new Schema<IFeedback>({
   email: { type: String, required: true },
   message: { type: String, required: true },
   rating: { type: Number, required: true, min: 1, max: 5 },
+  isWinner: { type: Boolean, default: false },
+  prizeWon: { type: String, default: '' },
   createdAt: { type: Date, default: Date.now }
 });
 

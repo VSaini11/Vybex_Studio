@@ -60,8 +60,8 @@ export function Hero({
         transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
       />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 lg:gap-6 items-center lg:min-h-[80vh]">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 pb-10 sm:pb-14">
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 lg:gap-6 items-center lg:min-h-[65vh]">
 
           {/* LEFT — Headline + CTA */}
           <motion.div
@@ -113,7 +113,7 @@ export function Hero({
             {/* Social Proof / Reviews Section */}
             <motion.div 
               variants={itemVariants}
-              className="mt-8 sm:mt-12 flex flex-col sm:flex-row items-center lg:items-start gap-4 py-3 px-5 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-sm w-fit mx-auto lg:mx-0"
+              className="mt-8 sm:mt-12 mb-8 sm:mb-12 flex flex-col sm:flex-row items-center lg:items-start gap-4 py-3 px-5 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-sm w-fit mx-auto lg:mx-0"
             >
               <div className="flex -space-x-2.5 items-center">
                 {feedbackInitials.length > 0 ? (
@@ -305,7 +305,7 @@ export function Hero({
       `}</style>
 
       <div className="relative mt-8 sm:mt-0 sm:absolute sm:bottom-0 left-0 right-0">
-        <div className="py-5">
+        <div className="py-8 sm:py-10">
           {/* Full-width marquee, edge-to-edge */}
           <div
             className="overflow-hidden"

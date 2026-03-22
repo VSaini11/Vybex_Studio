@@ -8,7 +8,7 @@ import { Pricing } from '@/components/pricing';
 import { Contact } from '@/components/contact';
 import { Footer } from '@/components/footer';
 import { AIOrb } from '@/components/ai-orb';
-import { getGiveawayStatus, getSubscriberData, getFeedbackData } from './admin/control-center/actions';
+import { getGiveawayStatus, getSubscriberData, getFeedbackData, getWinnerReviews } from './admin/control-center/actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,7 +16,7 @@ export default async function Home() {
   const giveawayStatus = await getGiveawayStatus();
   const isGiveawayActive = giveawayStatus.success ? giveawayStatus.isActive : true;
   const nextDrawDate = giveawayStatus.success && giveawayStatus.nextDrawDate ? new Date(giveawayStatus.nextDrawDate) : new Date('2026-03-22T18:00:00+05:30');
-  const prizeDescription = giveawayStatus.success && giveawayStatus.prizeDescription ? giveawayStatus.prizeDescription : 'Vybex VIP Pass';
+  const prizeDescription = giveawayStatus.success && giveawayStatus.prizeDescription ? giveawayStatus.prizeDescription : 'Vybex VIP Pass & Merchandise';
   
   const subscriberData = await getSubscriberData();
   const totalSubscribers = subscriberData.success ? subscriberData.totalCount : 0;
@@ -26,6 +26,9 @@ export default async function Home() {
   const totalFeedbacks = feedbackData.success ? feedbackData.totalCount : 0;
   const averageRating = feedbackData.success ? feedbackData.averageRating : 0;
   const feedbackInitials = feedbackData.success ? feedbackData.initials : [];
+
+  const winnerReviewsData = await getWinnerReviews();
+  const winnerReviews = winnerReviewsData.success ? winnerReviewsData.reviews : [];
 
   return (
     <>
@@ -45,6 +48,7 @@ export default async function Home() {
           prizeDescription={prizeDescription}
           totalSubscribers={totalSubscribers}
           subscriberInitials={subscriberInitials}
+          winnerReviews={winnerReviews}
         />
         <Services />
         <Portfolio />
