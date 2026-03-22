@@ -107,7 +107,7 @@ export default function MerchandisePage() {
             </nav>
             
             <h1 className="text-6xl md:text-8xl font-black mb-6 tracking-tighter leading-tight lg:leading-[1.1] overflow-visible pb-4">
-              Vybex <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-emerald-400 to-green-600 italic pr-8">Studio</span>
+              Vybex <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-emerald-400 to-green-600 italic px-4">Studio</span>
             </h1>
             
             <p className="text-gray-400 text-lg md:text-xl max-w-xl leading-relaxed font-medium">

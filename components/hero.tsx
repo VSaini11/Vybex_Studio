@@ -113,7 +113,7 @@ export function Hero({
             {/* Social Proof / Reviews Section */}
             <motion.div 
               variants={itemVariants}
-              className="mt-8 sm:mt-12 mb-8 sm:mb-12 flex flex-col sm:flex-row items-center lg:items-start gap-4 py-3 px-5 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-sm w-fit mx-auto lg:mx-0"
+              className="mt-8 sm:mt-12 mb-8 sm:mb-12 flex flex-row items-center gap-4 py-3 px-5 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-sm w-fit mx-auto lg:mx-0"
             >
               <div className="flex -space-x-2.5 items-center">
                 {feedbackInitials.length > 0 ? (
@@ -130,7 +130,7 @@ export function Hero({
                 )}
               </div>
               
-              <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+              <div className="flex flex-col items-start text-left">
                 <div className="flex items-center gap-1.5 mb-0.5">
                   <div className="flex gap-0.5">
                     {[1, 2, 3, 4, 5].map((star) => (
@@ -153,7 +153,7 @@ export function Hero({
           </motion.div>
 
           {/* CENTER + RIGHT — single overlapping zone (hidden on very small, visible from md) */}
-          <div className="hidden md:flex lg:col-span-7 relative items-center" style={{ minHeight: '480px' }}>
+          <div className="hidden lg:flex lg:col-span-7 relative items-center" style={{ minHeight: '480px' }}>
 
             {/* ── Abstract geometric sphere (center, bleeds right) ── */}
             <motion.div
