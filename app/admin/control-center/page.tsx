@@ -38,7 +38,7 @@ export default function GiveawayAdminPage() {
   
   const [isGiveawayActive, setIsGiveawayActive] = useState(true);
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
-  const [nextDrawDate, setNextDrawDate] = useState<string>('2026-03-22T18:00:00');
+  const [nextDrawDate, setNextDrawDate] = useState<string>('2026-03-22T18:00:00+05:30');
   const [prizeDescription, setPrizeDescription] = useState<string>('Vybex VIP Pass');
   const [showResumeModal, setShowResumeModal] = useState(false);
 
@@ -62,7 +62,7 @@ export default function GiveawayAdminPage() {
     gender: 'unisex' as 'male' | 'female' | 'unisex',
   });
 
-  const targetDate = new Date('2026-03-22T18:00:00');
+  const targetDate = new Date('2026-03-22T18:00:00+05:30');
   const [isLocked, setIsLocked] = useState(true);
 
   useEffect(() => {

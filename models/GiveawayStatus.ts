@@ -9,7 +9,7 @@ export interface IGiveawayStatus extends Document {
 
 const GiveawayStatusSchema: Schema = new Schema({
   isActive: { type: Boolean, default: true },
-  nextDrawDate: { type: Date, default: new Date('2026-03-22T18:00:00') },
+  nextDrawDate: { type: Date, default: new Date('2026-03-22T18:00:00+05:30') },
   prizeDescription: { type: String, default: 'Vybex VIP Pass' },
   updatedAt: { type: Date, default: Date.now }
 });

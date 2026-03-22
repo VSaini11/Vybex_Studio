@@ -6,7 +6,7 @@ import { CountdownTimer } from './countdown-timer';
 
 export function EarlyAccessPass({ 
   isActive = true, 
-  nextDrawDate = new Date('2026-03-22T18:00:00'),
+  nextDrawDate = new Date('2026-03-22T18:00:00+05:30'),
   prizeDescription = 'Vybex VIP Pass'
 }: { 
   isActive?: boolean;

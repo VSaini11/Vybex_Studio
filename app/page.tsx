@@ -13,7 +13,7 @@ import { getGiveawayStatus } from './admin/control-center/actions';
 export default async function Home() {
   const giveawayStatus = await getGiveawayStatus();
   const isGiveawayActive = giveawayStatus.success ? giveawayStatus.isActive : true;
-  const nextDrawDate = giveawayStatus.success && giveawayStatus.nextDrawDate ? new Date(giveawayStatus.nextDrawDate) : new Date('2026-03-22T18:00:00');
+  const nextDrawDate = giveawayStatus.success && giveawayStatus.nextDrawDate ? new Date(giveawayStatus.nextDrawDate) : new Date('2026-03-22T18:00:00+05:30');
   const prizeDescription = giveawayStatus.success && giveawayStatus.prizeDescription ? giveawayStatus.prizeDescription : 'Vybex VIP Pass';
 
   return (
