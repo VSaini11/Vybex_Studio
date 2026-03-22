@@ -249,10 +249,10 @@ export async function getFeedbackData() {
     ]);
     const averageRating = stats.length > 0 ? stats[0].avgRating : 0;
 
-    // Get latest 5 feedbacks' names for initials
+    // Get latest 4 feedbacks' names for initials
     const latestFeedbacks = await Feedback.find()
       .sort({ createdAt: -1 })
-      .limit(5)
+      .limit(4)
       .select('name')
       .lean();
     
