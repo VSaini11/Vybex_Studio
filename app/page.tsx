@@ -1,7 +1,6 @@
 import { Navbar } from '@/components/navbar';
 import { Hero } from '@/components/hero';
 import { EarlyAccessPass } from '@/components/early-access-pass';
-import { Services } from '@/components/services';
 import { Portfolio } from '@/components/portfolio';
 import { MerchandisePreview } from '@/components/merchandise-preview';
 import { Pricing } from '@/components/pricing';
@@ -9,6 +8,7 @@ import { Contact } from '@/components/contact';
 import { Footer } from '@/components/footer';
 import { AIOrb } from '@/components/ai-orb';
 import { getGiveawayStatus, getSubscriberData, getFeedbackData, getWinnerReviews } from './admin/control-center/actions';
+import { WinnersCircle } from '@/components/winners-circle';
 
 export const dynamic = 'force-dynamic';
 
@@ -48,9 +48,8 @@ export default async function Home() {
           prizeDescription={prizeDescription}
           totalSubscribers={totalSubscribers}
           subscriberInitials={subscriberInitials}
-          winnerReviews={winnerReviews}
         />
-        <Services />
+        <WinnersCircle winnerReviews={winnerReviews} />
         <Portfolio />
         <MerchandisePreview />
         <Pricing />
