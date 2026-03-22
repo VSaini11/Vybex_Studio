@@ -62,7 +62,6 @@ export default function GiveawayAdminPage() {
     gender: 'unisex' as 'male' | 'female' | 'unisex',
   });
 
-  const targetDate = new Date('2026-03-22T18:00:00+05:30');
   const [isLocked, setIsLocked] = useState(true);
 
   useEffect(() => {
@@ -98,7 +97,7 @@ export default function GiveawayAdminPage() {
     fetchGiveawayStatus();
 
     const checkLockStatus = () => {
-      setIsLocked(new Date() < targetDate);
+      setIsLocked(new Date() < new Date(nextDrawDate));
     };
     
     checkLockStatus();
@@ -312,21 +311,35 @@ export default function GiveawayAdminPage() {
               </div>
               <div className="flex justify-between items-center py-2 border-b border-white/5">
                 <span className="text-gray-500 text-sm">Target Announcement</span>
-                <span className="font-medium text-white">Sunday, Mar 22, 2026</span>
+                <span className="font-medium text-white">
+                  {isGiveawayActive ? new Date(nextDrawDate).toLocaleDateString('en-US', { 
+                    weekday: 'long', 
+                    month: 'short', 
+                    day: 'numeric', 
+                    year: 'numeric' 
+                  }) : 'Coming Soon'}
+                </span>
               </div>
             </div>
 
             <button
               onClick={handleRollWinner}
-              disabled={isRolling || isLocked}
-              className={`w-full relative group overflow-hidden rounded-xl bg-white text-black font-bold py-4 px-6 flex items-center justify-center gap-3 transition-all ${isLocked ? 'opacity-50 cursor-not-allowed bg-gray-300' : 'hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed'}`}
+              disabled={isRolling || isLocked || !isGiveawayActive}
+              className={`w-full relative group overflow-hidden rounded-xl bg-white text-black font-bold py-4 px-6 flex items-center justify-center gap-3 transition-all ${isLocked || !isGiveawayActive ? 'opacity-50 cursor-not-allowed bg-gray-300' : 'hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed'}`}
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-              {isLocked ? (
+              {!isGiveawayActive ? (
                 <>
                   <div className="flex items-center gap-2 text-gray-700">
-                    <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                    Locked until Sunday 6 PM
+                    <span className="w-2 h-2 rounded-full bg-red-500" />
+                    Giveaway Paused
+                  </div>
+                </>
+              ) : isLocked ? (
+                <>
+                  <div className="flex items-center gap-2 text-gray-700">
+                    <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
+                    Locked until {new Date(nextDrawDate).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}
                   </div>
                 </>
               ) : isRolling ? (

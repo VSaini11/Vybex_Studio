@@ -10,6 +10,8 @@ import { Footer } from '@/components/footer';
 import { AIOrb } from '@/components/ai-orb';
 import { getGiveawayStatus } from './admin/control-center/actions';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   const giveawayStatus = await getGiveawayStatus();
   const isGiveawayActive = giveawayStatus.success ? giveawayStatus.isActive : true;

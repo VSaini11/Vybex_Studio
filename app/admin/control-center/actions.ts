@@ -4,6 +4,7 @@ import dbConnect from '@/lib/mongodb';
 import Subscriber from '@/models/Subscriber';
 import { sendEmail } from '@/lib/gmail';
 import GiveawayStatus from '@/models/GiveawayStatus';
+import { revalidatePath } from 'next/cache';
 
 export async function getGiveawayStatus() {
   await dbConnect();
@@ -39,6 +40,10 @@ export async function updateGiveawayStatus(isActive: boolean, nextDrawDate?: Dat
       Object.assign(status, updateData);
       await status.save();
     }
+
+    revalidatePath('/');
+    revalidatePath('/admin/control-center');
+
     return { success: true };
   } catch (error) {
     console.error('Failed to update giveaway status:', error);
