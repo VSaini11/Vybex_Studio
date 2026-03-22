@@ -4,6 +4,7 @@ import dbConnect from '@/lib/mongodb';
 import Subscriber from '@/models/Subscriber';
 import { sendEmail } from '@/lib/gmail';
 import GiveawayStatus from '@/models/GiveawayStatus';
+import Feedback from '@/models/Feedback';
 import { revalidatePath } from 'next/cache';
 
 export async function getGiveawayStatus() {
@@ -188,5 +189,82 @@ export async function getRandomSubscriber() {
   } catch (error) {
     console.error('Error fetching random subscriber:', error);
     return { success: false, error: 'Internal server error while fetching subscriber' };
+  }
+}
+
+export async function getSubscriberData() {
+  try {
+    await dbConnect();
+    
+    // Get total count
+    const totalCount = await Subscriber.countDocuments({ active: true });
+    
+    // Get latest 4 subscribers' emails for initials
+    const latestSubscribers = await Subscriber.find({ active: true })
+      .sort({ subscribedAt: -1 })
+      .limit(4)
+      .select('email')
+      .lean();
+    
+    const initials = latestSubscribers.map(sub => 
+      sub.email.charAt(0).toUpperCase()
+    );
+
+    return {
+      success: true,
+      totalCount,
+      initials
+    };
+  } catch (error) {
+    console.error('Error fetching subscriber data:', error);
+    return { success: false, totalCount: 0, initials: [] };
+  }
+}
+
+export async function submitFeedback(data: { name: string; email: string; message: string; rating: number }) {
+  try {
+    await dbConnect();
+    await Feedback.create(data);
+    revalidatePath('/'); // Revalidate home page to show new review in social proof
+    return { success: true };
+  } catch (error) {
+    console.error('Error submitting feedback:', error);
+    return { success: false, error: 'Failed to submit feedback.' };
+  }
+}
+
+export async function getFeedbackData() {
+  try {
+    await dbConnect();
+    
+    // Get total count
+    const totalCount = await Feedback.countDocuments();
+    
+    // Get average rating
+    const stats = await Feedback.aggregate([
+      { $group: { _id: null, avgRating: { $avg: '$rating' } } }
+    ]);
+    const averageRating = stats.length > 0 ? stats[0].avgRating : 0;
+
+    // Get latest 5 feedbacks' names for initials
+    const latestFeedbacks = await Feedback.find()
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select('name')
+      .lean();
+    
+    const initials = latestFeedbacks.map(f => 
+      f.name.charAt(0).toUpperCase()
+    );
+
+    return {
+      success: true,
+      totalCount,
+      averageRating,
+      initials
+    };
+  } catch (error) {
+    console.error('Error fetching feedback data:', error);
+    return { success: false, totalCount: 0, averageRating: 0, initials: [] };
   }
 }

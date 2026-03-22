@@ -7,11 +7,15 @@ import { CountdownTimer } from './countdown-timer';
 export function EarlyAccessPass({ 
   isActive = true, 
   nextDrawDate = new Date('2026-03-22T18:00:00+05:30'),
-  prizeDescription = 'Vybex VIP Pass'
+  prizeDescription = 'Vybex VIP Pass',
+  totalSubscribers = 0,
+  subscriberInitials = []
 }: { 
   isActive?: boolean;
   nextDrawDate?: Date;
   prizeDescription?: string;
+  totalSubscribers?: number;
+  subscriberInitials?: string[];
 }) {
   if (!isActive) {
     return (
@@ -65,12 +69,23 @@ export function EarlyAccessPass({
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <div className="flex -space-x-3 items-center mb-4 sm:mb-0">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="w-10 h-10 rounded-full border-2 border-black bg-zinc-800 flex items-center justify-center overflow-hidden">
-                  <div className={`w-full h-full bg-gradient-to-br ${i % 2 === 0 ? 'from-blue-500 to-purple-500' : 'from-emerald-500 to-teal-500'} opacity-50`} />
-                </div>
-              ))}
-              <div className="pl-6 text-sm text-gray-500 font-medium">1,200+ Subscribed for the next drop</div>
+              {subscriberInitials.length > 0 ? (
+                subscriberInitials.map((initial, i) => (
+                  <div key={i} className="w-10 h-10 rounded-full border-2 border-black bg-zinc-900 flex items-center justify-center overflow-hidden relative group">
+                    <div className={`absolute inset-0 bg-gradient-to-br ${i % 2 === 0 ? 'from-blue-600 to-purple-600' : 'from-emerald-600 to-teal-600'} opacity-40`} />
+                    <span className="relative z-10 text-xs font-black text-white/90 font-mono">{initial}</span>
+                  </div>
+                ))
+              ) : (
+                [1, 2, 3, 4].map((i) => (
+                  <div key={i} className="w-10 h-10 rounded-full border-2 border-black bg-zinc-800 flex items-center justify-center overflow-hidden">
+                    <div className={`w-full h-full bg-gradient-to-br ${i % 2 === 0 ? 'from-blue-500 to-purple-500' : 'from-emerald-500 to-teal-500'} opacity-50`} />
+                  </div>
+                ))
+              )}
+              <div className="pl-6 text-sm text-gray-500 font-medium">
+                {totalSubscribers.toLocaleString()}{totalSubscribers >= 10 && '+'} Subscribed for the next drop
+              </div>
             </div>
           </motion.div>
           

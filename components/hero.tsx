@@ -13,7 +13,20 @@ const featurePills = [
   'Growth Strategy',
 ];
 
-export function Hero() {
+import { useState } from 'react';
+import { FeedbackModal } from './feedback-modal';
+import { Star } from 'lucide-react';
+
+export function Hero({
+  totalFeedbacks = 0,
+  averageRating = 0,
+  feedbackInitials = []
+}: {
+  totalFeedbacks?: number;
+  averageRating?: number;
+  feedbackInitials?: string[];
+}) {
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -87,28 +100,55 @@ export function Hero() {
                 Get Started Now
                 <ArrowRight size={18} />
               </motion.a>
-              <motion.a
-                href="#portfolio"
+              <motion.button
+                onClick={() => setIsFeedbackOpen(true)}
                 whileHover={{ scale: 1.04, borderColor: 'rgba(74,222,128,0.6)' }}
                 whileTap={{ scale: 0.96 }}
                 className="inline-flex items-center gap-2 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full font-semibold text-sm text-white border border-green-500/30 transition-colors"
               >
-                View Work
-              </motion.a>
+                Feedback
+              </motion.button>
             </motion.div>
 
-            {/* Stats row */}
-            <motion.div variants={itemVariants} className="mt-8 sm:mt-12 flex justify-center lg:justify-start gap-6 sm:gap-8">
-              {[
-                { value: '10+', label: 'Projects Delivered' },
-                { value: '5/5', label: 'Client Satisfaction' },
-                { value: '100%', label: 'On-Time Delivery' },
-              ].map((s) => (
-                <div key={s.label}>
-                  <div className="text-xl sm:text-2xl font-bold text-green-400">{s.value}</div>
-                  <p className="text-[10px] sm:text-xs text-gray-500 mt-0.5">{s.label}</p>
+            {/* Social Proof / Reviews Section */}
+            <motion.div 
+              variants={itemVariants}
+              className="mt-8 sm:mt-12 flex flex-col sm:flex-row items-center lg:items-start gap-4 py-3 px-5 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-sm w-fit mx-auto lg:mx-0"
+            >
+              <div className="flex -space-x-2.5 items-center">
+                {feedbackInitials.length > 0 ? (
+                  feedbackInitials.map((initial, i) => (
+                    <div key={i} className="w-8 h-8 rounded-full border-2 border-black bg-zinc-900 flex items-center justify-center overflow-hidden relative">
+                      <div className={`absolute inset-0 bg-gradient-to-br ${i % 2 === 0 ? 'from-green-600 to-emerald-600' : 'from-blue-600 to-teal-600'} opacity-40`} />
+                      <span className="relative z-10 text-[10px] font-black text-white/90 font-mono">{initial}</span>
+                    </div>
+                  ))
+                ) : (
+                  [1,2,3].map((i) => (
+                    <div key={i} className="w-8 h-8 rounded-full border-2 border-black bg-zinc-800" />
+                  ))
+                )}
+              </div>
+              
+              <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+                <div className="flex items-center gap-1.5 mb-0.5">
+                  <div className="flex gap-0.5">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star 
+                        key={star} 
+                        size={12} 
+                        className={`${star <= Math.round(averageRating || 5) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-600'}`} 
+                      />
+                    ))}
+                  </div>
+                  <span className="text-xs font-bold text-white">
+                    {averageRating > 0 ? averageRating.toFixed(1) : '5.0'}
+                  </span>
                 </div>
-              ))}
+                <p className="text-[10px] text-gray-400 font-medium">
+                  from {totalFeedbacks >= 1 ? `${totalFeedbacks}+ happy clients` : 'Join our growing community'} worldwide
+                </p>
+              </div>
             </motion.div>
           </motion.div>
 
@@ -319,6 +359,10 @@ export function Hero() {
         </div>
       </div>
 
+      <FeedbackModal 
+        isOpen={isFeedbackOpen} 
+        onClose={() => setIsFeedbackOpen(false)} 
+      />
     </section>
   );
 }

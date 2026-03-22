@@ -8,7 +8,7 @@ import { Pricing } from '@/components/pricing';
 import { Contact } from '@/components/contact';
 import { Footer } from '@/components/footer';
 import { AIOrb } from '@/components/ai-orb';
-import { getGiveawayStatus } from './admin/control-center/actions';
+import { getGiveawayStatus, getSubscriberData, getFeedbackData } from './admin/control-center/actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,6 +17,15 @@ export default async function Home() {
   const isGiveawayActive = giveawayStatus.success ? giveawayStatus.isActive : true;
   const nextDrawDate = giveawayStatus.success && giveawayStatus.nextDrawDate ? new Date(giveawayStatus.nextDrawDate) : new Date('2026-03-22T18:00:00+05:30');
   const prizeDescription = giveawayStatus.success && giveawayStatus.prizeDescription ? giveawayStatus.prizeDescription : 'Vybex VIP Pass';
+  
+  const subscriberData = await getSubscriberData();
+  const totalSubscribers = subscriberData.success ? subscriberData.totalCount : 0;
+  const subscriberInitials = subscriberData.success ? subscriberData.initials : [];
+
+  const feedbackData = await getFeedbackData();
+  const totalFeedbacks = feedbackData.success ? feedbackData.totalCount : 0;
+  const averageRating = feedbackData.success ? feedbackData.averageRating : 0;
+  const feedbackInitials = feedbackData.success ? feedbackData.initials : [];
 
   return (
     <>
@@ -25,11 +34,17 @@ export default async function Home() {
         <div className="fixed inset-0 pointer-events-none grain" />
 
         <Navbar />
-        <Hero />
+        <Hero 
+          totalFeedbacks={totalFeedbacks}
+          averageRating={averageRating}
+          feedbackInitials={feedbackInitials}
+        />
         <EarlyAccessPass 
           isActive={isGiveawayActive} 
           nextDrawDate={nextDrawDate}
           prizeDescription={prizeDescription}
+          totalSubscribers={totalSubscribers}
+          subscriberInitials={subscriberInitials}
         />
         <Services />
         <Portfolio />
