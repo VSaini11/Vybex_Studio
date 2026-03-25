@@ -51,6 +51,8 @@ export const metadata: Metadata = {
   },
 }
 
+import { IntroAnimation } from '@/components/IntroAnimation'
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -59,6 +61,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans antialiased">
+        <IntroAnimation />
         {children}
         <Analytics />
       </body>

@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Brain, Fingerprint, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { Brain, Fingerprint } from 'lucide-react';
 import Link from 'next/link';
 
 interface AIOrbitProps {
@@ -13,13 +13,21 @@ interface AIOrbitProps {
 export function AIOrb({ href = 'https://vybexai.vercel.app/', tooltipText = 'Explore AI' }: AIOrbitProps) {
     const [hovered, setHovered] = useState(false);
 
+    // Premium Green/Emerald Color Palette
+    const colors = {
+        primary: 'rgb(34, 197, 94)', // Green 500
+        secondary: 'rgb(16, 185, 129)', // Emerald 500
+        accent: 'rgb(74, 222, 128)', // Green 400
+        glow: 'rgba(34, 197, 94, 0.4)',
+        halo: 'rgba(16, 185, 129, 0.15)',
+    };
+
     return (
         <div 
             className="fixed bottom-7 right-7 z-[9999] flex items-center justify-center select-none"
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
         >
-
             {/* Hover Menu */}
             <AnimatePresence>
                 {hovered && (
@@ -32,8 +40,8 @@ export function AIOrb({ href = 'https://vybexai.vercel.app/', tooltipText = 'Exp
                     >
                         <Link href="https://vybexai.vercel.app/">
                             <motion.div
-                                whileHover={{ x: -5, backgroundColor: 'rgba(0,255,120,0.15)' }}
-                                className="px-4 py-3 rounded-xl border border-green-500/10 bg-black/80 backdrop-blur-xl flex items-center gap-3 group transition-colors cursor-pointer"
+                                whileHover={{ x: -5, backgroundColor: 'rgba(34, 197, 94, 0.15)' }}
+                                className="px-4 py-3 rounded-xl border border-green-500/20 bg-black/80 backdrop-blur-xl flex items-center gap-3 group transition-colors cursor-pointer"
                             >
                                 <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center shrink-0">
                                     <Brain className="w-5 h-5 text-green-400" />
@@ -47,8 +55,8 @@ export function AIOrb({ href = 'https://vybexai.vercel.app/', tooltipText = 'Exp
                         
                         <Link href="/dna">
                             <motion.div
-                                whileHover={{ x: -5, backgroundColor: 'rgba(0,255,120,0.15)' }}
-                                className="px-4 py-3 rounded-xl border border-green-500/10 bg-black/80 backdrop-blur-xl flex items-center gap-3 group transition-colors cursor-pointer"
+                                whileHover={{ x: -5, backgroundColor: 'rgba(16, 185, 129, 0.15)' }}
+                                className="px-4 py-3 rounded-xl border border-green-500/20 bg-black/80 backdrop-blur-xl flex items-center gap-3 group transition-colors cursor-pointer"
                             >
                                 <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center shrink-0">
                                     <Fingerprint className="w-5 h-5 text-green-400" />
@@ -63,130 +71,97 @@ export function AIOrb({ href = 'https://vybexai.vercel.app/', tooltipText = 'Exp
                 )}
             </AnimatePresence>
 
-            {/* ── Deep-space corona bloom ── */}
+            {/* ── Outer Aurora Bloom ── */}
             <motion.div
                 className="absolute rounded-full pointer-events-none"
                 style={{
-                    width: 120,
-                    height: 120,
-                    background:
-                        'radial-gradient(circle at 50% 50%, rgba(0,255,120,0.10) 0%, rgba(0,200,90,0.05) 40%, transparent 75%)',
-                    filter: 'blur(20px)',
+                    width: 140,
+                    height: 140,
+                    background: `radial-gradient(circle at 50% 50%, ${colors.glow} 0%, rgba(34, 197, 94, 0.1) 45%, transparent 70%)`,
+                    filter: 'blur(30px)',
                 }}
-                animate={{ scale: hovered ? [1, 1.22, 1.15] : [1, 1.14, 1], opacity: hovered ? [0.8, 1, 0.85] : [0.5, 0.72, 0.5] }}
-                transition={{ duration: hovered ? 1.4 : 3.8, repeat: Infinity, ease: 'easeInOut' }}
+                animate={{ 
+                    scale: hovered ? [1, 1.25, 1.15] : [1, 1.1, 1], 
+                    opacity: hovered ? [0.6, 0.9, 0.7] : [0.3, 0.5, 0.3] 
+                }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
             />
 
-            {/* ── Outer atmospheric halo ring ── */}
+            {/* ── Atmospheric Halo ── */}
             <motion.div
-                className="absolute rounded-full pointer-events-none"
+                className="absolute rounded-full pointer-events-none border border-green-500/20"
                 style={{
-                    width: 84,
-                    height: 84,
-                    border: '1.5px solid rgba(0,255,110,0.14)',
-                    boxShadow:
-                        '0 0 18px rgba(0,255,110,0.12), inset 0 0 14px rgba(0,255,110,0.04)',
+                    width: 80,
+                    height: 80,
+                    boxShadow: `0 0 20px ${colors.halo}, inset 0 0 10px ${colors.halo}`,
                 }}
-                animate={{ scale: hovered ? 1.15 : [1, 1.05, 1], opacity: hovered ? 1 : [0.6, 0.9, 0.6] }}
-                transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+                animate={{ scale: hovered ? 1.2 : [1, 1.05, 1], opacity: hovered ? 1 : [0.4, 0.7, 0.4] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
             />
 
-            {/* ── Slow orbit ring with particles ── */}
+            {/* ── Siri/AI Orb Core ── */}
             <motion.div
-                className="absolute rounded-full pointer-events-none"
-                style={{ width: 74, height: 74 }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
-            >
-                {[0, 90, 180, 270].map((deg) => (
-                    <span
-                        key={deg}
-                        style={{
-                            position: 'absolute',
-                            width: deg % 180 === 0 ? 3.5 : 2.5,
-                            height: deg % 180 === 0 ? 3.5 : 2.5,
-                            borderRadius: '50%',
-                            background: deg % 180 === 0 ? 'rgba(0,255,130,0.85)' : 'rgba(0,200,100,0.55)',
-                            boxShadow: deg % 180 === 0 ? '0 0 8px 2px rgba(0,255,130,0.9)' : '0 0 5px rgba(0,200,100,0.7)',
-                            top: '50%',
-                            left: '50%',
-                            transform: `rotate(${deg}deg) translateY(-35px) translate(-50%,-50%)`,
-                        }}
-                    />
-                ))}
-            </motion.div>
-
-            {/* ── Fast inner trail ring ── */}
-            <motion.div
-                className="absolute rounded-full pointer-events-none"
-                style={{ width: 60, height: 60 }}
-                animate={{ rotate: -360 }}
-                transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
-            >
-                {[45, 225].map((deg) => (
-                    <span
-                        key={deg}
-                        style={{
-                            position: 'absolute',
-                            width: 2,
-                            height: 2,
-                            borderRadius: '50%',
-                            background: 'rgba(100,255,180,0.75)',
-                            boxShadow: '0 0 6px 1px rgba(100,255,180,0.85)',
-                            top: '50%',
-                            left: '50%',
-                            transform: `rotate(${deg}deg) translateY(-28px) translate(-50%,-50%)`,
-                        }}
-                    />
-                ))}
-            </motion.div>
-
-            {/* ── The Planet Core ── */}
-            <motion.div
+                className="relative flex items-center justify-center cursor-pointer overflow-hidden"
                 style={{
-                    width: 56,
-                    height: 56,
+                    width: 60,
+                    height: 60,
                     borderRadius: '50%',
-                    position: 'relative',
-                    cursor: 'pointer',
-                    overflow: 'hidden',
-                    zIndex: 2,
-                    background:
-                        'radial-gradient(circle at 35% 30%, rgba(0,255,120,0.30) 0%, rgba(0,160,70,0.18) 22%, rgba(0,50,25,0.60) 55%, rgba(0,10,6,0.95) 85%, #000a05 100%)',
-                    boxShadow: hovered
-                            ? `0 0 0 2px rgba(0,255,120,0.40),
-               0 0 50px rgba(0,255,120,0.65),
-               0 0 90px rgba(0,220,100,0.28),
-               inset 0 0 22px rgba(0,255,120,0.18)`
-                            : `0 0 0 1px rgba(0,255,120,0.22),
-               0 0 28px rgba(0,255,120,0.50),
-               0 0 55px rgba(0,200,90,0.20),
-               inset 0 0 14px rgba(0,255,120,0.10)`,
-                    transition: 'box-shadow 0.3s ease',
+                    background: '#050a05',
+                    boxShadow: hovered 
+                        ? `0 0 40px rgba(34, 197, 94, 0.4), inset 0 0 15px rgba(34, 197, 94, 0.2)`
+                        : `0 0 20px rgba(34, 197, 94, 0.2), inset 0 0 10px rgba(34, 197, 94, 0.1)`,
                 }}
-                animate={{
-                    scale: hovered ? 1.14 : [1, 1.05, 1],
-                }}
-                transition={hovered
-                        ? { duration: 0.22, ease: 'easeOut' }
-                        : { duration: 4, repeat: Infinity, ease: 'easeInOut' }
-                }
+                animate={{ scale: hovered ? 1.1 : 1 }}
+                transition={{ duration: 0.3 }}
             >
-                {/* Atmospheric rim glow */}
-                <span
-                    style={{
-                        position: 'absolute',
-                        inset: 0,
-                        borderRadius: '50%',
-                        boxShadow: 'inset 0 0 0 2px rgba(0,255,120,0.22), inset -8px -8px 16px rgba(0,0,0,0.7)',
-                        pointerEvents: 'none',
-                    }}
-                />
-                
-                {/* Center AI spark icon */}
-                <div className="flex items-center justify-center h-full">
-                    <Sparkles className="w-6 h-6 text-green-300 drop-shadow-[0_0_8px_rgba(34,197,94,0.8)]" />
+                {/* Internal Animated Blobs (Siri Style) */}
+                <div className="absolute inset-0 overflow-hidden rounded-full">
+                    {/* Blob 1 */}
+                    <motion.div
+                        className="absolute top-[-20%] left-[-10%] w-[120%] h-[120%]"
+                        style={{
+                            background: `radial-gradient(circle at center, ${colors.primary} 0%, transparent 60%)`,
+                            mixBlendMode: 'screen',
+                        }}
+                        animate={{
+                            x: [0, 10, -5, 0],
+                            y: [0, -10, 5, 0],
+                            scale: [1, 1.1, 0.9, 1],
+                        }}
+                        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                    />
+                    {/* Blob 2 */}
+                    <motion.div
+                        className="absolute bottom-[-20%] right-[-10%] w-[120%] h-[120%]"
+                        style={{
+                            background: `radial-gradient(circle at center, ${colors.secondary} 0%, transparent 60%)`,
+                            mixBlendMode: 'screen',
+                        }}
+                        animate={{
+                            x: [0, -15, 10, 0],
+                            y: [0, 5, -10, 0],
+                            scale: [1, 1.2, 0.8, 1],
+                        }}
+                        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+                    />
+                    {/* Blob 3 */}
+                    <motion.div
+                        className="absolute top-[10%] right-[-20%] w-[100%] h-[100%]"
+                        style={{
+                            background: `radial-gradient(circle at center, ${colors.accent} 0%, transparent 50%)`,
+                            mixBlendMode: 'screen',
+                        }}
+                        animate={{
+                            rotate: [0, 360],
+                            scale: [1, 1.1, 1],
+                        }}
+                        transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
+                    />
                 </div>
+
+                {/* Surface Polish / Glass reflection */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/5 to-white/10 pointer-events-none" />
+                
             </motion.div>
         </div>
     );
