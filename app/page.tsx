@@ -9,6 +9,7 @@ import { Footer } from '@/components/footer';
 import { AIOrb } from '@/components/ai-orb';
 import { getGiveawayStatus, getSubscriberData, getFeedbackData, getWinnerReviews } from './admin/control-center/actions';
 import { WinnersCircle } from '@/components/winners-circle';
+import { Founder } from '@/components/founder';
 
 export const dynamic = 'force-dynamic';
 
@@ -51,6 +52,7 @@ export default async function Home() {
         />
         <WinnersCircle winnerReviews={winnerReviews} />
         <Portfolio />
+        <Founder />
         <MerchandisePreview />
         <Pricing />
         <Contact />
