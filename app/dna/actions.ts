@@ -1,6 +1,9 @@
 'use server';
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import dbConnect from "@/lib/mongodb";
+import DNAFeedback from "@/models/DNAFeedback";
+import DNAStat from "@/models/DNAStat";
 
 interface DNAFormData {
   idea: string;
@@ -79,6 +82,17 @@ export async function analyzeStartupDNA(formData: DNAFormData) {
     const text = response.text();
     
     const jsonString = text.replace(/```json/g, "").replace(/```/g, "").trim();
+    
+    // Increment total analyzed stats asynchronously (we don't await/block the return)
+    dbConnect().then(async () => {
+      let stat = await DNAStat.findOne({});
+      if (!stat) {
+        stat = new DNAStat({ totalAnalyzed: 0 });
+      }
+      stat.totalAnalyzed += 1;
+      await stat.save();
+    }).catch(console.error);
+
     return { success: true, data: JSON.parse(jsonString) };
   } catch (error: any) {
     console.error("Gemini Analysis Error:", error);
@@ -90,5 +104,72 @@ export async function analyzeStartupDNA(formData: DNAFormData) {
     }
 
     return { success: false, error: 'GENERAL_ERROR' };
+  }
+}
+
+export async function submitDNAFeedback(data: { name: string, email: string, profession: string, experience: string, rating: number, improvedIdea: boolean }) {
+  try {
+    await dbConnect();
+    const newFeedback = new DNAFeedback(data);
+    await newFeedback.save();
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to submit DNA Feedback:", error);
+    return { success: false, error: "Failed to submit feedback" };
+  }
+}
+
+export async function getDNAStats() {
+  try {
+    await dbConnect();
+    const feedbackCount = await DNAFeedback.countDocuments();
+    
+    // Calculate improved idea percentage
+    const improvedCount = await DNAFeedback.countDocuments({ improvedIdea: true });
+    
+    let stat = await DNAStat.findOne({});
+    let totalAnalyzed = stat ? stat.totalAnalyzed : 0;
+
+    let improvedPercentage = 0;
+    if (feedbackCount > 0) {
+      improvedPercentage = Math.round((improvedCount / feedbackCount) * 100);
+    }
+    
+    const foundersTrusted = feedbackCount;
+
+    // Fetch top recent testimonials (rating 4 or 5 that have an experience message)
+    const testimonialsDocs = await DNAFeedback.find({ 
+      rating: { $gte: 4 }, 
+      experience: { $ne: '' } 
+    }).sort({ createdAt: -1 }).limit(3).lean();
+
+    const testimonials = testimonialsDocs.map(doc => ({
+      name: doc.name,
+      profession: doc.profession,
+      experience: doc.experience,
+      rating: doc.rating,
+      id: doc._id.toString()
+    }));
+
+    return {
+      success: true,
+      stats: {
+        foundersTrusted,
+        totalAnalyzed,
+        improvedPercentage
+      },
+      testimonials
+    };
+  } catch (error) {
+    console.error("Failed to get DNA Stats:", error);
+    return { 
+      success: true,
+      stats: {
+        foundersTrusted: 0,
+        totalAnalyzed: 0,
+        improvedPercentage: 0
+      },
+      testimonials: []
+    };
   }
 }
