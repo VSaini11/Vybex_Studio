@@ -198,7 +198,7 @@ export default function VybexDNAPage() {
               className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center"
             >
               {/* ── Left Image Section ──────────────────────────────── */}
-              <div className="hidden lg:block relative w-full h-[650px] rounded-[40px] overflow-hidden">
+              <div className="order-2 lg:order-1 relative w-full h-[500px] lg:h-[650px] rounded-[40px] overflow-hidden">
                 <div
                   className="absolute inset-0 bg-cover bg-center transition-all bg-no-repeat"
                   style={{
@@ -209,35 +209,35 @@ export default function VybexDNAPage() {
                 />
 
                 {/* ── Top Floating Metric Cards ── */}
-                <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0 }} className="absolute top-[6%] left-[10%] bg-[#160b24]/60 backdrop-blur-md border border-purple-500/20 px-3 py-2 rounded-xl shadow-[0_10px_30px_rgba(168,85,247,0.15)] flex flex-col gap-0.5 w-36 z-10">
-                  <p className="text-[8px] text-purple-300/80 uppercase tracking-widest font-bold">DNA Score</p>
-                  <p className="text-white font-mono text-base font-bold">94<span className="text-gray-500 text-[10px]">/100</span></p>
+                <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0 }} className="absolute top-[6%] left-[5%] lg:left-[10%] bg-[#160b24]/60 backdrop-blur-md border border-purple-500/20 px-2 lg:px-3 py-1.5 lg:py-2 rounded-lg lg:rounded-xl shadow-[0_10px_30px_rgba(168,85,247,0.15)] flex flex-col gap-0.5 w-24 lg:w-36 z-10">
+                  <p className="text-[6px] lg:text-[8px] text-purple-300/80 uppercase tracking-widest font-bold">DNA Score</p>
+                  <p className="text-white font-mono text-sm lg:text-base font-bold">94<span className="text-gray-500 text-[8px] lg:text-[10px]">/100</span></p>
                 </motion.div>
 
-                <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute top-[18%] left-[20%] bg-[#160b24]/60 backdrop-blur-md border border-purple-500/20 px-3 py-2 rounded-xl shadow-[0_10px_30px_rgba(168,85,247,0.15)] flex flex-col gap-0.5 w-36 z-10">
-                  <p className="text-[8px] text-purple-300/80 uppercase tracking-widest font-bold">Idea Clarity</p>
-                  <p className="text-white font-mono text-base font-bold text-green-400">88%</p>
+                <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute top-[18%] left-[10%] lg:left-[20%] bg-[#160b24]/60 backdrop-blur-md border border-purple-500/20 px-2 lg:px-3 py-1.5 lg:py-2 rounded-lg lg:rounded-xl shadow-[0_10px_30px_rgba(168,85,247,0.15)] flex flex-col gap-0.5 w-24 lg:w-36 z-10">
+                  <p className="text-[6px] lg:text-[8px] text-purple-300/80 uppercase tracking-widest font-bold">Idea Clarity</p>
+                  <p className="text-white font-mono text-sm lg:text-base font-bold text-green-400">88%</p>
                 </motion.div>
 
-                <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }} className="absolute top-[6%] right-[10%] bg-[#160b24]/60 backdrop-blur-md border border-purple-500/20 px-3 py-2 rounded-xl shadow-[0_10px_30px_rgba(168,85,247,0.15)] flex flex-col gap-0.5 w-36 z-10">
-                  <p className="text-[8px] text-purple-300/80 uppercase tracking-widest font-bold">Market Potential</p>
-                  <div className="flex items-center gap-2">
+                <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }} className="absolute top-[6%] right-[5%] lg:right-[10%] bg-[#160b24]/60 backdrop-blur-md border border-purple-500/20 px-2 lg:px-3 py-1.5 lg:py-2 rounded-lg lg:rounded-xl shadow-[0_10px_30px_rgba(168,85,247,0.15)] flex flex-col gap-0.5 w-24 lg:w-36 z-10">
+                  <p className="text-[6px] lg:text-[8px] text-purple-300/80 uppercase tracking-widest font-bold">Market Potential</p>
+                  <div className="flex items-center gap-1.5 lg:gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_10px_rgba(74,222,128,0.8)]" />
-                    <p className="text-white font-mono text-xs font-bold">High</p>
+                    <p className="text-white font-mono text-[10px] lg:text-xs font-bold">High</p>
                   </div>
                 </motion.div>
 
-                <motion.div animate={{ y: [0, -12, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute top-[18%] right-[20%] bg-[#160b24]/60 backdrop-blur-md border border-purple-500/20 px-3 py-2 rounded-xl shadow-[0_10px_30px_rgba(168,85,247,0.15)] flex flex-col gap-0.5 w-36 z-10">
-                  <p className="text-[8px] text-purple-300/80 uppercase tracking-widest font-bold">Competition</p>
-                  <div className="flex items-center gap-2">
+                <motion.div animate={{ y: [0, -12, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute top-[18%] right-[10%] lg:right-[20%] bg-[#160b24]/60 backdrop-blur-md border border-purple-500/20 px-2 lg:px-3 py-1.5 lg:py-2 rounded-lg lg:rounded-xl shadow-[0_10px_30px_rgba(168,85,247,0.15)] flex flex-col gap-0.5 w-24 lg:w-36 z-10">
+                  <p className="text-[6px] lg:text-[8px] text-purple-300/80 uppercase tracking-widest font-bold">Competition</p>
+                  <div className="flex items-center gap-1.5 lg:gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.8)]" />
-                    <p className="text-white font-mono text-xs font-bold">Moderate</p>
+                    <p className="text-white font-mono text-[10px] lg:text-xs font-bold">Moderate</p>
                   </div>
                 </motion.div>
 
-                <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} className="absolute top-[28%] left-[50%] bg-[#160b24]/60 backdrop-blur-md border border-purple-500/20 px-3 py-2 rounded-xl shadow-[0_10px_30px_rgba(168,85,247,0.15)] flex flex-col gap-0.5 w-36 z-10 -translate-x-1/2">
-                  <p className="text-[8px] text-purple-300/80 uppercase tracking-widest font-bold">Scalability</p>
-                  <p className="text-white font-mono text-xs font-bold">High Growth</p>
+                <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: 1.5 }} className="absolute top-[28%] left-[50%] bg-[#160b24]/60 backdrop-blur-md border border-purple-500/20 px-2 lg:px-3 py-1.5 lg:py-2 rounded-lg lg:rounded-xl shadow-[0_10px_30px_rgba(168,85,247,0.15)] flex flex-col gap-0.5 w-24 lg:w-36 z-10 -translate-x-1/2">
+                  <p className="text-[6px] lg:text-[8px] text-purple-300/80 uppercase tracking-widest font-bold">Scalability</p>
+                  <p className="text-white font-mono text-[10px] lg:text-xs font-bold">High Growth</p>
                 </motion.div>
 
                 {/* Fallback glow if no image */}
@@ -245,7 +245,7 @@ export default function VybexDNAPage() {
               </div>
 
               {/* ── Right Content Section ───────────────────────────── */}
-              <div className="space-y-12">
+              <div className="space-y-12 order-1 lg:order-2">
                 <div className="text-left">
 
                   <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-4 bg-gradient-to-br from-white via-white to-purple-200 bg-clip-text text-transparent leading-[1.1]">
@@ -325,7 +325,7 @@ export default function VybexDNAPage() {
               </div>
 
               {testimonials.length > 0 && (
-                <div className="lg:col-span-2 w-screen relative left-1/2 -translate-x-1/2 overflow-hidden mt-32 mb-24">
+                <div className="order-3 lg:col-span-2 w-screen relative left-1/2 -translate-x-1/2 overflow-hidden mt-16 lg:mt-32 mb-24">
                   
                   <div className="max-w-7xl mx-auto px-4 mb-16 relative z-20">
                     <h3 className="text-4xl md:text-5xl font-bold text-white text-center leading-tight">
@@ -408,10 +408,7 @@ export default function VybexDNAPage() {
                 </div>
               )}
 
-              {/* ── Background Helix ── */}
-              <div className="mt-20 flex justify-center opacity-20 h-40">
-                <DNAHelixStatic />
-              </div>
+
             </motion.div>
           )}
 
