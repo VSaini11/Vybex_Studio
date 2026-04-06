@@ -100,3 +100,49 @@ export async function sendWelcomeEmail(email: string) {
     `,
   });
 }
+/**
+ * Send a notification email for a new signal to all subscribers
+ */
+export async function sendNewSignalNotification({
+  to,
+  signalTitle,
+  signalSlug,
+  signalExcerpt,
+}: {
+  to: string;
+  signalTitle: string;
+  signalSlug: string;
+  signalExcerpt: string;
+}) {
+  const signalUrl = `https://vybexstudio.in/signals/${signalSlug}`;
+
+  await sendEmail({
+    to,
+    subject: `📡 NEW SIGNAL: ${signalTitle}`,
+    html: `
+      <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #080d08; color: #d4e8d4; padding: 40px; border-radius: 24px; border: 1px solid #1a1a1a;">
+        <div style="margin-bottom: 30px; text-align: center;">
+          <span style="background: #22c55e; color: #000; padding: 4px 12px; border-radius: 100px; font-size: 10px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase;">New Transmission</span>
+        </div>
+        
+        <h1 style="color: #ffffff; font-size: 24px; font-weight: 800; margin-bottom: 20px; text-align: center; line-height: 1.3;">${signalTitle}</h1>
+        
+        <p style="color: #9ca3af; font-size: 15px; line-height: 1.7; margin-bottom: 30px;">
+          ${signalExcerpt}
+        </p>
+        
+        <div style="text-align: center; margin-bottom: 40px;">
+          <a href="${signalUrl}" style="background: #22c55e; color: #000; padding: 14px 28px; border-radius: 12px; font-weight: 900; text-decoration: none; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; display: inline-block;">Synchronize Signal</a>
+        </div>
+        
+        <div style="border-top: 1px solid #1a1a1a; padding-top: 30px; text-align: center;">
+          <p style="color: #4b5563; font-size: 12px; margin-bottom: 8px;">You're receiving this because you're subscribed to Vybex Signals.</p>
+          <p style="color: #6b7280; font-size: 11px;">
+            &copy; 2026 Vybex Studio. All rights reserved.<br />
+            <a href="https://vybexstudio.in" style="color: #4ade80; text-decoration: none;">vybexstudio.in</a>
+          </p>
+        </div>
+      </div>
+    `,
+  });
+}

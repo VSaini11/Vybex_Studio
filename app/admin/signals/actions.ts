@@ -2,7 +2,9 @@
 
 import dbConnect from '@/lib/mongodb';
 import Signal from '@/models/Signal';
-import { revalidatePath } from 'next/cache';
+import Subscriber from '@/models/Subscriber';
+import { sendNewSignalNotification } from '@/lib/gmail';
+import { revalidatePath, unstable_noStore as noStore } from 'next/cache';
 
 function generateSlug(title: string) {
   return title
@@ -55,10 +57,37 @@ export async function addSignal(data: {
       updatedAt: new Date(),
     });
 
-    revalidatePath('/signals');
-    revalidatePath(`/signals/${slug}`);
-    revalidatePath('/');
-    revalidatePath('/admin/signals');
+    revalidatePath('/', 'page');
+    revalidatePath('/signals', 'page');
+    revalidatePath(`/signals/${slug}`, 'page');
+    revalidatePath('/admin/signals', 'page');
+
+    // Trigger Notifications to Subscribers (Non-blocking)
+    try {
+      const activeSubscribers = await Subscriber.find({ active: true }).select('email').lean();
+      const subscriberEmails = activeSubscribers.map(sub => sub.email);
+      
+      const excerpt = data.content.length > 150 
+        ? data.content.replace(/[#*`]/g, '').substring(0, 150) + '...' 
+        : data.content.replace(/[#*`]/g, '');
+
+      if (subscriberEmails.length > 0) {
+        // We use allSettled to ensure one failure doesn't stop others, though currently our sendNewSignalNotification sends to one at a time.
+        // For efficiency, we'll fire them all off and move on.
+        Promise.allSettled(
+          subscriberEmails.map(email => 
+            sendNewSignalNotification({
+              to: email,
+              signalTitle: data.title,
+              signalSlug: slug,
+              signalExcerpt: excerpt
+            })
+          )
+        ).catch(err => console.error('Bulk notification error:', err));
+      }
+    } catch (notificationError) {
+      console.error('Failed to trigger notifications:', notificationError);
+    }
 
     return {
       success: true,
@@ -72,6 +101,7 @@ export async function addSignal(data: {
 
 export async function getSignals() {
   try {
+    noStore();
     await dbConnect();
     const signals = await Signal.find().sort({ createdAt: -1 }).lean();
     
@@ -91,10 +121,10 @@ export async function deleteSignal(id: string) {
     const signal = await Signal.findByIdAndDelete(id);
     
     if (signal) {
-      revalidatePath('/signals');
-      revalidatePath(`/signals/${signal.slug}`);
-      revalidatePath('/');
-      revalidatePath('/admin/signals');
+      revalidatePath('/', 'page');
+      revalidatePath('/signals', 'page');
+      revalidatePath(`/signals/${signal.slug}`, 'page');
+      revalidatePath('/admin/signals', 'page');
     }
 
     return { success: true };
@@ -106,6 +136,7 @@ export async function deleteSignal(id: string) {
 
 export async function getSignalBySlug(slug: string) {
   try {
+    noStore();
     await dbConnect();
     const signal = await Signal.findOne({ slug }).lean();
     
@@ -147,10 +178,10 @@ export async function updateSignal(id: string, data: {
       return { success: false, error: 'Signal not found' };
     }
  
-    revalidatePath('/signals');
-    revalidatePath(`/signals/${updatedSignal.slug}`);
-    revalidatePath('/');
-    revalidatePath('/admin/signals');
+    revalidatePath('/', 'page');
+    revalidatePath('/signals', 'page');
+    revalidatePath(`/signals/${updatedSignal.slug}`, 'page');
+    revalidatePath('/admin/signals', 'page');
  
     return {
       success: true,

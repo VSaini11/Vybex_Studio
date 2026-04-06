@@ -6,6 +6,7 @@ import { ArrowRight, Menu, X } from 'lucide-react';
 
 const navItems = [
   { label: 'Home', href: '/' },
+  { label: 'Signals', href: '/signals' },
   { label: 'Ecosystem', href: '/ecosystem' },
   { label: 'Merchandise', href: '/merchandise' },
 ];
@@ -57,7 +58,7 @@ export function Navbar() {
 
         {/* CTA — "Let's Talk" with green arrow circle */}
         <motion.a
-          href="#contact"
+          href="/#contact"
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.96 }}
           className="hidden md:flex items-center gap-2 pl-5 pr-2 py-2 rounded-full text-sm font-semibold text-white flex-shrink-0"
@@ -113,7 +114,7 @@ export function Navbar() {
                 </a>
               ))}
               <a
-                href="#contact"
+                href="/#contact"
                 onClick={() => setIsOpen(false)}
                 className="mt-2 flex items-center justify-center gap-2 px-4 py-3 rounded-full text-sm font-semibold text-white"
                 style={{ background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)' }}

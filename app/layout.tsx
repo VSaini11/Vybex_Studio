@@ -52,6 +52,7 @@ export const metadata: Metadata = {
 }
 
 import { IntroAnimation } from '@/components/IntroAnimation'
+import { Navbar } from '@/components/navbar'
 
 export default function RootLayout({
   children,
@@ -62,6 +63,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="font-sans antialiased">
         <IntroAnimation />
+        <Navbar />
         {children}
         <Analytics />
       </body>

@@ -1,4 +1,3 @@
-import { Navbar } from '@/components/navbar';
 import { Hero } from '@/components/hero';
 import { EarlyAccessPass } from '@/components/early-access-pass';
 import { Portfolio } from '@/components/portfolio';
@@ -37,7 +36,6 @@ export default async function Home() {
         {/* Subtle background grain */}
         <div className="fixed inset-0 pointer-events-none grain" />
 
-        <Navbar />
         <Hero 
           totalFeedbacks={totalFeedbacks}
           averageRating={averageRating}
