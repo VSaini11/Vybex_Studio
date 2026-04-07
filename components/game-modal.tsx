@@ -41,7 +41,7 @@ export function GameModal({ isOpen, onClose }: GameModalProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[10000] flex items-center justify-center p-4"
+          className="fixed inset-0 z-[10000] flex items-center justify-center sm:p-4"
         >
           {/* Backdrop */}
           <div 
@@ -54,7 +54,7 @@ export function GameModal({ isOpen, onClose }: GameModalProps) {
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            className="relative w-full max-w-[850px] bg-[#050a05] border border-green-500/20 rounded-3xl sm:rounded-[2.5rem] shadow-[0_0_100px_rgba(34,197,94,0.15)] overflow-hidden"
+            className="relative w-full h-full sm:h-auto sm:max-w-[850px] sm:max-h-[85vh] overflow-hidden sm:overflow-y-auto bg-[#050a05] border-0 sm:border border-green-500/20 rounded-none sm:rounded-[2.5rem] shadow-[0_0_100px_rgba(34,197,94,0.15)] scrollbar-hide flex flex-col items-center justify-center"
           >
             {/* Header */}
             <div className="absolute top-0 left-0 w-full p-4 sm:p-8 flex items-center justify-between z-20 pointer-events-none">
@@ -72,7 +72,7 @@ export function GameModal({ isOpen, onClose }: GameModalProps) {
             </div>
 
             {/* Game Canvas Container */}
-            <div className="p-4 sm:p-8 pt-20 sm:pt-32 pb-8 sm:pb-12 flex flex-col items-center">
+            <div className="w-full p-4 sm:p-8 pt-16 sm:pt-32 pb-6 sm:pb-12 flex flex-col items-center justify-center flex-1">
               <VybexGame 
                 status={status} 
                 onGameOver={handleGameOver} 
@@ -86,15 +86,15 @@ export function GameModal({ isOpen, onClose }: GameModalProps) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm pt-24"
+                    className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm pt-20 sm:pt-24"
                   >
-                    <div className="flex flex-col items-center gap-8 text-center px-12">
-                      <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center border border-green-500/20 shadow-[0_0_30px_rgba(34,197,94,0.1)]">
-                         <Zap className="text-green-500 animate-pulse" size={40} />
+                    <div className="flex flex-col items-center gap-6 sm:gap-8 text-center px-10 sm:px-12">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-green-500/10 flex items-center justify-center border border-green-500/20 shadow-[0_0_30px_rgba(34,197,94,0.1)]">
+                         <Zap className="text-green-500 animate-pulse" size={32} />
                       </div>
-                      <div className="space-y-4">
-                        <h3 className="text-xl sm:text-3xl font-black text-white px-4">READY SYSTEM?</h3>
-                        <p className="text-gray-400 max-w-sm text-[12px] sm:text-sm font-medium leading-relaxed px-6">
+                      <div className="space-y-3 sm:space-y-4">
+                        <h3 className="text-xl sm:text-3xl font-black text-white px-2">READY SYSTEM?</h3>
+                        <p className="text-gray-400 max-w-sm text-[11px] sm:text-sm font-medium leading-relaxed px-4">
                           Dodge data corruptions and maintain the stream integrity. High speed, low latency.
                         </p>
                       </div>
@@ -111,7 +111,7 @@ export function GameModal({ isOpen, onClose }: GameModalProps) {
                       {highScore > 0 && (
                           <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/5 bg-white/[0.02]">
                              <Trophy size={14} className="text-green-500/50" />
-                             <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">
+                             <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-gray-500">
                                 High Integrity: {highScore}
                              </span>
                           </div>
@@ -126,17 +126,17 @@ export function GameModal({ isOpen, onClose }: GameModalProps) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md pt-24"
+                    className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md pt-20 sm:pt-24"
                   >
-                     <div className="flex flex-col items-center gap-8 text-center px-4">
+                     <div className="flex flex-col items-center gap-6 sm:gap-8 text-center px-4">
                         <div className="space-y-2">
                            <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-[0.5em] text-red-500 animate-pulse">Critical Failure</span>
-                           <h3 className="text-3xl sm:text-5xl font-black text-white">TERMINATED</h3>
+                           <h3 className="text-2xl sm:text-5xl font-black text-white">TERMINATED</h3>
                         </div>
 
                         <div className="flex flex-col items-center gap-2">
                            <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">System Performance</span>
-                           <div className="text-3xl sm:text-4xl font-black text-green-500">{score}</div>
+                           <div className="text-2xl sm:text-4xl font-black text-green-500">{score}</div>
                         </div>
 
                         <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">

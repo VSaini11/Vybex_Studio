@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { ArrowRight, Menu, X } from 'lucide-react';
 
 const navItems = [
@@ -13,17 +13,32 @@ const navItems = [
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    if (latest > previous && latest > 150) {
+      setHidden(true);
+      setIsOpen(false); // Close mobile menu if scrolling down
+    } else {
+      setHidden(false);
+    }
+  });
 
   return (
     <motion.header
       initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
+      animate={{ 
+        y: hidden ? -100 : 0, 
+        opacity: 1 
+      }}
+      transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
       className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-4"
     >
       {/* ── Pill container ── */}
       <div
-        className="w-full max-w-4xl flex items-center justify-between px-4 py-2.5 rounded-full"
+        className="w-full max-w-4xl flex items-center justify-between px-4 py-2 sm:py-2.5 rounded-full"
         style={{
           background: 'rgba(14, 14, 14, 0.92)',
           border: '1px solid rgba(255,255,255,0.08)',
@@ -33,9 +48,7 @@ export function Navbar() {
       >
         {/* Logo */}
         <a href="#" className="flex items-center gap-2 flex-shrink-0">
-          {/* Triangle / pyramid icon */}
-
-          <span className="text-white font-bold text-lg tracking-tight">Vybex Studio</span>
+          <span className="text-white font-bold text-base sm:text-lg tracking-tight">Vybex Studio</span>
         </a>
 
         {/* Desktop nav links — centered */}
@@ -78,11 +91,11 @@ export function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden text-white p-1"
+          className="md:hidden text-white p-2"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
-          {isOpen ? <X size={22} /> : <Menu size={22} />}
+          {isOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 

@@ -175,37 +175,45 @@ export function Portfolio() {
         </div>
 
         {/* Mobile horizontal auto-slide */}
-        <div className="sm:hidden">
+        <div className="sm:hidden -mx-4">
           <style>{`.scrollbar-hide::-webkit-scrollbar { display: none; }`}</style>
           <div
             ref={scrollRef}
-            className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            className="flex gap-4 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide px-[30px]"
+            style={{ 
+              scrollbarWidth: 'none', 
+              msOverflowStyle: 'none',
+              scrollPaddingLeft: '30px',
+              scrollPaddingRight: '30px'
+            }}
           >
             {services.map((s, i) => (
               <div
                 key={s.num}
-                className="flex-shrink-0 w-[80vw] snap-center rounded-2xl p-6 flex flex-col justify-between scrollbar-hide"
+                className="flex-shrink-0 w-[calc(100vw-60px)] snap-center rounded-2xl p-7 flex flex-col justify-between shadow-xl"
                 style={{
                   background: '#0a0a0a',
-                  border: i === activeIndex ? '1px solid rgba(34,197,94,0.3)' : '1px solid #1a1a1a',
-                  transition: 'border-color 0.3s',
-                  minHeight: '280px',
+                  border: i === activeIndex ? '1px solid rgba(34,197,94,0.4)' : '1px solid #1a1a1a',
+                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                  minHeight: '300px',
+                  boxShadow: i === activeIndex ? '0 10px 40px -10px rgba(34,197,94,0.1)' : 'none',
+                  opacity: i === activeIndex ? 1 : 0.6,
+                  transform: i === activeIndex ? 'scale(1)' : 'scale(0.95)',
                 }}
               >
                 <div>
                   <span className="text-xs font-mono" style={{ color: 'rgba(255,255,255,0.12)' }}>{s.num}</span>
-                  <h3 className="text-xl font-black text-white leading-snug mt-3 mb-2">{s.title}</h3>
-                  <p className="text-xs tracking-widest uppercase mb-4" style={{ color: 'rgba(255,255,255,0.22)' }}>{s.short}</p>
-                  <p className="text-xs leading-relaxed mb-4" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.desc}</p>
-                  <ul className="flex flex-col gap-1.5">
-                    {s.features.map((f) => (
-                      <li key={f} className="flex items-center gap-2 text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                  <h3 className="text-xl font-black text-white leading-snug mt-4 mb-2">{s.title}</h3>
+                  <p className="text-[10px] tracking-widest uppercase mb-4" style={{ color: 'rgba(255,255,255,0.25)' }}>{s.short}</p>
+                  <p className="text-[12px] leading-relaxed mb-6" style={{ color: 'rgba(255,255,255,0.45)' }}>{s.desc}</p>
+                  <ul className="flex flex-col gap-2">
+                    {s.features.slice(0, 3).map((f) => (
+                      <li key={f} className="flex items-center gap-2.5 text-[11px]" style={{ color: 'rgba(255,255,255,0.5)' }}>
                         <span
-                          className="flex-shrink-0 w-3.5 h-3.5 rounded-full flex items-center justify-center"
+                          className="flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center"
                           style={{ background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.2)' }}
                         >
-                          <Check size={8} color="#4ade80" strokeWidth={3} />
+                          <Check size={9} color="#4ade80" strokeWidth={3} />
                         </span>
                         {f}
                       </li>
@@ -214,12 +222,12 @@ export function Portfolio() {
                 </div>
                 <a
                   href="#contact"
-                  className="mt-4 flex items-center justify-between px-4 py-2.5 rounded-full text-xs font-semibold text-black"
+                  className="mt-8 flex items-center justify-between px-5 py-3 rounded-full text-[11px] font-bold text-black"
                   style={{ background: 'linear-gradient(135deg,#4ade80,#22c55e)' }}
                 >
                   Start This Project
                   <span className="w-5 h-5 rounded-full bg-black/20 flex items-center justify-center">
-                    <ArrowRight size={11} />
+                    <ArrowRight size={12} />
                   </span>
                 </a>
               </div>

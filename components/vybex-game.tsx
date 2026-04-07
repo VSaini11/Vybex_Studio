@@ -19,9 +19,10 @@ export function VybexGame({ onGameOver, status }: VybexGameProps) {
   const PLAYER_RADIUS = 15;
   const GRAVITY = 0.6;
   const JUMP_FORCE = -12;
-  const INITIAL_SPEED = 5;
-  const SPEED_INCREMENT = 0.002;
-  const OBSTACLE_SPAWN_CHANCE = 0.02;
+  const INITIAL_SPEED = 6;
+  const SPEED_INCREMENT = 0.0025;
+  const MIN_SPAWN_INTERVAL = 800; // ms
+  const MAX_SPAWN_INTERVAL = 2000; // ms
 
   // Track if we are on a mobile/low-perf device
   const [isLowPerf, setIsLowPerf] = useState(false);
@@ -87,14 +88,20 @@ export function VybexGame({ onGameOver, status }: VybexGameProps) {
     state.speed += SPEED_INCREMENT * factor;
     state.score += 0.1 * factor;
 
-    // Spawn obstacles
+    // Spawn obstacles (Time-based for consistency across frame rates)
     const now = Date.now();
-    const spawnDelay = Math.max(800, 1500 - (state.speed - INITIAL_SPEED) * 100);
-    if (now - state.lastSpawnTime > spawnDelay && Math.random() < OBSTACLE_SPAWN_CHANCE) {
+    const currentDifficultyFactor = (state.speed - INITIAL_SPEED) / 5;
+    const dynamicSpawnInterval = Math.max(
+        MIN_SPAWN_INTERVAL, 
+        MAX_SPAWN_INTERVAL - currentDifficultyFactor * 500
+    );
+    
+    if (now - state.lastSpawnTime > dynamicSpawnInterval) {
+      // Once interval passes, we spawn. No random frame check.
       state.obstacles.push({
-        x: BASE_WIDTH,
-        width: 30 + Math.random() * 20,
-        height: 40 + Math.random() * 60,
+        x: BASE_WIDTH + 50,
+        width: 35 + Math.random() * 25,
+        height: 45 + Math.random() * 65,
       });
       state.lastSpawnTime = now;
     }
@@ -149,18 +156,19 @@ export function VybexGame({ onGameOver, status }: VybexGameProps) {
     ctx.strokeStyle = gridColor;
     ctx.lineWidth = 1;
     
-    // Draw horizontal grid lines
-    for (let i = 0; i < BASE_HEIGHT; i += 20) {
+    // Draw horizontal grid lines (Reduced for mobile)
+    const gridStep = isLowPerf ? 40 : 20;
+    for (let i = 0; i < BASE_HEIGHT; i += gridStep) {
       ctx.beginPath();
       ctx.moveTo(0, i);
       ctx.lineTo(BASE_WIDTH, i);
       ctx.stroke();
     }
     
-    // Draw vertical grid lines (moving)
-    for (let i = 0; i < BASE_WIDTH + 40; i += 20) {
+    // Draw vertical grid lines (moving, reduced for mobile)
+    for (let i = 0; i < BASE_WIDTH + gridStep * 2; i += gridStep) {
       ctx.beginPath();
-      const xOffset = (i - (state.score * state.speed) % 20);
+      const xOffset = (i - (state.score * state.speed) % gridStep);
       ctx.moveTo(xOffset, 0);
       ctx.lineTo(xOffset, BASE_HEIGHT);
       ctx.stroke();

@@ -28,7 +28,7 @@ export function AIOrb({ href = 'https://vybexai.vercel.app/', tooltipText = 'Exp
 
     return (
         <div 
-            className="fixed bottom-7 right-7 z-[9999] flex items-center justify-center select-none"
+            className="fixed bottom-5 right-5 sm:bottom-7 sm:right-7 z-[9999] flex items-center justify-center select-none"
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
         >
@@ -40,19 +40,19 @@ export function AIOrb({ href = 'https://vybexai.vercel.app/', tooltipText = 'Exp
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
                         transition={{ duration: 0.2, ease: 'easeOut' }}
-                        className="absolute bottom-[80px] right-0 flex flex-col gap-2 min-w-[200px]"
+                        className="absolute bottom-[70px] sm:bottom-[80px] right-0 flex flex-col gap-2 min-w-[170px] sm:min-w-[200px]"
                     >
                         <Link href="https://vybexai.vercel.app/">
                             <motion.div
                                 whileHover={{ x: -5, backgroundColor: 'rgba(34, 197, 94, 0.15)' }}
-                                className="px-4 py-3 rounded-xl border border-green-500/20 bg-black/80 backdrop-blur-xl flex items-center gap-3 group transition-colors cursor-pointer"
+                                className="px-3 py-2 sm:px-4 sm:py-3 rounded-xl border border-green-500/20 bg-black/80 backdrop-blur-xl flex items-center gap-2 sm:gap-3 group transition-colors cursor-pointer"
                             >
-                                <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center shrink-0">
-                                    <Brain className="w-5 h-5 text-green-400" />
+                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-500/10 flex items-center justify-center shrink-0">
+                                    <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="text-white text-sm font-bold">Vybex AI</span>
-                                    <span className="text-[10px] text-gray-400 group-hover:text-green-300">Intelligent Products</span>
+                                    <span className="text-white text-xs sm:text-sm font-bold">Vybex AI</span>
+                                    <span className="text-[9px] sm:text-[10px] text-gray-400 group-hover:text-green-300">Intelligent Products</span>
                                 </div>
                             </motion.div>
                         </Link>
@@ -60,28 +60,28 @@ export function AIOrb({ href = 'https://vybexai.vercel.app/', tooltipText = 'Exp
                         <Link href="/dna">
                             <motion.div
                                 whileHover={{ x: -5, backgroundColor: 'rgba(16, 185, 129, 0.15)' }}
-                                className="px-4 py-3 rounded-xl border border-green-500/20 bg-black/80 backdrop-blur-xl flex items-center gap-3 group transition-colors cursor-pointer"
+                                className="px-3 py-2 sm:px-4 sm:py-3 rounded-xl border border-green-500/20 bg-black/80 backdrop-blur-xl flex items-center gap-2 sm:gap-3 group transition-colors cursor-pointer"
                             >
-                                <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center shrink-0">
-                                    <Fingerprint className="w-5 h-5 text-green-400" />
+                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-500/10 flex items-center justify-center shrink-0">
+                                    <Fingerprint className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="text-white text-sm font-bold">Vybex DNA</span>
-                                    <span className="text-[10px] text-gray-400 group-hover:text-green-300">Prediction Engine</span>
+                                    <span className="text-white text-xs sm:text-sm font-bold">Vybex DNA</span>
+                                    <span className="text-[9px] sm:text-[10px] text-gray-400 group-hover:text-green-300">Prediction Engine</span>
                                 </div>
                             </motion.div>
                         </Link>
                         <div onClick={() => setIsGameOpen(true)}>
                             <motion.div
                                 whileHover={{ x: -5, backgroundColor: 'rgba(34, 197, 94, 0.15)' }}
-                                className="px-4 py-3 rounded-xl border border-green-500/20 bg-black/80 backdrop-blur-xl flex items-center gap-3 group transition-colors cursor-pointer"
+                                className="px-3 py-2 sm:px-4 sm:py-3 rounded-xl border border-green-500/20 bg-black/80 backdrop-blur-xl flex items-center gap-2 sm:gap-3 group transition-colors cursor-pointer"
                             >
-                                <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center shrink-0">
-                                    <Gamepad2 className="w-5 h-5 text-green-400" />
+                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-500/10 flex items-center justify-center shrink-0">
+                                    <Gamepad2 className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="text-white text-sm font-bold">Vybex Shift</span>
-                                    <span className="text-[10px] text-gray-400 group-hover:text-green-300">Infinite Runner</span>
+                                    <span className="text-white text-xs sm:text-sm font-bold">Vybex Shift</span>
+                                    <span className="text-[9px] sm:text-[10px] text-gray-400 group-hover:text-green-300">Infinite Runner</span>
                                 </div>
                             </motion.div>
                         </div>
@@ -93,12 +93,11 @@ export function AIOrb({ href = 'https://vybexai.vercel.app/', tooltipText = 'Exp
             <GameModal isOpen={isGameOpen} onClose={() => setIsGameOpen(false)} />
 
             {/* ── Outer Aurora Bloom ── */}
-
             <motion.div
                 className="absolute rounded-full pointer-events-none"
                 style={{
-                    width: 140,
-                    height: 140,
+                    width: 120,
+                    height: 120,
                     background: `radial-gradient(circle at 50% 50%, ${colors.glow} 0%, rgba(34, 197, 94, 0.1) 45%, transparent 70%)`,
                     filter: 'blur(30px)',
                 }}
@@ -113,8 +112,8 @@ export function AIOrb({ href = 'https://vybexai.vercel.app/', tooltipText = 'Exp
             <motion.div
                 className="absolute rounded-full pointer-events-none border border-green-500/20"
                 style={{
-                    width: 80,
-                    height: 80,
+                    width: 70,
+                    height: 70,
                     boxShadow: `0 0 20px ${colors.halo}, inset 0 0 10px ${colors.halo}`,
                 }}
                 animate={{ scale: hovered ? 1.2 : [1, 1.05, 1], opacity: hovered ? 1 : [0.4, 0.7, 0.4] }}
@@ -125,8 +124,8 @@ export function AIOrb({ href = 'https://vybexai.vercel.app/', tooltipText = 'Exp
             <motion.div
                 className="relative flex items-center justify-center cursor-pointer overflow-hidden"
                 style={{
-                    width: 60,
-                    height: 60,
+                    width: 54,
+                    height: 54,
                     borderRadius: '50%',
                     background: '#050a05',
                     boxShadow: hovered 
