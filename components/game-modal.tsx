@@ -54,25 +54,25 @@ export function GameModal({ isOpen, onClose }: GameModalProps) {
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            className="relative w-full max-w-[850px] bg-[#050a05] border border-green-500/20 rounded-[2.5rem] shadow-[0_0_100px_rgba(34,197,94,0.15)] overflow-hidden"
+            className="relative w-full max-w-[850px] bg-[#050a05] border border-green-500/20 rounded-3xl sm:rounded-[2.5rem] shadow-[0_0_100px_rgba(34,197,94,0.15)] overflow-hidden"
           >
             {/* Header */}
-            <div className="absolute top-0 left-0 w-full p-8 flex items-center justify-between z-20 pointer-events-none">
+            <div className="absolute top-0 left-0 w-full p-4 sm:p-8 flex items-center justify-between z-20 pointer-events-none">
               <div className="flex flex-col gap-1">
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-green-500/60">Operation</span>
-                <h2 className="text-2xl font-black text-white italic tracking-tight">Vybex Shift</h2>
+                <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-[0.4em] text-green-500/60">Operation</span>
+                <h2 className="text-lg sm:text-2xl font-black text-white italic tracking-tight">Vybex Shift</h2>
               </div>
               
               <button 
                 onClick={onClose}
-                className="p-3 rounded-full bg-white/5 border border-white/10 text-gray-500 hover:text-white hover:bg-white/10 transition-all pointer-events-auto"
+                className="p-2 sm:p-3 rounded-full bg-white/5 border border-white/10 text-gray-500 hover:text-white hover:bg-white/10 transition-all pointer-events-auto"
               >
-                <X size={20} />
+                <X size={18} />
               </button>
             </div>
 
             {/* Game Canvas Container */}
-            <div className="p-8 pt-32 pb-12 flex flex-col items-center">
+            <div className="p-4 sm:p-8 pt-20 sm:pt-32 pb-8 sm:pb-12 flex flex-col items-center">
               <VybexGame 
                 status={status} 
                 onGameOver={handleGameOver} 
@@ -93,18 +93,18 @@ export function GameModal({ isOpen, onClose }: GameModalProps) {
                          <Zap className="text-green-500 animate-pulse" size={40} />
                       </div>
                       <div className="space-y-4">
-                        <h3 className="text-3xl font-black text-white">READY SYSTEM?</h3>
-                        <p className="text-gray-400 max-w-sm text-sm font-medium leading-relaxed">
+                        <h3 className="text-xl sm:text-3xl font-black text-white px-4">READY SYSTEM?</h3>
+                        <p className="text-gray-400 max-w-sm text-[12px] sm:text-sm font-medium leading-relaxed px-6">
                           Dodge data corruptions and maintain the stream integrity. High speed, low latency.
                         </p>
                       </div>
                       
                       <button 
                         onClick={startGame}
-                        className="group relative px-10 py-4 bg-green-500 text-black font-black uppercase text-xs tracking-[0.2em] rounded-full hover:bg-green-400 transition-all shadow-[0_0_30px_rgba(34,197,94,0.2)]"
+                        className="group relative px-8 sm:px-10 py-3 sm:py-4 bg-green-500 text-black font-black uppercase text-[10px] sm:text-xs tracking-[0.2em] rounded-full hover:bg-green-400 transition-all shadow-[0_0_30px_rgba(34,197,94,0.2)]"
                       >
                         <span className="flex items-center gap-2">
-                           <Play size={16} fill="currentColor" /> Initialize 
+                           <Play size={14} fill="currentColor" /> Initialize 
                         </span>
                       </button>
 
@@ -128,51 +128,51 @@ export function GameModal({ isOpen, onClose }: GameModalProps) {
                     exit={{ opacity: 0 }}
                     className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md pt-24"
                   >
-                    <div className="flex flex-col items-center gap-8 text-center">
-                       <div className="space-y-2">
-                          <span className="text-[10px] font-black uppercase tracking-[0.5em] text-red-500 animate-pulse">Critical Failure</span>
-                          <h3 className="text-5xl font-black text-white">TERMINATED</h3>
-                       </div>
+                     <div className="flex flex-col items-center gap-8 text-center px-4">
+                        <div className="space-y-2">
+                           <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-[0.5em] text-red-500 animate-pulse">Critical Failure</span>
+                           <h3 className="text-3xl sm:text-5xl font-black text-white">TERMINATED</h3>
+                        </div>
 
-                       <div className="flex flex-col items-center gap-2">
-                          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">System Performance</span>
-                          <div className="text-4xl font-black text-green-500">{score}</div>
-                       </div>
+                        <div className="flex flex-col items-center gap-2">
+                           <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">System Performance</span>
+                           <div className="text-3xl sm:text-4xl font-black text-green-500">{score}</div>
+                        </div>
 
-                       <div className="flex items-center gap-4">
-                          <button 
-                            onClick={startGame}
-                            className="flex items-center gap-2 px-8 py-4 bg-white text-black font-black uppercase text-xs tracking-[0.2em] rounded-xl hover:bg-green-500 transition-all"
-                          >
-                            <RefreshCcw size={16} /> Reboot
-                          </button>
-                          <button 
-                            onClick={onClose}
-                            className="px-8 py-4 bg-white/5 border border-white/10 text-white font-black uppercase text-xs tracking-[0.2em] rounded-xl hover:bg-white/10 transition-all"
-                          >
-                            Disconnect
-                          </button>
-                       </div>
-                    </div>
+                        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                           <button 
+                             onClick={startGame}
+                             className="flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-white text-black font-black uppercase text-[10px] sm:text-xs tracking-[0.2em] rounded-xl hover:bg-green-500 transition-all"
+                           >
+                             <RefreshCcw size={14} /> Reboot
+                           </button>
+                           <button 
+                             onClick={onClose}
+                             className="px-6 sm:px-8 py-3 sm:py-4 bg-white/5 border border-white/10 text-white font-black uppercase text-[10px] sm:text-xs tracking-[0.2em] rounded-xl hover:bg-white/10 transition-all"
+                           >
+                             Disconnect
+                           </button>
+                        </div>
+                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
 
               {/* Status Bar */}
               {status === 'PLAYING' && (
-                  <motion.div 
+                   <motion.div 
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="w-full mt-8 flex items-center justify-between px-4"
+                    className="w-full mt-4 sm:mt-8 flex items-center justify-between px-2 sm:px-4"
                   >
-                     <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                        <span className="text-[10px] font-black uppercase tracking-widest text-green-500/70">Secure Transmission in Progress...</span>
+                     <div className="flex items-center gap-2 sm:gap-3">
+                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500 animate-pulse" />
+                        <span className="text-[7px] sm:text-[10px] font-black uppercase tracking-widest text-green-500/70">Secure Transmission...</span>
                      </div>
-                     <div className="flex items-center gap-6">
+                     <div className="flex items-center gap-4 sm:gap-6">
                         <div className="flex flex-col items-end">
-                            <span className="text-[9px] font-black uppercase tracking-widest text-gray-600">Local High</span>
-                            <span className="text-xs font-black text-gray-400">{highScore}</span>
+                            <span className="text-[7px] sm:text-[9px] font-black uppercase tracking-widest text-gray-600">Local High</span>
+                            <span className="text-[10px] sm:text-xs font-black text-gray-400">{highScore}</span>
                         </div>
                      </div>
                   </motion.div>
