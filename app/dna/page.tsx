@@ -2,7 +2,7 @@ import VybexDNAClient from './dna-client';
 import { getDNAStats } from './actions';
 
 export const metadata = {
-  title: 'Vybex DNA | AI Startup Idea Analyzer',
+  title: 'DNA',
   description: 'Get a data-backed report on your startup idea\'s potential, competition, and execution roadmap.',
 };
 

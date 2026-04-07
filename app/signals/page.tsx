@@ -4,6 +4,12 @@ import SignalsList from '@/components/signals-list';
 import NewsletterForm from '@/components/signals/newsletter-form';
 import * as motion from 'framer-motion/client';
 
+export const metadata = {
+  title: 'Signals',
+  description: 'The latest platform updates, ecosystem news, and digital transmissions from Vybex Studio.',
+};
+
+
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 

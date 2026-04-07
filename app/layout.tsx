@@ -8,7 +8,10 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://vybexstudio.in'),
-  title: 'Vybex Studio | Premium Digital Agency & Software House',
+  title: {
+    default: 'Vybex Studio | Premium Digital Agency & Software House',
+    template: '%s | Vybex Studio',
+  },
   description: 'Vybex Studio specializes in building high-performance websites, AI-driven applications, and scalable digital products. From branding to backend, we build it right.',
   keywords: ['Web Development', 'Digital Agency', 'UI/UX Design', 'Branding', 'Software House', 'Vybex Studio', 'AI Applications'],
   authors: [{ name: 'Vybex Studio Team' }],
