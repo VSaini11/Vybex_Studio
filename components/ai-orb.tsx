@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
-import { Brain, Fingerprint } from 'lucide-react';
+import { Brain, Fingerprint, Gamepad2 } from 'lucide-react';
 import Link from 'next/link';
+import { GameModal } from './game-modal';
+
 
 interface AIOrbitProps {
     href?: string;
@@ -12,8 +14,10 @@ interface AIOrbitProps {
 
 export function AIOrb({ href = 'https://vybexai.vercel.app/', tooltipText = 'Explore AI' }: AIOrbitProps) {
     const [hovered, setHovered] = useState(false);
+    const [isGameOpen, setIsGameOpen] = useState(false);
 
     // Premium Green/Emerald Color Palette
+
     const colors = {
         primary: 'rgb(34, 197, 94)', // Green 500
         secondary: 'rgb(16, 185, 129)', // Emerald 500
@@ -67,11 +71,29 @@ export function AIOrb({ href = 'https://vybexai.vercel.app/', tooltipText = 'Exp
                                 </div>
                             </motion.div>
                         </Link>
+                        <div onClick={() => setIsGameOpen(true)}>
+                            <motion.div
+                                whileHover={{ x: -5, backgroundColor: 'rgba(34, 197, 94, 0.15)' }}
+                                className="px-4 py-3 rounded-xl border border-green-500/20 bg-black/80 backdrop-blur-xl flex items-center gap-3 group transition-colors cursor-pointer"
+                            >
+                                <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center shrink-0">
+                                    <Gamepad2 className="w-5 h-5 text-green-400" />
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-white text-sm font-bold">Vybex Shift</span>
+                                    <span className="text-[10px] text-gray-400 group-hover:text-green-300">Infinite Runner</span>
+                                </div>
+                            </motion.div>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
 
+            {/* Game Modal */}
+            <GameModal isOpen={isGameOpen} onClose={() => setIsGameOpen(false)} />
+
             {/* ── Outer Aurora Bloom ── */}
+
             <motion.div
                 className="absolute rounded-full pointer-events-none"
                 style={{
