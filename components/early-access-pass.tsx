@@ -3,6 +3,9 @@
 import { motion } from 'framer-motion';
 import { Ticket, Unlock, Sparkles, Star, CalendarClock, Gift, Award, ExternalLink, Quote } from 'lucide-react';
 import { CountdownTimer } from './countdown-timer';
+import { Outfit } from 'next/font/google';
+
+const outfit = Outfit({ subsets: ['latin'], weight: ['400', '500', '700', '800', '900'] });
 
 export function EarlyAccessPass({ 
   isActive = true, 
@@ -31,35 +34,53 @@ export function EarlyAccessPass({
         </div>
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 mb-8"
-          >
-            <Sparkles size={16} className="text-blue-400" />
-            <span className="text-xs font-bold text-gray-300 uppercase tracking-[0.2em]">Next Drop Preparation</span>
-          </motion.div>
-          
-          <motion.h2 
+          <motion.a
+            href="https://the-orbit-vyana.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 100 }}
-            className="text-4xl sm:text-6xl md:text-7xl font-black text-white mb-8 tracking-tighter"
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 100, damping: 20 }}
+            className="block relative w-full max-w-5xl mx-auto rounded-3xl overflow-hidden mb-12 border border-emerald-500/10 bg-[#050505] group shadow-2xl"
           >
-            Something <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Brilliant</span> Is Coming
-          </motion.h2>
-
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed"
-          >
-            The Vybex VIP giveaway is currently transitioning to the next phase. Our algorithms are preparing the next batch of exclusive rewards.
-          </motion.p>
+            {/* Cinematic Tunnel/Glow Background */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_120%,rgba(5,150,105,0.15),rgba(0,0,0,0))] opacity-80 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent group-hover:via-emerald-400/60 transition-all duration-700" />
+            
+            {/* Smooth Cinematic Grid */}
+            <div className="absolute inset-0 opacity-[0.02] group-hover:opacity-[0.04] transition-opacity duration-700 pointer-events-none" style={{
+              backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)',
+              backgroundSize: '60px 60px',
+              backgroundPosition: 'center center',
+              maskImage: 'radial-gradient(circle at center, black 0%, transparent 80%)'
+            }} />
+            
+            <div className="relative px-6 py-10 sm:py-12 flex flex-col items-center justify-center text-center z-10">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 backdrop-blur-md mb-4 transition-colors group-hover:bg-emerald-500/10 group-hover:border-emerald-500/30">
+                <Sparkles size={12} className="text-emerald-400" />
+                <span className="text-[10px] font-bold text-emerald-200/80 uppercase tracking-[0.2em]">Orbit Intelligence</span>
+              </div>
+              
+              <h3 className={`text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 tracking-tighter drop-shadow-sm ${outfit.className}`}>
+                Discover <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500">Orbit</span>
+              </h3>
+              
+              <p className="text-sm sm:text-lg text-gray-300 font-medium mb-4 max-w-2xl mx-auto leading-relaxed">
+                Detect components that need improvement, skip what works, and understand the system as a whole.
+              </p>
+              
+              <p className="text-xs sm:text-sm text-gray-500 flex items-center justify-center gap-1.5 transition-colors group-hover:text-gray-300 font-medium">
+                Experience the clean, smooth UI at the-orbit-vyana.vercel.app
+                <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 -ml-2 group-hover:ml-0 transition-all duration-300" />
+              </p>
+            </div>
+            
+            {/* Floating cinematic glare */}
+            <div className="absolute top-0 left-1/4 w-1/2 h-[1px] bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent blur-sm" />
+          </motion.a>
 
           <motion.div
             initial={{ opacity: 0 }}
