@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Eye, Layout, Link as LinkIcon, Lock, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
+import { Send, Eye, Layout, Link as LinkIcon, Lock, AlertCircle, CheckCircle2, Loader2, Image as ImageIcon, Upload } from 'lucide-react';
 
 export default function AdminNotificationsPage() {
   const [formData, setFormData] = useState({
     subject: '',
     content: '',
+    imageUrl: '',
     ctaText: '',
     ctaUrl: '',
     secret: ''
@@ -15,6 +16,21 @@ export default function AdminNotificationsPage() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
   const [showPreview, setShowPreview] = useState(true);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        alert("Image size should be less than 2MB for email embedding.");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, imageUrl: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,6 +119,38 @@ export default function AdminNotificationsPage() {
                   value={formData.content}
                   onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                 />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-400 flex items-center justify-between">
+                  <span className="flex items-center gap-2"><ImageIcon size={14} /> Image</span>
+                </label>
+                <div className="flex gap-4 items-center">
+                  <input
+                    type="url"
+                    placeholder="Image URL (https://...)"
+                    className="flex-1 bg-[#0a110a] border border-[#1a2e1a] rounded-xl px-4 py-3 focus:outline-none focus:border-green-500/50 transition-colors placeholder:text-gray-700"
+                    value={formData.imageUrl.startsWith('data:') ? '' : formData.imageUrl}
+                    onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                  />
+                  <span className="text-gray-500 text-sm">OR</span>
+                  <label className="cursor-pointer flex items-center justify-center min-w-[140px] gap-2 bg-[#1a2e1a] hover:bg-[#2a4e2a] transition-colors px-4 py-3 rounded-xl border border-[#2a4e2a] text-green-400 text-sm font-medium">
+                    <Upload size={16} />
+                    Upload File
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      className="hidden" 
+                      onChange={handleImageUpload}
+                    />
+                  </label>
+                </div>
+                {formData.imageUrl.startsWith('data:') && (
+                  <div className="text-xs text-green-500 mt-2">
+                    ✓ Local image uploaded ({Math.round(formData.imageUrl.length / 1024)} KB) - 
+                    <button type="button" onClick={() => setFormData({...formData, imageUrl: ''})} className="underline ml-1">Remove</button>
+                  </div>
+                )}
               </div>
 
               <div className="grid sm:grid-cols-2 gap-4">
@@ -207,6 +255,13 @@ export default function AdminNotificationsPage() {
                 <div className="bg-[#080d08] border border-[#1a1a1a] rounded-2xl p-8 max-w-[500px] mx-auto shadow-inner">
                   <h2 className="text-[#4ade80] text-xl font-bold mb-6">Vybex Studio Update 🚀</h2>
                   
+                  {formData.imageUrl && (
+                    <div className="mb-8 rounded-xl overflow-hidden border border-[#1a1a1a]">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={formData.imageUrl} alt="Notification visual" className="w-full h-auto object-cover" />
+                    </div>
+                  )}
+
                   <div className="text-[#9ca3af] text-sm leading-relaxed mb-8 whitespace-pre-wrap">{formData.content || 'Your message content will appear here...'}</div>
 
                   {formData.ctaUrl && (

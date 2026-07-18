@@ -12,7 +12,7 @@ import { sendEmail } from '@/lib/gmail';
  */
 export async function POST(req: NextRequest) {
   try {
-    const { subject, content, ctaText, ctaUrl, secret } = await req.json();
+    const { subject, content, imageUrl, ctaText, ctaUrl, secret } = await req.json();
 
     // Simple auth check
     if (secret !== process.env.NOTIFY_SECRET) {
@@ -34,6 +34,11 @@ export async function POST(req: NextRequest) {
     const html = `
       <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #080d08; color: #d4e8d4; padding: 40px; border-radius: 16px;">
         <h2 style="color: #4ade80; font-size: 24px; margin-bottom: 20px;">Vybex Studio Update 🚀</h2>
+        ${imageUrl ? `
+          <div style="margin-bottom: 30px; border-radius: 12px; overflow: hidden; border: 1px solid #1a1a1a;">
+            <img src="${imageUrl}" alt="Notification Image" style="width: 100%; height: auto; display: block;" />
+          </div>
+        ` : ''}
         <div style="color: #9ca3af; font-size: 16px; line-height: 1.7; margin-bottom: 30px; white-space: pre-wrap;">${content}</div>
         ${ctaUrl ? `
           <div style="text-align: center; margin: 40px 0;">
