@@ -54,8 +54,14 @@ export const metadata: Metadata = {
   },
 }
 
+import { Plus_Jakarta_Sans } from 'next/font/google'
 import { IntroAnimation } from '@/components/IntroAnimation'
 import { Navbar } from '@/components/navbar'
+
+const jakarta = Plus_Jakarta_Sans({ 
+  subsets: ["latin"],
+  variable: "--font-jakarta"
+});
 
 export default function RootLayout({
   children,
@@ -64,7 +70,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-sans antialiased">
+      <body className={`${jakarta.className} antialiased`}>
         <IntroAnimation />
         <Navbar />
         {children}

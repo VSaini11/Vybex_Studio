@@ -22,7 +22,7 @@ export function Footer() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [subStatus, setSubStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   return (
-    <footer style={{ background: '#060606' }}>
+    <footer className="relative z-50 w-full" style={{ background: '#060606' }}>
 
       {/* ── Top scrolling marquee ── */}
       <div
@@ -71,36 +71,23 @@ export function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16 items-start">
 
           {/* LEFT — CTA heading */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
+          <div>
             <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white leading-tight mb-6">
               Let&apos;s Build Your Digital
               <br />
               Growth Engine{' '}
-              <motion.a
+              <a
                 href="#contact"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center justify-center w-12 h-12 rounded-full align-middle ml-1"
+                className="inline-flex items-center justify-center w-12 h-12 rounded-full align-middle ml-1 hover:scale-110 active:scale-95 transition-transform duration-200"
                 style={{ background: '#22c55e', verticalAlign: 'middle' }}
               >
                 <ArrowRight size={20} color="#000" strokeWidth={2.5} />
-              </motion.a>
+              </a>
             </h2>
-          </motion.div>
+          </div>
 
           {/* RIGHT — Subscribe + Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="flex flex-col gap-10"
-          >
+          <div className="flex flex-col gap-10">
             {/* Subscribe */}
             <div>
               <p className="text-white text-sm font-semibold mb-3">Subscribe now</p>
@@ -206,7 +193,7 @@ export function Footer() {
             <p className="text-xs text-gray-600">
               © Vybex Studio · From branding to backend  &amp; — we build it right.
             </p>
-          </motion.div>
+          </div>
 
         </div>
       </div>
