@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useRef, useState } from 'react';
 import { Ticket, Unlock, Sparkles, Star, CalendarClock, Gift, Award, ExternalLink, Quote } from 'lucide-react';
 import { CountdownTimer } from './countdown-timer';
 import { Outfit } from 'next/font/google';
@@ -20,6 +21,22 @@ export function EarlyAccessPass({
   totalSubscribers?: number;
   subscriberInitials?: string[];
 }) {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [activeSlide, setActiveSlide] = useState(1); // Default to middle
+
+  const handleScroll = () => {
+    if (!carouselRef.current) return;
+    const scrollLeft = carouselRef.current.scrollLeft;
+    const containerWidth = carouselRef.current.clientWidth;
+    const itemWidth = carouselRef.current.children[0].clientWidth;
+    const padding = (containerWidth - itemWidth) / 2;
+    // Calculate index based on scroll position + half item width
+    const newIndex = Math.round(scrollLeft / itemWidth);
+    if (newIndex !== activeSlide && newIndex >= 0 && newIndex <= 2) {
+      setActiveSlide(newIndex);
+    }
+  };
+
   if (!isActive) {
     return (
       <section className="relative w-full overflow-hidden py-24 sm:py-32 border-y border-white/5 bg-[#050505] min-h-[600px] flex items-center">
@@ -34,82 +51,134 @@ export function EarlyAccessPass({
         </div>
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 text-center">
-          <motion.a
-            href="https://the-orbit-vyana.vercel.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 100, damping: 20 }}
-            className="block relative w-full max-w-5xl mx-auto rounded-3xl overflow-hidden mb-12 border border-emerald-500/10 bg-[#050505] group shadow-2xl"
-          >
-            {/* Cinematic Tunnel/Glow Background */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_120%,rgba(5,150,105,0.15),rgba(0,0,0,0))] opacity-80 group-hover:opacity-100 transition-opacity duration-700" />
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent group-hover:via-emerald-400/60 transition-all duration-700" />
-            
-            {/* Smooth Cinematic Grid */}
-            <div className="absolute inset-0 opacity-[0.02] group-hover:opacity-[0.04] transition-opacity duration-700 pointer-events-none" style={{
-              backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)',
-              backgroundSize: '60px 60px',
-              backgroundPosition: 'center center',
-              maskImage: 'radial-gradient(circle at center, black 0%, transparent 80%)'
-            }} />
-            
-            <div className="relative px-6 py-10 sm:py-12 flex flex-col items-center justify-center text-center z-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 backdrop-blur-md mb-4 transition-colors group-hover:bg-emerald-500/10 group-hover:border-emerald-500/30">
-                <Sparkles size={12} className="text-emerald-400" />
-                <span className="text-[10px] font-bold text-emerald-200/80 uppercase tracking-[0.2em]">Orbit Intelligence</span>
-              </div>
-              
-              <h3 className={`text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 tracking-tighter drop-shadow-sm ${outfit.className}`}>
-                Discover <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500">Orbit</span>
-              </h3>
-              
-              <p className="text-sm sm:text-lg text-gray-300 font-medium mb-4 max-w-2xl mx-auto leading-relaxed">
-                Detect components that need improvement, skip what works, and understand the system as a whole.
-              </p>
-              
-              <p className="text-xs sm:text-sm text-gray-500 flex items-center justify-center gap-1.5 transition-colors group-hover:text-gray-300 font-medium">
-                Experience the clean, smooth UI at the-orbit-vyana.vercel.app
-                <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 -ml-2 group-hover:ml-0 transition-all duration-300" />
-              </p>
-            </div>
-            
-            {/* Floating cinematic glare */}
-            <div className="absolute top-0 left-1/4 w-1/2 h-[1px] bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent blur-sm" />
-          </motion.a>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
-            <div className="flex -space-x-3 items-center mb-4 sm:mb-0">
-              {subscriberInitials.length > 0 ? (
-                subscriberInitials.map((initial, i) => (
-                  <div key={i} className="w-10 h-10 rounded-full border-2 border-black bg-zinc-900 flex items-center justify-center overflow-hidden relative group">
-                    <div className={`absolute inset-0 bg-gradient-to-br ${i % 2 === 0 ? 'from-blue-600 to-purple-600' : 'from-emerald-600 to-teal-600'} opacity-40`} />
-                    <span className="relative z-10 text-xs font-black text-white/90 font-mono">{initial}</span>
-                  </div>
-                ))
-              ) : (
-                [1, 2, 3, 4].map((i) => (
-                  <div key={i} className="w-10 h-10 rounded-full border-2 border-black bg-zinc-800 flex items-center justify-center overflow-hidden">
-                    <div className={`w-full h-full bg-gradient-to-br ${i % 2 === 0 ? 'from-blue-500 to-purple-500' : 'from-emerald-500 to-teal-500'} opacity-50`} />
-                  </div>
-                ))
-              )}
-              <div className="pl-6 text-sm text-gray-500 font-medium">
-                {totalSubscribers.toLocaleString()}{totalSubscribers >= 10 && '+'} Subscribed for the next drop
-              </div>
-            </div>
-          </motion.div>
           
+          {/* Featured Products Section */}
+          <div className="mt-4 mb-12 w-full max-w-7xl mx-auto relative">
+            
+            {/* Background Nerves SVG Overlay */}
+            <div className="absolute top-[80px] left-0 right-0 bottom-[100px] pointer-events-none z-0 overflow-visible opacity-50 hidden md:block">
+               <svg width="100%" height="100%" viewBox="0 0 1000 600" preserveAspectRatio="none">
+                  {/* Faint base lines */}
+                  <path d="M 500 0 C 500 250, 166 150, 166 600" stroke="rgba(168, 85, 247, 0.2)" strokeWidth="1.5" fill="none" />
+                  <path d="M 500 0 C 500 250, 500 150, 500 600" stroke="rgba(74, 222, 128, 0.2)" strokeWidth="1.5" fill="none" />
+                  <path d="M 500 0 C 500 250, 833 150, 833 600" stroke="rgba(5, 150, 105, 0.2)" strokeWidth="1.5" fill="none" />
+                  
+                  {/* Animated flowing lights */}
+                  <motion.path 
+                    d="M 500 0 C 500 250, 166 150, 166 600" 
+                    stroke="rgba(168, 85, 247, 0.8)" 
+                    strokeWidth="3" 
+                    fill="none" 
+                    strokeLinecap="round"
+                    strokeDasharray="100 1000"
+                    initial={{ strokeDashoffset: 1100 }}
+                    animate={{ strokeDashoffset: -100 }}
+                    transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
+                    style={{ filter: "drop-shadow(0px 0px 8px rgba(168,85,247,0.8))" }}
+                  />
+                  <motion.path 
+                    d="M 500 0 C 500 250, 500 150, 500 600" 
+                    stroke="rgba(74, 222, 128, 0.8)" 
+                    strokeWidth="3" 
+                    fill="none" 
+                    strokeLinecap="round"
+                    strokeDasharray="100 1000"
+                    initial={{ strokeDashoffset: 1100 }}
+                    animate={{ strokeDashoffset: -100 }}
+                    transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
+                    style={{ filter: "drop-shadow(0px 0px 8px rgba(74,222,128,0.8))" }}
+                  />
+                  <motion.path 
+                    d="M 500 0 C 500 250, 833 150, 833 600" 
+                    stroke="rgba(5, 150, 105, 0.8)" 
+                    strokeWidth="3" 
+                    fill="none" 
+                    strokeLinecap="round"
+                    strokeDasharray="100 1000"
+                    initial={{ strokeDashoffset: 1100 }}
+                    animate={{ strokeDashoffset: -100 }}
+                    transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
+                    style={{ filter: "drop-shadow(0px 0px 8px rgba(5,150,105,0.8))" }}
+                  />
+               </svg>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-6 relative z-10"
+            >
+              <h3 className={`text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tighter drop-shadow-sm ${outfit.className}`}>
+                Our Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500">Products</span>
+              </h3>
+              <p className="text-gray-400 mt-4 max-w-2xl mx-auto">Explore our suite of intelligent tools designed to elevate your impact.</p>
+            </motion.div>
+
+            <div 
+              ref={carouselRef}
+              onScroll={handleScroll}
+              className="flex overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-3 gap-6 lg:gap-8 items-end px-[10vw] md:px-4 relative z-10 pb-12 md:pb-0 -mt-16 md:mt-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+            >
+              
+              {/* Left Image: DNA */}
+              <motion.div
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.1, type: "spring", bounce: 0.4 }}
+                className={`w-[80vw] sm:w-[350px] md:w-full shrink-0 snap-center h-[320px] sm:h-[350px] md:h-[450px] lg:h-[500px] relative flex justify-center overflow-visible group transition-all duration-500 ease-out ${activeSlide === 0 ? 'opacity-100 scale-100 md:scale-100' : 'opacity-40 scale-90 md:opacity-100 md:scale-100'}`}
+              >
+                <div 
+                  className="absolute inset-0 bg-contain bg-bottom transition-all duration-700 bg-no-repeat z-0 scale-100 sm:scale-[1.05] lg:scale-[1.1] origin-bottom group-hover:scale-[1.15]"
+                  style={{
+                    backgroundImage: "url('/63a012e5-1a65-4a75-8c09-1b118cd49610-Photoroom.png')",
+                    maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
+                    WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)"
+                  }}
+                />
+              </motion.div>
+
+              {/* Center Image: Meet Vyana */}
+              <motion.div
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2, type: "spring", bounce: 0.4 }}
+                className={`w-[80vw] sm:w-[350px] md:w-full shrink-0 snap-center h-[320px] sm:h-[350px] md:h-[450px] lg:h-[500px] relative flex justify-center overflow-visible group transition-all duration-500 ease-out ${activeSlide === 1 ? 'opacity-100 scale-100 md:scale-100' : 'opacity-40 scale-90 md:opacity-100 md:scale-100'}`}
+              >
+                <div 
+                  className="absolute inset-0 bg-contain bg-bottom transition-all duration-700 bg-no-repeat z-0 scale-100 sm:scale-[1.05] lg:scale-[1.1] origin-bottom group-hover:scale-[1.15]"
+                  style={{
+                    backgroundImage: "url('/ChatGPT Image Jul 19, 2026, 12_31_36 PM-Photoroom.png')",
+                    maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
+                    WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)"
+                  }}
+                />
+              </motion.div>
+
+              {/* Right Image: Orbit */}
+              <motion.div
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.3, type: "spring", bounce: 0.4 }}
+                className={`w-[80vw] sm:w-[350px] md:w-full shrink-0 snap-center h-[320px] sm:h-[350px] md:h-[450px] lg:h-[500px] relative flex justify-center overflow-visible group transition-all duration-500 ease-out ${activeSlide === 2 ? 'opacity-100 scale-100 md:scale-100' : 'opacity-40 scale-90 md:opacity-100 md:scale-100'}`}
+              >
+                <div 
+                  className="absolute inset-0 bg-contain bg-bottom transition-all duration-700 bg-no-repeat z-0 scale-100 sm:scale-[1.05] lg:scale-[1.1] origin-bottom group-hover:scale-[1.15]"
+                  style={{
+                    backgroundImage: "url('/ChatGPT Image Jul 19, 2026, 12_32_12 PM.png')",
+                    maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
+                    WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)"
+                  }}
+                />
+              </motion.div>
+
+            </div>
+          </div>
+
           {/* Decorative element */}
           <div className="mt-20 w-full max-w-3xl mx-auto h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         </div>
