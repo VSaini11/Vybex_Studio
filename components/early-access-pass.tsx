@@ -123,7 +123,10 @@ export function EarlyAccessPass({
             >
               
               {/* Left Image: DNA */}
-              <motion.div
+              <motion.a
+                href="https://vybexstudio.in/dna"
+                target="_blank"
+                rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -138,10 +141,13 @@ export function EarlyAccessPass({
                     WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)"
                   }}
                 />
-              </motion.div>
+              </motion.a>
 
               {/* Center Image: Meet Vyana */}
-              <motion.div
+              <motion.a
+                href="https://vybexai.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -156,10 +162,13 @@ export function EarlyAccessPass({
                     WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)"
                   }}
                 />
-              </motion.div>
+              </motion.a>
 
               {/* Right Image: Orbit */}
-              <motion.div
+              <motion.a
+                href="https://the-orbit-vyana.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -174,7 +183,7 @@ export function EarlyAccessPass({
                     WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)"
                   }}
                 />
-              </motion.div>
+              </motion.a>
 
             </div>
           </div>

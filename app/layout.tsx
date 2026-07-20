@@ -12,8 +12,9 @@ export const metadata: Metadata = {
     default: 'Vybex Studio | Premium Digital Agency & Software House',
     template: '%s | Vybex Studio',
   },
-  description: 'Vybex Studio specializes in building high-performance websites, AI-driven applications, and scalable digital products. From branding to backend, we build it right.',
-  keywords: ['Web Development', 'Digital Agency', 'UI/UX Design', 'Branding', 'Software House', 'Vybex Studio', 'AI Applications'],
+  description: 'Vybex Studio is a premium digital agency specializing in high-performance websites, AI-driven applications, and scalable digital products. We build tools like Vyana (AI Agent), Orbit (Codebase Analyzer), and Vybex Studio DNA (Startup Analysis).',
+  keywords: ['Web Development', 'Digital Agency', 'UI/UX Design', 'Branding', 'Software House', 'Vybex Studio', 'AI Applications', 'Vyana', 'Orbit Codebase Analyzer', 'Startup Analysis'],
+  category: 'technology',
   authors: [{ name: 'Vybex Studio Team' }],
   creator: 'Vybex Studio',
   publisher: 'Vybex Studio',
@@ -63,6 +64,47 @@ const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta"
 });
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Vybex Studio",
+  "url": "https://vybexstudio.in",
+  "logo": "https://vybexstudio.in/Vybex.png",
+  "description": "Premium Digital Agency & Software House specializing in high-performance websites, AI-driven applications, and scalable digital products.",
+  "makesOffer": [
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "SoftwareApplication",
+        "name": "Vyana",
+        "applicationCategory": "BusinessApplication",
+        "description": "An advanced AI Agent that assists with problem-solving, answers questions, and helps users build and automate within the Vybex ecosystem.",
+        "url": "https://vybexai.vercel.app/"
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "SoftwareApplication",
+        "name": "Vybex Studio DNA",
+        "applicationCategory": "BusinessApplication",
+        "description": "A startup and idea analysis tool that evaluates business ideas and tells users where their idea stands in the market.",
+        "url": "https://vybexstudio.in/dna"
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "SoftwareApplication",
+        "name": "Orbit",
+        "applicationCategory": "DeveloperApplication",
+        "description": "An AI-powered codebase analyzer that helps developers understand, explore, and improve any project instantly.",
+        "url": "https://the-orbit-vyana.vercel.app/"
+      }
+    }
+  ]
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -70,6 +112,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className={`${jakarta.className} antialiased`}>
         <IntroAnimation />
         <Navbar />
