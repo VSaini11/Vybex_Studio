@@ -78,6 +78,7 @@ const jsonLd = {
         "@type": "SoftwareApplication",
         "name": "Vyana",
         "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web, Windows, macOS, Linux, iOS, Android",
         "description": "An advanced AI Agent that assists with problem-solving, answers questions, and helps users build and automate within the Vybex ecosystem.",
         "url": "https://vybexai.vercel.app/"
       }
@@ -88,6 +89,7 @@ const jsonLd = {
         "@type": "SoftwareApplication",
         "name": "Vybex Studio DNA",
         "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web, Windows, macOS, Linux, iOS, Android",
         "description": "A startup and idea analysis tool that evaluates business ideas and tells users where their idea stands in the market.",
         "url": "https://vybexstudio.in/dna"
       }
@@ -98,6 +100,7 @@ const jsonLd = {
         "@type": "SoftwareApplication",
         "name": "Orbit",
         "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web, Windows, macOS, Linux, iOS, Android",
         "description": "An AI-powered codebase analyzer that helps developers understand, explore, and improve any project instantly.",
         "url": "https://the-orbit-vyana.vercel.app/"
       }
