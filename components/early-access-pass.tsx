@@ -9,14 +9,14 @@ import Link from 'next/link';
 
 const outfit = Outfit({ subsets: ['latin'], weight: ['400', '500', '700', '800', '900'] });
 
-export function EarlyAccessPass({ 
-  isActive = true, 
+export function EarlyAccessPass({
+  isActive = true,
   nextDrawDate = new Date('2026-03-22T18:00:00+05:30'),
   prizeDescription = 'Vybex VIP Pass',
   totalSubscribers = 0,
   subscriberInitials = [],
   latestSignalSlug
-}: { 
+}: {
   isActive?: boolean;
   nextDrawDate?: Date;
   prizeDescription?: string;
@@ -46,65 +46,65 @@ export function EarlyAccessPass({
         {/* Animated Background Elements */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500/5 blur-[120px] rounded-full animate-pulse" />
-          <motion.div 
+          <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
-            className="absolute top-0 right-0 w-96 h-96 bg-purple-500/5 blur-[100px] rounded-full" 
+            className="absolute top-0 right-0 w-96 h-96 bg-purple-500/5 blur-[100px] rounded-full"
           />
         </div>
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 text-center">
 
-          
+
           {/* Featured Products Section */}
           <div className="mt-4 mb-12 w-full max-w-7xl mx-auto relative">
-            
+
             {/* Background Nerves SVG Overlay */}
             <div className="absolute top-[80px] left-0 right-0 bottom-[100px] pointer-events-none z-0 overflow-visible opacity-50 hidden md:block">
-               <svg width="100%" height="100%" viewBox="0 0 1000 600" preserveAspectRatio="none">
-                  {/* Faint base lines */}
-                  <path d="M 500 0 C 500 250, 166 150, 166 600" stroke="rgba(168, 85, 247, 0.2)" strokeWidth="1.5" fill="none" />
-                  <path d="M 500 0 C 500 250, 500 150, 500 600" stroke="rgba(74, 222, 128, 0.2)" strokeWidth="1.5" fill="none" />
-                  <path d="M 500 0 C 500 250, 833 150, 833 600" stroke="rgba(5, 150, 105, 0.2)" strokeWidth="1.5" fill="none" />
-                  
-                  {/* Animated flowing lights */}
-                  <motion.path 
-                    d="M 500 0 C 500 250, 166 150, 166 600" 
-                    stroke="rgba(168, 85, 247, 0.8)" 
-                    strokeWidth="3" 
-                    fill="none" 
-                    strokeLinecap="round"
-                    strokeDasharray="100 1000"
-                    initial={{ strokeDashoffset: 1100 }}
-                    animate={{ strokeDashoffset: -100 }}
-                    transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
-                    style={{ filter: "drop-shadow(0px 0px 8px rgba(168,85,247,0.8))" }}
-                  />
-                  <motion.path 
-                    d="M 500 0 C 500 250, 500 150, 500 600" 
-                    stroke="rgba(74, 222, 128, 0.8)" 
-                    strokeWidth="3" 
-                    fill="none" 
-                    strokeLinecap="round"
-                    strokeDasharray="100 1000"
-                    initial={{ strokeDashoffset: 1100 }}
-                    animate={{ strokeDashoffset: -100 }}
-                    transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
-                    style={{ filter: "drop-shadow(0px 0px 8px rgba(74,222,128,0.8))" }}
-                  />
-                  <motion.path 
-                    d="M 500 0 C 500 250, 833 150, 833 600" 
-                    stroke="rgba(5, 150, 105, 0.8)" 
-                    strokeWidth="3" 
-                    fill="none" 
-                    strokeLinecap="round"
-                    strokeDasharray="100 1000"
-                    initial={{ strokeDashoffset: 1100 }}
-                    animate={{ strokeDashoffset: -100 }}
-                    transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
-                    style={{ filter: "drop-shadow(0px 0px 8px rgba(5,150,105,0.8))" }}
-                  />
-               </svg>
+              <svg width="100%" height="100%" viewBox="0 0 1000 600" preserveAspectRatio="none">
+                {/* Faint base lines */}
+                <path d="M 500 0 C 500 250, 166 150, 166 600" stroke="rgba(168, 85, 247, 0.2)" strokeWidth="1.5" fill="none" />
+                <path d="M 500 0 C 500 250, 500 150, 500 600" stroke="rgba(74, 222, 128, 0.2)" strokeWidth="1.5" fill="none" />
+                <path d="M 500 0 C 500 250, 833 150, 833 600" stroke="rgba(5, 150, 105, 0.2)" strokeWidth="1.5" fill="none" />
+
+                {/* Animated flowing lights */}
+                <motion.path
+                  d="M 500 0 C 500 250, 166 150, 166 600"
+                  stroke="rgba(168, 85, 247, 0.8)"
+                  strokeWidth="3"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeDasharray="100 1000"
+                  initial={{ strokeDashoffset: 1100 }}
+                  animate={{ strokeDashoffset: -100 }}
+                  transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
+                  style={{ filter: "drop-shadow(0px 0px 8px rgba(168,85,247,0.8))" }}
+                />
+                <motion.path
+                  d="M 500 0 C 500 250, 500 150, 500 600"
+                  stroke="rgba(74, 222, 128, 0.8)"
+                  strokeWidth="3"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeDasharray="100 1000"
+                  initial={{ strokeDashoffset: 1100 }}
+                  animate={{ strokeDashoffset: -100 }}
+                  transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
+                  style={{ filter: "drop-shadow(0px 0px 8px rgba(74,222,128,0.8))" }}
+                />
+                <motion.path
+                  d="M 500 0 C 500 250, 833 150, 833 600"
+                  stroke="rgba(5, 150, 105, 0.8)"
+                  strokeWidth="3"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeDasharray="100 1000"
+                  initial={{ strokeDashoffset: 1100 }}
+                  animate={{ strokeDashoffset: -100 }}
+                  transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
+                  style={{ filter: "drop-shadow(0px 0px 8px rgba(5,150,105,0.8))" }}
+                />
+              </svg>
             </div>
 
             <motion.div
@@ -119,12 +119,12 @@ export function EarlyAccessPass({
               <p className="text-gray-400 mt-4 max-w-2xl mx-auto">Explore our suite of intelligent tools designed to elevate your impact.</p>
             </motion.div>
 
-            <div 
+            <div
               ref={carouselRef}
               onScroll={handleScroll}
               className="flex overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-3 gap-6 lg:gap-8 items-end px-[10vw] md:px-4 relative z-10 pb-12 md:pb-0 -mt-16 md:mt-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
             >
-              
+
               {/* Left Image: DNA */}
               <motion.a
                 href="https://vybexstudio.in/dna"
@@ -136,7 +136,7 @@ export function EarlyAccessPass({
                 transition={{ duration: 0.8, delay: 0.1, type: "spring", bounce: 0.4 }}
                 className={`w-[80vw] sm:w-[350px] md:w-full shrink-0 snap-center h-[320px] sm:h-[350px] md:h-[450px] lg:h-[500px] relative flex justify-center overflow-visible group transition-all duration-500 ease-out ${activeSlide === 0 ? 'opacity-100 scale-100 md:scale-100' : 'opacity-40 scale-90 md:opacity-100 md:scale-100'}`}
               >
-                <div 
+                <div
                   className="absolute inset-0 bg-contain bg-bottom transition-all duration-700 bg-no-repeat z-0 scale-100 sm:scale-[1.05] lg:scale-[1.1] origin-bottom group-hover:scale-[1.15]"
                   style={{
                     backgroundImage: "url('/63a012e5-1a65-4a75-8c09-1b118cd49610-Photoroom.png')",
@@ -157,7 +157,7 @@ export function EarlyAccessPass({
                 transition={{ duration: 0.8, delay: 0.2, type: "spring", bounce: 0.4 }}
                 className={`w-[80vw] sm:w-[350px] md:w-full shrink-0 snap-center h-[320px] sm:h-[350px] md:h-[450px] lg:h-[500px] relative flex justify-center overflow-visible group transition-all duration-500 ease-out ${activeSlide === 1 ? 'opacity-100 scale-100 md:scale-100' : 'opacity-40 scale-90 md:opacity-100 md:scale-100'}`}
               >
-                <div 
+                <div
                   className="absolute inset-0 bg-contain bg-bottom transition-all duration-700 bg-no-repeat z-0 scale-100 sm:scale-[1.05] lg:scale-[1.1] origin-bottom group-hover:scale-[1.15]"
                   style={{
                     backgroundImage: "url('/ChatGPT Image Jul 19, 2026, 12_31_36 PM-Photoroom.png')",
@@ -178,7 +178,7 @@ export function EarlyAccessPass({
                 transition={{ duration: 0.8, delay: 0.3, type: "spring", bounce: 0.4 }}
                 className={`w-[80vw] sm:w-[350px] md:w-full shrink-0 snap-center h-[320px] sm:h-[350px] md:h-[450px] lg:h-[500px] relative flex justify-center overflow-visible group transition-all duration-500 ease-out ${activeSlide === 2 ? 'opacity-100 scale-100 md:scale-100' : 'opacity-40 scale-90 md:opacity-100 md:scale-100'}`}
               >
-                <div 
+                <div
                   className="absolute inset-0 bg-contain bg-bottom transition-all duration-700 bg-no-repeat z-0 scale-100 sm:scale-[1.05] lg:scale-[1.1] origin-bottom group-hover:scale-[1.15]"
                   style={{
                     backgroundImage: "url('/ChatGPT Image Jul 19, 2026, 12_32_12 PM.png')",
@@ -195,9 +195,9 @@ export function EarlyAccessPass({
           {latestSignalSlug && (
             <div className="mt-16 w-full flex justify-center px-4 sm:px-6">
               <Link href={`/signals/${latestSignalSlug}`} className="block w-full max-w-4xl group relative overflow-hidden rounded-[14px] sm:rounded-[24px] md:rounded-[32px]">
-                <img 
-                  src="/IMG_20260720_225204.png" 
-                  alt="Read our latest Transmission on Vybex Signals" 
+                <img
+                  src="/IMG_20260720_225204.png"
+                  alt="Read our latest Transmission on Vybex Signals"
                   className="w-full h-auto object-cover scale-[1.08] translate-y-[1.5%] group-hover:scale-[1.10] transition-transform duration-700"
                 />
               </Link>
@@ -217,7 +217,7 @@ export function EarlyAccessPass({
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
-          
+
           {/* Left: Info */}
           <div className="lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left">
             <motion.div
@@ -229,16 +229,16 @@ export function EarlyAccessPass({
               <Sparkles size={14} className="text-blue-400" />
               <span className="text-xs font-medium text-blue-300 uppercase tracking-wider">Limited Opportunity</span>
             </motion.div>
-            
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 leading-tight"
-              >
-                Win the <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 drop-shadow-sm">{prizeDescription}</span> 🎫
-              </motion.h2>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 leading-tight"
+            >
+              Win the <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 drop-shadow-sm">{prizeDescription}</span> 🎫
+            </motion.h2>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -249,7 +249,7 @@ export function EarlyAccessPass({
             >
               Random subscribers will be selected to receive a unique code. Use this code to unlock exceptional value and exclusive access.
             </motion.p>
-            
+
             <div className="space-y-4 w-full max-w-md">
               {[
                 { icon: Unlock, text: "Use future paid features for free" },
@@ -285,7 +285,7 @@ export function EarlyAccessPass({
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
                   Results Announcement
                 </p>
-                  <CountdownTimer targetDate={nextDrawDate} />
+                <CountdownTimer targetDate={nextDrawDate} />
               </div>
             </motion.div>
           </div>
@@ -300,18 +300,18 @@ export function EarlyAccessPass({
               className="relative w-full max-w-[380px] aspect-[1/1.4]"
               style={{ perspective: "1000px" }}
             >
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-blue-500/30 via-purple-500/30 to-white/5 p-[1px] shadow-2xl shadow-blue-500/20"
                 whileHover={{ rotateY: 5, rotateX: -5, scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
                 <div className="absolute inset-0 rounded-[2rem] bg-zinc-950/90 backdrop-blur-xl flex flex-col overflow-hidden">
-                  
+
                   {/* Glowing header of the ticket */}
                   <div className="relative h-36 bg-gradient-to-br from-blue-600/90 to-purple-800/90 p-7 flex flex-col justify-between overflow-hidden">
                     <div className="absolute -right-4 -top-4 w-32 h-32 bg-white/20 blur-3xl rounded-full" />
                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay" />
-                    
+
                     <div className="flex justify-between items-start relative z-10">
                       <Ticket className="text-white" size={28} />
                       <span className="px-3 py-1 bg-black/40 backdrop-blur-md rounded-full text-[10px] font-bold text-white uppercase tracking-widest border border-white/20 shadow-inner">
@@ -327,7 +327,7 @@ export function EarlyAccessPass({
                   {/* Body of the ticket */}
                   <div className="flex-1 p-7 flex flex-col justify-between relative bg-gradient-to-b from-transparent to-black/40">
                     <div className="w-full h-px bg-white/10 absolute top-0 left-0 border-t border-dashed border-white/20" />
-                    
+
                     <div className="space-y-7 mt-2">
                       <div>
                         <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1.5">Privilege Level</p>
@@ -349,7 +349,7 @@ export function EarlyAccessPass({
                     <div className="flex items-center justify-between mt-8 pt-4 border-t border-white/5">
                       <div className="flex items-center gap-1.5 opacity-40">
                         <div className="flex gap-[3px]">
-                          {Array.from({length: 12}).map((_, i) => (
+                          {Array.from({ length: 12 }).map((_, i) => (
                             <div key={i} className="w-1 h-8 bg-white rounded-full" style={{ opacity: Math.random() * 0.5 + 0.2, height: `${Math.random() * 16 + 16}px` }} />
                           ))}
                         </div>
