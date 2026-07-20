@@ -5,6 +5,7 @@ import { useRef, useState } from 'react';
 import { Ticket, Unlock, Sparkles, Star, CalendarClock, Gift, Award, ExternalLink, Quote } from 'lucide-react';
 import { CountdownTimer } from './countdown-timer';
 import { Outfit } from 'next/font/google';
+import Link from 'next/link';
 
 const outfit = Outfit({ subsets: ['latin'], weight: ['400', '500', '700', '800', '900'] });
 
@@ -13,13 +14,15 @@ export function EarlyAccessPass({
   nextDrawDate = new Date('2026-03-22T18:00:00+05:30'),
   prizeDescription = 'Vybex VIP Pass',
   totalSubscribers = 0,
-  subscriberInitials = []
+  subscriberInitials = [],
+  latestSignalSlug
 }: { 
   isActive?: boolean;
   nextDrawDate?: Date;
   prizeDescription?: string;
   totalSubscribers?: number;
   subscriberInitials?: string[];
+  latestSignalSlug?: string | null;
 }) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeSlide, setActiveSlide] = useState(1); // Default to middle
@@ -188,8 +191,18 @@ export function EarlyAccessPass({
             </div>
           </div>
 
-          {/* Decorative element */}
-          <div className="mt-20 w-full max-w-3xl mx-auto h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          {/* Signals Banner */}
+          {latestSignalSlug && (
+            <div className="mt-16 w-full flex justify-center px-4 sm:px-6">
+              <Link href={`/signals/${latestSignalSlug}`} className="block w-full max-w-4xl group relative overflow-hidden rounded-[14px] sm:rounded-[24px] md:rounded-[32px]">
+                <img 
+                  src="/IMG_20260720_225204.png" 
+                  alt="Read our latest Transmission on Vybex Signals" 
+                  className="w-full h-auto object-cover scale-[1.08] translate-y-[1.5%] group-hover:scale-[1.10] transition-transform duration-700"
+                />
+              </Link>
+            </div>
+          )}
         </div>
       </section>
     );

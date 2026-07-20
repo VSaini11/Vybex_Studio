@@ -59,7 +59,7 @@ import { Plus_Jakarta_Sans } from 'next/font/google'
 import { IntroAnimation } from '@/components/IntroAnimation'
 import { Navbar } from '@/components/navbar'
 
-const jakarta = Plus_Jakarta_Sans({ 
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-jakarta"
 });

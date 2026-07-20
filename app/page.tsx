@@ -7,6 +7,7 @@ import { Contact } from '@/components/contact';
 import { Footer } from '@/components/footer';
 import { AIOrb } from '@/components/ai-orb';
 import { getGiveawayStatus, getSubscriberData, getFeedbackData, getWinnerReviews } from './admin/control-center/actions';
+import { getSignals } from '@/app/admin/signals/actions';
 import { WinnersCircle } from '@/components/winners-circle';
 import { Founder } from '@/components/founder';
 
@@ -30,6 +31,9 @@ export default async function Home() {
   const winnerReviewsData = await getWinnerReviews();
   const winnerReviews = winnerReviewsData.success ? winnerReviewsData.reviews : [];
 
+  const signalResult = await getSignals();
+  const latestSignalSlug = (signalResult.success && signalResult.signals && signalResult.signals.length > 0) ? signalResult.signals[0].slug : null;
+
   return (
     <>
       <main className="min-h-screen bg-black text-white overflow-hidden">
@@ -47,6 +51,7 @@ export default async function Home() {
           prizeDescription={prizeDescription}
           totalSubscribers={totalSubscribers}
           subscriberInitials={subscriberInitials}
+          latestSignalSlug={latestSignalSlug}
         />
         <WinnersCircle winnerReviews={winnerReviews} />
         <Portfolio />
