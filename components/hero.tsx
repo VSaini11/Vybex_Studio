@@ -44,7 +44,7 @@ export function Hero({
   } as const;
 
   return (
-    <section className="min-h-screen flex flex-col justify-center pt-16 relative overflow-hidden">
+    <section className="min-h-dvh flex flex-col justify-between pt-16 relative overflow-hidden bg-[#080d08]">
       {/* Background glow blobs - refined */}
       <motion.div
         className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none opacity-40"
@@ -53,7 +53,7 @@ export function Hero({
         transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
       />
 
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 pt-10 pb-20 text-center">
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 pt-6 pb-10 text-center my-auto">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -104,7 +104,7 @@ export function Hero({
           {/* Social Proof Card */}
           <motion.div 
             variants={itemVariants}
-            className="mt-10 sm:mt-12 w-full flex justify-center scale-90 sm:scale-100"
+            className="mt-8 sm:mt-10 w-full flex justify-center scale-90 sm:scale-100"
           >
             <div className="flex items-center justify-center gap-4 sm:gap-6">
               <div className="flex -space-x-2.5 sm:-space-x-3">
@@ -160,7 +160,7 @@ export function Hero({
         }
       `}</style>
       
-      <div className="absolute bottom-0 left-0 right-0 py-8 lg:py-12">
+      <div className="relative z-10 w-full py-6 lg:py-8 mt-auto">
         <div
           className="overflow-hidden"
           style={{

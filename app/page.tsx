@@ -37,7 +37,7 @@ export default async function Home() {
 
   return (
     <>
-      <main className="min-h-screen bg-black text-white overflow-hidden">
+      <main className="min-h-dvh bg-[#080d08] text-white overflow-x-clip">
         {/* Subtle background grain */}
         <div className="fixed inset-0 pointer-events-none grain" />
 

@@ -57,14 +57,15 @@ export function VyanaAudioIntro() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section className="w-full max-w-5xl mx-auto px-4 sm:px-6 pb-20 pt-10 flex justify-center relative z-20">
-      
-      {/* Background soft glow - completely borderless and blended */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-green-500/5 blur-[150px] rounded-[100%] pointer-events-none" />
+    <section className="relative w-full overflow-hidden py-16 sm:py-24 bg-[#050505] z-20">
+      {/* Ambient background glows matching Featured Products section */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-full bg-emerald-500/5 blur-[120px] rounded-full" />
+      </div>
 
-      <div className="relative w-full flex flex-col md:flex-row items-center justify-center gap-0 md:gap-24 z-10 bg-transparent border-none">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-center gap-0 md:gap-24">
         
-        {/* Left Side: Agent Image Cutout with center glow */}
+        {/* Left Side: Agent Image Cutout */}
         <div 
           className="relative flex-shrink-0 w-64 h-64 md:w-80 md:h-80 flex items-center justify-center translate-y-12 md:translate-y-20"
         >
@@ -74,7 +75,7 @@ export function VyanaAudioIntro() {
              <img 
                src="/vybex-ai-avatar.png" 
                alt="Vyana Avatar" 
-               className="object-contain w-full h-full opacity-90 drop-shadow-[0_0_40px_rgba(34,197,94,0.2)] scale-[2.5] pointer-events-none"
+               className="object-contain w-full h-full opacity-90 scale-[2.5] pointer-events-none"
                onError={(e) => {
                  // Prevent infinite loop by checking if we already tried the fallback
                  if (!e.currentTarget.src.includes('IMG_20260720_225204.png')) {
