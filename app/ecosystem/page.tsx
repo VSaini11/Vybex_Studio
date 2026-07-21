@@ -61,7 +61,30 @@ export default function EcosystemPage() {
       {/* ── Evolution Flow Section ─────────────────────────────── */}
       <EcosystemFlow />
 
-      
+      {/* ── Visual Section ─────────────────────────────────────── */}
+      <EcosystemSection
+        id="vybex-ai"
+        title="Intelligence Reimagined"
+        subtitle="VYBEX AI CORE"
+        description="Experience the next generation of artificial intelligence, where intuition meets processing power. Designed to augment human creativity."
+        features={[
+          { title: 'Neural Processing', desc: 'Advanced cognitive architectures that learn and adapt.' },
+          { title: 'Seamless Integration', desc: 'Plug directly into the Vybex ecosystem with zero friction.' }
+        ]}
+        icon={<Brain className="w-8 h-8 text-green-400" />}
+        gradient="from-green-500 to-emerald-900"
+        reversed={true}
+        imageChild={
+          <div className="relative w-full aspect-square flex items-center justify-center">
+            {/* The image is scaled up using scale-125 or scale-150 */}
+            <img 
+              src="/vybex-ai-avatar.png" 
+              alt="Vybex AI Avatar" 
+              className="w-full h-full object-contain scale-125 transform"
+            />
+          </div>
+        }
+      />
 
       {/* ── Final CTA ───────────────────────────────────────────── */}
       <section className="py-20 sm:py-32 px-4 relative">

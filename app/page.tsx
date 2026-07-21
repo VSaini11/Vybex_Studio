@@ -1,4 +1,5 @@
 import { Hero } from '@/components/hero';
+import { VyanaAudioIntro } from '@/components/vyana-audio-intro';
 import { EarlyAccessPass } from '@/components/early-access-pass';
 import { Portfolio } from '@/components/portfolio';
 import { MerchandisePreview } from '@/components/merchandise-preview';
@@ -45,6 +46,7 @@ export default async function Home() {
           averageRating={averageRating}
           feedbackInitials={feedbackInitials}
         />
+        <VyanaAudioIntro />
         <EarlyAccessPass 
           isActive={isGiveawayActive} 
           nextDrawDate={nextDrawDate}
