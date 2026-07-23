@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { ArrowRight, Menu, X } from 'lucide-react';
 
+import { usePathname } from 'next/navigation';
+
 const navItems = [
   { label: 'Home', href: '/' },
   { label: 'Signals', href: '/signals' },
@@ -12,9 +14,14 @@ const navItems = [
 ];
 
 export function Navbar() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const { scrollY } = useScroll();
+
+  if (pathname === '/talk-to-vyana') {
+    return null;
+  }
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;

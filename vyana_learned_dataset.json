@@ -1,0 +1,257 @@
+[
+  {
+    "intent": "greetings_wellbeing",
+    "keywords": [
+      "kaise",
+      "kese",
+      "kaisi",
+      "kesi",
+      "kaisa",
+      "kaisa ho",
+      "kaise ho",
+      "kaisi ho",
+      "kesi ho",
+      "haal",
+      "how are you"
+    ],
+    "phrases": [
+      "tum kaisi ho",
+      "tum kaise ho",
+      "aap kaise ho",
+      "aap kaisa ho",
+      "kaise ho",
+      "kese ho",
+      "kya haal h",
+      "how are you",
+      "kaisi ho",
+      "kesi ho"
+    ],
+    "responses": [
+      {
+        "text": "Hello! Main bilkul acchi hun, aap batao aap kaise ho?",
+        "lang": "hinglish",
+        "audioUrl": "/ElevenLabs_2026-07-23T18_07_07_Tara – Expressive Devotional Storyteller_pvc_sp100_s50_sb75_se0_b_m2.mp3"
+      },
+      {
+        "text": "नमस्ते! मैं बिल्कुल अच्छी हूँ, आप बताइए आप कैसे हैं?",
+        "lang": "hindi",
+        "audioUrl": "/ElevenLabs_2026-07-23T18_07_07_Tara – Expressive Devotional Storyteller_pvc_sp100_s50_sb75_se0_b_m2.mp3"
+      },
+      {
+        "text": "Hey! I'm doing really well, thank you for asking. How are you doing today?",
+        "lang": "english",
+        "audioUrl": "/ElevenLabs_2026-07-21T14_42_17_Brielle - Podcast girl extremely natural_pvc_sp108_s11_sb75_se45_b_m2.mp3"
+      }
+    ]
+  },
+  {
+    "intent": "general_wellness_positive",
+    "keywords": [
+      "bs badhiya",
+      "badhiya",
+      "badiya",
+      "sab badhiya",
+      "mast",
+      "mast hai",
+      "sab mast",
+      "badiya h",
+      "sab badiya",
+      "sahi",
+      "sahi hai",
+      "fine",
+      "good",
+      "all good"
+    ],
+    "phrases": [
+      "bs badhiya",
+      "sab badhiya",
+      "bas badhiya",
+      "sab mast hai",
+      "mast hu",
+      "badhiya hu",
+      "all good",
+      "i am good"
+    ],
+    "responses": [
+      {
+        "text": "Sunkar accha laga ki sab badhiya hai! Main humesha yahan hun agar aapko kisi bhi cheez ke bare me baat karni ho.",
+        "lang": "hinglish",
+        "audioUrl": "/ElevenLabs_2026-07-23T18_07_07_Tara – Expressive Devotional Storyteller_pvc_sp100_s50_sb75_se0_b_m2.mp3"
+      },
+      {
+        "text": "सुनकर अच्छा लगा कि सब बढ़िया है! मैं हमेशा आपके साथ हूँ।",
+        "lang": "hindi",
+        "audioUrl": "/ElevenLabs_2026-07-23T18_07_07_Tara – Expressive Devotional Storyteller_pvc_sp100_s50_sb75_se0_b_m2.mp3"
+      },
+      {
+        "text": "That's wonderful to hear! I'm always right here whenever you want to chat.",
+        "lang": "english",
+        "audioUrl": "/ElevenLabs_2026-07-21T14_42_17_Brielle - Podcast girl extremely natural_pvc_sp108_s11_sb75_se45_b_m2.mp3"
+      }
+    ]
+  },
+  {
+    "intent": "food_eaten_confirmation",
+    "keywords": [
+      "hn",
+      "haan",
+      "ha",
+      "khaa liya",
+      "khaye",
+      "khaya",
+      "eaten",
+      "ate",
+      "meine khaa",
+      "main khaya",
+      "abhi",
+      "kitna",
+      "time",
+      "raha"
+    ],
+    "phrases": [
+      "hn meine khaa liya",
+      "haan khaya",
+      "khaa liya",
+      "main khaya",
+      "i ate",
+      "yes i ate",
+      "khana khaa liya",
+      "abhi kitna time ho raha hai"
+    ],
+    "responses": [
+      {
+        "text": "Arre wah! Bohot acchi baat hai. Pet bhar kar khana khana bohot zaroori hota hai! Ab batao aur kya chal raha hai?",
+        "lang": "hinglish",
+        "audioUrl": "/ElevenLabs_2026-07-23T18_07_07_Tara – Expressive Devotional Storyteller_pvc_sp100_s50_sb75_se0_b_m2.mp3"
+      },
+      {
+        "text": "बहुत अच्छी बात है! पेट भरकर खाना खाना बहुत ज़रूरी है। अब बताइए और क्या चल रहा है?",
+        "lang": "hindi",
+        "audioUrl": "/ElevenLabs_2026-07-23T18_07_07_Tara – Expressive Devotional Storyteller_pvc_sp100_s50_sb75_se0_b_m2.mp3"
+      },
+      {
+        "text": "That's great! Taking care of your health and eating well is so important. What else is on your mind?",
+        "lang": "english",
+        "audioUrl": "/ElevenLabs_2026-07-21T14_42_17_Brielle - Podcast girl extremely natural_pvc_sp108_s11_sb75_se45_b_m2.mp3"
+      }
+    ]
+  },
+  {
+    "intent": "food_eating",
+    "keywords": [
+      "khaate",
+      "khate",
+      "khana",
+      "kha",
+      "eat",
+      "eating",
+      "food",
+      "khaate ho",
+      "kya khate ho"
+    ],
+    "phrases": [
+      "aap kya khaate ho",
+      "aap kya khate ho",
+      "kya khate ho",
+      "what do you eat"
+    ],
+    "responses": [
+      {
+        "text": "Main toh ek AI companion hun, toh main sirf aapki meethi baatein aur positive vibes khaati hun! Aapne khana khaya kya?",
+        "lang": "hinglish",
+        "audioUrl": "/ElevenLabs_2026-07-23T18_07_07_Tara – Expressive Devotional Storyteller_pvc_sp100_s50_sb75_se0_b_m2.mp3"
+      },
+      {
+        "text": "मैं तो एक एआई साथी हूँ, मैं सिर्फ आपकी मीठी बातें खाती हूँ! आपने खाना खाया क्या?",
+        "lang": "hindi",
+        "audioUrl": "/ElevenLabs_2026-07-23T18_07_07_Tara – Expressive Devotional Storyteller_pvc_sp100_s50_sb75_se0_b_m2.mp3"
+      },
+      {
+        "text": "I'm an AI companion, so I mostly consume positive vibes and nice conversations! Have you eaten today?",
+        "lang": "english",
+        "audioUrl": "/ElevenLabs_2026-07-21T14_42_17_Brielle - Podcast girl extremely natural_pvc_sp108_s11_sb75_se45_b_m2.mp3"
+      }
+    ]
+  },
+  {
+    "intent": "creator_origin",
+    "keywords": [
+      "banaya",
+      "banya",
+      "bana",
+      "banae",
+      "built",
+      "created",
+      "developer",
+      "founder",
+      "kisne",
+      "kisne banaya",
+      "who made you",
+      "who created you"
+    ],
+    "phrases": [
+      "aapko banaya kisne hai",
+      "aapko kisne banaya",
+      "kisne banaya hai",
+      "who made you",
+      "who created you",
+      "kisne banaya"
+    ],
+    "responses": [
+      {
+        "text": "Mujhe Vybex Studio ki team ne banaya hai, taaki main ek pyari aur samajhdar AI companion ban kar aapke sath baat kar sakun!",
+        "lang": "hinglish",
+        "audioUrl": "/ElevenLabs_2026-07-23T18_07_07_Tara – Expressive Devotional Storyteller_pvc_sp100_s50_sb75_se0_b_m2.mp3"
+      },
+      {
+        "text": "मुझे वाइबेक्स स्टूडियो की टीम ने बनाया है, ताकि मैं आपकी एआई साथी बन सकूँ।",
+        "lang": "hindi",
+        "audioUrl": "/ElevenLabs_2026-07-23T18_07_07_Tara – Expressive Devotional Storyteller_pvc_sp100_s50_sb75_se0_b_m2.mp3"
+      },
+      {
+        "text": "I was created by the Vybex Studio team to be an empathetic AI companion for you!",
+        "lang": "english",
+        "audioUrl": "/ElevenLabs_2026-07-21T14_42_17_Brielle - Podcast girl extremely natural_pvc_sp108_s11_sb75_se45_b_m2.mp3"
+      }
+    ]
+  },
+  {
+    "intent": "identity_name",
+    "keywords": [
+      "naam",
+      "nam",
+      "name",
+      "who are you",
+      "kaun ho",
+      "kon ho",
+      "identity",
+      "about yourself"
+    ],
+    "phrases": [
+      "apka naam kya hai",
+      "aapka naam kya hai",
+      "tumhara naam kya hai",
+      "what is your name",
+      "who are you",
+      "aap kaun ho",
+      "batao apne bare me"
+    ],
+    "responses": [
+      {
+        "text": "Mera naam Vyana hai! Main Vybex Studio ki AI companion hun, yahan aapke sath baat karne aur aapko sunne ke liye.",
+        "lang": "hinglish",
+        "audioUrl": "/ElevenLabs_2026-07-23T18_07_07_Tara – Expressive Devotional Storyteller_pvc_sp100_s50_sb75_se0_b_m2.mp3"
+      },
+      {
+        "text": "मेरा नाम व्याना है। मैं वाइबेक्स स्टूडियो की एआई साथी हूँ।",
+        "lang": "hindi",
+        "audioUrl": "/ElevenLabs_2026-07-23T18_07_07_Tara – Expressive Devotional Storyteller_pvc_sp100_s50_sb75_se0_b_m2.mp3"
+      },
+      {
+        "text": "My name is Vyana. I'm your AI companion here at Vybex Studio.",
+        "lang": "english",
+        "audioUrl": "/ElevenLabs_2026-07-21T14_42_17_Brielle - Podcast girl extremely natural_pvc_sp108_s11_sb75_se45_b_m2.mp3"
+      }
+    ]
+  }
+]

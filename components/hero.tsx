@@ -25,7 +25,7 @@ export function Hero({
   feedbackInitials?: string[];
 }) {
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
-  
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -102,7 +102,7 @@ export function Hero({
           </motion.div>
 
           {/* Social Proof Card */}
-          <motion.div 
+          <motion.div
             variants={itemVariants}
             className="mt-8 sm:mt-10 w-full flex justify-center scale-90 sm:scale-100"
           >
@@ -116,20 +116,20 @@ export function Hero({
                     </div>
                   ))
                 ) : (
-                  [1,2,3,4].map((i) => (
+                  [1, 2, 3, 4].map((i) => (
                     <div key={i} className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-[#090909] bg-zinc-800" />
                   ))
                 )}
               </div>
-              
+
               <div className="flex flex-col items-start">
                 <div className="flex items-center gap-1 sm:gap-1.5 mb-0.5 sm:mb-1">
                   <div className="flex gap-0.5">
                     {[1, 2, 3, 4, 5].map((star) => (
-                      <Star 
-                        key={star} 
-                        size={12} 
-                        className={`sm:w-[14px] sm:h-[14px] ${star <= Math.round(averageRating || 5) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-600'}`} 
+                      <Star
+                        key={star}
+                        size={12}
+                        className={`sm:w-[14px] sm:h-[14px] ${star <= Math.round(averageRating || 5) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-600'}`}
                       />
                     ))}
                   </div>
@@ -159,7 +159,7 @@ export function Hero({
           animation: hero-marquee 30s linear infinite;
         }
       `}</style>
-      
+
       <div className="relative z-10 w-full py-6 lg:py-8 mt-auto">
         <div
           className="overflow-hidden"
@@ -199,9 +199,9 @@ export function Hero({
         </div>
       </div>
 
-      <FeedbackModal 
-        isOpen={isFeedbackOpen} 
-        onClose={() => setIsFeedbackOpen(false)} 
+      <FeedbackModal
+        isOpen={isFeedbackOpen}
+        onClose={() => setIsFeedbackOpen(false)}
       />
     </section>
   );

@@ -150,6 +150,12 @@ export function VyanaAudioIntro() {
                 >
                   No, I will see it myself
                 </button>
+                <a
+                  href="/talk-to-vyana"
+                  className="px-8 py-3.5 rounded-full text-sm font-semibold text-green-400 bg-green-500/10 hover:bg-green-500/20 border border-green-500/20 transition-all w-full md:w-max inline-block text-center"
+                >
+                  Wanna talk to Vyana?
+                </a>
               </motion.div>
             ) : (
               <motion.div
