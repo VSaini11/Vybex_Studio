@@ -75,7 +75,7 @@ export function IntroAnimation() {
           {/* Logo enlarging slowly */}
           <motion.div variants={logoVars} className="relative">
             <Image 
-              src="/Vybex.png" 
+              src="/vybex-new-transparent.png" 
               alt="Vybex Logo" 
               width={240} 
               height={240} 

@@ -21,11 +21,25 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: '/Vybex.png',
+        url: '/vybex-new-transparent.png',
+        type: 'image/png',
+      },
+      {
+        url: '/icon.png',
+        type: 'image/png',
+      },
+      {
+        url: '/favicon.ico',
+        type: 'image/x-icon',
+      }
+    ],
+    apple: [
+      {
+        url: '/vybex-new-transparent.png',
         type: 'image/png',
       }
     ],
-    apple: '/Vybex.png',
+    shortcut: '/vybex-new-transparent.png',
   },
   openGraph: {
     type: 'website',
@@ -36,9 +50,9 @@ export const metadata: Metadata = {
     description: 'Elevate your digital presence with Vybex Studio. We build scalable, high-performance digital solutions tailored for growth.',
     images: [
       {
-        url: '/Vybex.png',
-        width: 800,
-        height: 600,
+        url: '/vybex-new-transparent.png',
+        width: 666,
+        height: 659,
         alt: 'Vybex Studio Logo',
       }
     ],
@@ -47,7 +61,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Vybex Studio | Premium Digital Agency & Software House',
     description: 'Elevate your digital presence with Vybex Studio. We build scalable, high-performance digital solutions tailored for growth.',
-    images: ['/Vybex.png'],
+    images: ['/vybex-new-transparent.png'],
     creator: '@vybexstudio',
   },
   verification: {
@@ -69,7 +83,7 @@ const jsonLd = {
   "@type": "Organization",
   "name": "Vybex Studio",
   "url": "https://vybexstudio.in",
-  "logo": "https://vybexstudio.in/Vybex.png",
+  "logo": "https://vybexstudio.in/vybex-new-transparent.png",
   "description": "Premium Digital Agency & Software House specializing in high-performance websites, AI-driven applications, and scalable digital products.",
   "makesOffer": [
     {

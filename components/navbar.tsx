@@ -54,8 +54,13 @@ export function Navbar() {
         }}
       >
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2 flex-shrink-0">
-          <span className="text-white font-bold text-base sm:text-lg tracking-tight">Vybex Studio</span>
+        <a href="/" className="flex items-center flex-shrink-0 group" aria-label="Vybex Studio">
+          <img
+            src="/vybex-new-transparent.png"
+            alt="Vybex Studio Logo"
+            className="w-7 h-7 sm:w-8 sm:h-8 object-contain group-hover:scale-105 transition-transform"
+          />
+          <span className="sr-only">Vybex Studio</span>
         </a>
 
         {/* Desktop nav links — centered */}

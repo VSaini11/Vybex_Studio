@@ -11,7 +11,7 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: '#4ade80',
     icons: [
       {
-        src: '/Vybex.png',
+        src: '/vybex-new-transparent.png',
         sizes: 'any',
         type: 'image/png',
       },
