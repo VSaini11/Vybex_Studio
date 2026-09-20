@@ -1,6 +1,6 @@
 import { Hero } from '@/components/hero';
 import { VyanaAudioIntro } from '@/components/vyana-audio-intro';
-import { EarlyAccessPass } from '@/components/early-access-pass';
+import { GiveawayInviteBanner } from '@/components/giveaway-invite-banner';
 import { Portfolio } from '@/components/portfolio';
 import { MerchandisePreview } from '@/components/merchandise-preview';
 import { Pricing } from '@/components/pricing';
@@ -18,12 +18,10 @@ export default async function Home() {
   const giveawayStatus = await getGiveawayStatus();
   const isGiveawayActive = giveawayStatus.success ? giveawayStatus.isActive : true;
   const nextDrawDate = giveawayStatus.success && giveawayStatus.nextDrawDate ? new Date(giveawayStatus.nextDrawDate) : new Date('2026-03-22T18:00:00+05:30');
-  const prizeDescription = giveawayStatus.success && giveawayStatus.prizeDescription ? giveawayStatus.prizeDescription : 'Vybex VIP Pass & Merchandise';
+  const prizeDescription = giveawayStatus.success && giveawayStatus.prizeDescription ? giveawayStatus.prizeDescription : 'Amazon Gift Voucher Worth 1000 Rs';
+  // Section 1 = 'vyana' (Vyana Audio Intro), Section 2 = 'giveaway' (Giveaway Ad Banner)
+  const activeIntroSection = giveawayStatus.success && giveawayStatus.activeIntroSection ? giveawayStatus.activeIntroSection : 'giveaway';
   
-  const subscriberData = await getSubscriberData();
-  const totalSubscribers = subscriberData.success ? subscriberData.totalCount : 0;
-  const subscriberInitials = subscriberData.success ? subscriberData.initials : [];
-
   const feedbackData = await getFeedbackData();
   const totalFeedbacks = feedbackData.success ? feedbackData.totalCount : 0;
   const averageRating = feedbackData.success ? feedbackData.averageRating : 0;
@@ -31,9 +29,6 @@ export default async function Home() {
 
   const winnerReviewsData = await getWinnerReviews();
   const winnerReviews = winnerReviewsData.success ? winnerReviewsData.reviews : [];
-
-  const signalResult = await getSignals();
-  const latestSignalSlug = (signalResult.success && signalResult.signals && signalResult.signals.length > 0) ? signalResult.signals[0].slug : null;
 
   return (
     <>
@@ -46,15 +41,23 @@ export default async function Home() {
           averageRating={averageRating}
           feedbackInitials={feedbackInitials}
         />
-        <VyanaAudioIntro />
-        <EarlyAccessPass 
-          isActive={isGiveawayActive} 
-          nextDrawDate={nextDrawDate}
-          prizeDescription={prizeDescription}
-          totalSubscribers={totalSubscribers}
-          subscriberInitials={subscriberInitials}
-          latestSignalSlug={latestSignalSlug}
-        />
+        
+        {/* ── 2nd Section Toggle ────────────────────────────────────────────────────────
+            Section 1: Vyana Audio Intro (<VyanaAudioIntro />)
+            Section 2: Giveaway Ad 'You Are Invited' Banner (<GiveawayInviteBanner />)
+            Can be toggled from /admin/control-center or swapped here.
+        ───────────────────────────────────────────────────────────────────────────── */}
+        {activeIntroSection === 'vyana' ? (
+          /* [Section 1: Original Vyana Audio Intro] */
+          <VyanaAudioIntro />
+        ) : (
+          /* [Section 2: Active Giveaway 'You Are Invited' Ad Banner] */
+          <GiveawayInviteBanner 
+            prizeDescription={prizeDescription}
+            nextDrawDate={nextDrawDate}
+          />
+        )}
+
         <WinnersCircle winnerReviews={winnerReviews} />
         <Portfolio />
         <Founder />

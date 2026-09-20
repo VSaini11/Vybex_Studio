@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Ticket, Gift, Sparkles, Trophy, Loader2, Unlock, Package, Plus, Trash2, Globe, ExternalLink, Download, Image as ImageIcon, Camera, Shirt, Smartphone, Coffee } from 'lucide-react';
-import { getRandomSubscriber, getGiveawayStatus, updateGiveawayStatus } from './actions';
+import { getRandomSubscriber, getGiveawayStatus, updateGiveawayStatus, setIntroSection, sendTestWinnerEmail } from './actions';
 import { addAuthorizedTool, getAuthorizedTools, deleteAuthorizedTool } from './tool-actions';
 import { addMerchandiseItem, getMerchandiseItems, deleteMerchandiseItem } from './merchandise-actions';
 import confetti from 'canvas-confetti';
@@ -38,8 +38,11 @@ export default function GiveawayAdminPage() {
   
   const [isGiveawayActive, setIsGiveawayActive] = useState(true);
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+  const [activeIntroSection, setActiveIntroSection] = useState<'vyana' | 'giveaway'>('giveaway');
+  const [isUpdatingIntro, setIsUpdatingIntro] = useState(false);
   const [nextDrawDate, setNextDrawDate] = useState<string>('2026-03-22T18:00:00+05:30');
-  const [prizeDescription, setPrizeDescription] = useState<string>('Vybex VIP Pass');
+  const [prizeDescription, setPrizeDescription] = useState<string>('Amazon Gift Voucher Worth 1000 Rs');
+  const [prizeType, setPrizeType] = useState<'voucher' | 'vip_pass'>('voucher');
   const [showResumeModal, setShowResumeModal] = useState(false);
 
   const [authorizedTools, setAuthorizedTools] = useState<AuthorizedTool[]>([]);
@@ -87,8 +90,15 @@ export default function GiveawayAdminPage() {
       const result = await getGiveawayStatus();
       if (result.success) {
         setIsGiveawayActive(result.isActive);
-        if (result.nextDrawDate) setNextDrawDate(new Date(result.nextDrawDate).toISOString().slice(0, 16));
+        if (result.activeIntroSection) setActiveIntroSection(result.activeIntroSection);
+        if (result.nextDrawDate) {
+          const d = new Date(result.nextDrawDate);
+          // Format in local timezone (YYYY-MM-DDTHH:mm) so datetime-local doesn't convert to UTC
+          const localIso = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+          setNextDrawDate(localIso);
+        }
         if (result.prizeDescription) setPrizeDescription(result.prizeDescription);
+        if (result.prizeType) setPrizeType(result.prizeType);
       }
     };
 
@@ -103,7 +113,7 @@ export default function GiveawayAdminPage() {
     checkLockStatus();
     const interval = setInterval(checkLockStatus, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [nextDrawDate]);
 
   const triggerConfetti = () => {
     const duration = 3000;
@@ -184,6 +194,74 @@ export default function GiveawayAdminPage() {
           </div>
         </div>
 
+        {/* ── Section 1 / Section 2 Intro Section Switcher ── */}
+        <div className="mb-8 p-5 sm:p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-xl relative overflow-hidden">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <h3 className="text-sm font-bold uppercase tracking-wider text-white">Homepage 2nd Section Switcher</h3>
+              </div>
+              <p className="text-xs text-gray-400 max-w-xl">
+                Choose what displays in the 2nd section of the landing page. Switch between <strong className="text-white">Section 1 (Vyana Audio Intro)</strong> and <strong className="text-white">Section 2 (Giveaway "You're Invited" Ad Banner)</strong> at any time.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 bg-black/60 p-1.5 rounded-xl border border-white/10 w-full sm:w-auto justify-between sm:justify-start">
+              <button
+                onClick={async () => {
+                  setIsUpdatingIntro(true);
+                  const res = await setIntroSection('vyana');
+                  if (res.success) {
+                    setActiveIntroSection('vyana');
+                    toast.success('Switched to Section 1 (Vyana Audio Intro)');
+                  } else {
+                    toast.error('Failed to switch section');
+                  }
+                  setIsUpdatingIntro(false);
+                }}
+                disabled={isUpdatingIntro}
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                  activeIntroSection === 'vyana'
+                    ? 'bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)]'
+                    : 'text-gray-400 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                1: Vyana Intro
+              </button>
+
+              <button
+                onClick={async () => {
+                  setIsUpdatingIntro(true);
+                  const res = await setIntroSection('giveaway');
+                  if (res.success) {
+                    setActiveIntroSection('giveaway');
+                    toast.success('Switched to Section 2 (Giveaway Ad Banner)');
+                  } else {
+                    toast.error('Failed to switch section');
+                  }
+                  setIsUpdatingIntro(false);
+                }}
+                disabled={isUpdatingIntro}
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                  activeIntroSection === 'giveaway'
+                    ? 'bg-emerald-500 text-black shadow-[0_0_20px_rgba(16,185,129,0.4)]'
+                    : 'text-gray-400 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                2: Giveaway Ad
+              </button>
+            </div>
+          </div>
+          
+          <div className="mt-3 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-gray-500">
+            <span>Currently Active: <strong className={activeIntroSection === 'giveaway' ? 'text-emerald-400 font-bold' : 'text-white font-bold'}>{activeIntroSection === 'giveaway' ? 'Section 2 (Giveaway "You Are Invited" Banner)' : 'Section 1 (Original Vyana Audio Intro)'}</strong></span>
+            <a href="/" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline flex items-center gap-1">
+              View Landing Page <ExternalLink size={11} />
+            </a>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           
           {/* Active Giveaway Details Card */}
@@ -240,6 +318,34 @@ export default function GiveawayAdminPage() {
                     </h3>
                     <div className="space-y-4">
                       <div>
+                        <label className="block text-xs text-gray-400 mb-1">Prize Category</label>
+                        <div className="grid grid-cols-2 gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setPrizeType('voucher')}
+                            className={`py-2 px-3 rounded-lg text-xs font-bold border transition-all ${
+                              prizeType === 'voucher'
+                                ? 'bg-emerald-500 text-black border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)]'
+                                : 'bg-black/40 text-gray-400 border-white/10 hover:border-white/20'
+                            }`}
+                          >
+                            🎁 Gift Voucher
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setPrizeType('vip_pass')}
+                            className={`py-2 px-3 rounded-lg text-xs font-bold border transition-all ${
+                              prizeType === 'vip_pass'
+                                ? 'bg-purple-500 text-white border-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.3)]'
+                                : 'bg-black/40 text-gray-400 border-white/10 hover:border-white/20'
+                            }`}
+                          >
+                            🎫 Vybex VIP Pass
+                          </button>
+                        </div>
+                      </div>
+
+                      <div>
                         <label className="block text-xs text-gray-400 mb-1">Next Draw Date & Time</label>
                         <input 
                           type="datetime-local" 
@@ -248,13 +354,14 @@ export default function GiveawayAdminPage() {
                           className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-sm focus:border-green-500 outline-none"
                         />
                       </div>
+
                       <div>
                         <label className="block text-xs text-gray-400 mb-1">Prize Description</label>
                         <input 
                           type="text" 
                           value={prizeDescription}
                           onChange={(e) => setPrizeDescription(e.target.value)}
-                          placeholder="e.g. Vybex VIP Pass"
+                          placeholder="e.g. Amazon Gift Voucher Worth 1000 Rs"
                           className="w-full bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-sm focus:border-green-500 outline-none"
                         />
                       </div>
@@ -269,11 +376,11 @@ export default function GiveawayAdminPage() {
                       <button 
                         onClick={async () => {
                           setIsUpdatingStatus(true);
-                          const result = await updateGiveawayStatus(true, new Date(nextDrawDate), prizeDescription);
+                          const result = await updateGiveawayStatus(true, new Date(nextDrawDate), prizeDescription, prizeType);
                           if (result.success) {
                             setIsGiveawayActive(true);
                             setShowResumeModal(false);
-                            toast.success('Giveaway resumed successfully');
+                            toast.success(`Giveaway resumed as ${prizeType === 'voucher' ? 'Gift Voucher' : 'VIP Pass'} draw!`);
                           } else {
                             toast.error('Failed to resume giveaway');
                           }
@@ -291,12 +398,12 @@ export default function GiveawayAdminPage() {
             </AnimatePresence>
 
             <div className="mb-6">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center mb-4">
-                <Ticket className="text-blue-400" size={28} />
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center mb-4">
+                <Ticket className="text-emerald-400" size={28} />
               </div>
-              <h2 className="text-3xl font-bold mb-2">Vybex VIP Pass</h2>
+              <h2 className="text-3xl font-bold mb-2">{prizeDescription || 'Vybex VIP Pass'}</h2>
               <p className="text-gray-400 text-sm leading-relaxed">
-                The ultimate access pass. Winners will receive an exclusive code allowing them to permanently unlock all future Vybex premium features for free.
+                Active community giveaway prize. A randomly selected subscriber will win and receive the code/details for this prize.
               </p>
             </div>
 
@@ -307,17 +414,17 @@ export default function GiveawayAdminPage() {
               </div>
               <div className="flex justify-between items-center py-2 border-b border-white/5">
                 <span className="text-gray-500 text-sm">Prize</span>
-                <span className="font-medium text-blue-400">1x VIP Pass Code</span>
+                <span className="font-medium text-emerald-400 font-semibold">{prizeDescription || '1x VIP Pass Code'}</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-white/5">
                 <span className="text-gray-500 text-sm">Target Announcement</span>
-                <span className="font-medium text-white">
-                  {isGiveawayActive ? new Date(nextDrawDate).toLocaleDateString('en-US', { 
-                    weekday: 'long', 
+                <span className="font-medium text-white text-right">
+                  {isGiveawayActive ? `${new Date(nextDrawDate).toLocaleDateString('en-US', { 
+                    weekday: 'short', 
                     month: 'short', 
                     day: 'numeric', 
                     year: 'numeric' 
-                  }) : 'Coming Soon'}
+                  })} at ${new Date(nextDrawDate).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}` : 'Coming Soon'}
                 </span>
               </div>
             </div>
@@ -339,7 +446,7 @@ export default function GiveawayAdminPage() {
                 <>
                   <div className="flex items-center gap-2 text-gray-700">
                     <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
-                    Locked until {new Date(nextDrawDate).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}
+                    Locked until {new Date(nextDrawDate).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })} ({new Date(nextDrawDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })})
                   </div>
                 </>
               ) : isRolling ? (
@@ -354,6 +461,34 @@ export default function GiveawayAdminPage() {
                 </>
               )}
             </button>
+
+            {/* Test Email Trigger Button */}
+            <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-xs text-gray-400">
+              <span>Preview winner email:</span>
+              <button
+                type="button"
+                onClick={async () => {
+                  const testEmail = prompt("Enter email address to send a preview of the Winner Email:");
+                  if (!testEmail) return;
+                  const loadingToast = toast.loading("Sending test winner email...");
+                  try {
+                    const res = await sendTestWinnerEmail(testEmail);
+                    toast.dismiss(loadingToast);
+                    if (res.success) {
+                      toast.success(`Preview email sent to ${testEmail}!`);
+                    } else {
+                      toast.error(res.error || "Failed to send preview");
+                    }
+                  } catch {
+                    toast.dismiss(loadingToast);
+                    toast.error("Network error sending preview");
+                  }
+                }}
+                className="text-emerald-400 hover:text-emerald-300 font-semibold hover:underline cursor-pointer"
+              >
+                Send Test Email ↗
+              </button>
+            </div>
             
             {error && (
               <p className="text-red-400 text-sm mt-4 text-center bg-red-400/10 py-2 rounded-lg border border-red-400/20">{error}</p>
@@ -446,10 +581,23 @@ export default function GiveawayAdminPage() {
                       transition={{ delay: 0.8 }}
                       className="w-full mb-8"
                     >
-                      <p className="text-xs text-blue-400 uppercase tracking-widest font-bold mb-2">Secret VIP Code generated</p>
-                      <div className="bg-blue-500/10 border border-blue-500/20 py-3 rounded-lg font-mono text-xl text-blue-300 w-full font-bold shadow-inner">
+                      <p className="text-xs text-emerald-400 uppercase tracking-widest font-bold mb-2">Secret VIP Code generated</p>
+                      <div className="bg-emerald-500/10 border border-emerald-500/20 py-3 rounded-lg font-mono text-xl text-emerald-300 w-full font-bold shadow-inner">
                         {winnerCode}
                       </div>
+                    </motion.div>
+                  )}
+
+                  {!winnerCode && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.8 }}
+                      className="w-full mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20"
+                    >
+                      <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mb-1">Won Prize</p>
+                      <p className="text-lg font-bold text-emerald-300">{prizeDescription || 'Amazon Gift Voucher'}</p>
+                      <p className="text-xs text-gray-400 mt-2">Winner notification email sent directly to this address.</p>
                     </motion.div>
                   )}
 
@@ -459,23 +607,32 @@ export default function GiveawayAdminPage() {
                     transition={{ delay: 1 }}
                     className="w-full space-y-3"
                   >
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className={winnerCode ? "grid grid-cols-2 gap-3" : "w-full"}>
                       <button 
-                        onClick={() => navigator.clipboard.writeText(winnerEmail)}
+                        onClick={() => {
+                          navigator.clipboard.writeText(winnerEmail);
+                          toast.success('Winner email copied to clipboard!');
+                        }}
                         className="w-full py-3 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-colors text-sm font-medium"
                       >
-                        Copy Email
+                        Copy Winner Email
                       </button>
-                      <button 
-                        onClick={() => winnerCode && navigator.clipboard.writeText(winnerCode)}
-                        disabled={!winnerCode}
-                        className="w-full py-3 rounded-lg border border-blue-500/20 bg-blue-500/10 hover:bg-blue-500/20 transition-colors text-blue-400 text-sm font-bold disabled:opacity-50"
-                      >
-                        Copy Code
-                      </button>
+                      {winnerCode && (
+                        <button 
+                          onClick={() => {
+                            navigator.clipboard.writeText(winnerCode);
+                            toast.success('VIP Code copied to clipboard!');
+                          }}
+                          className="w-full py-3 rounded-lg border border-emerald-500/20 bg-emerald-500/10 hover:bg-emerald-500/20 transition-colors text-emerald-400 text-sm font-bold"
+                        >
+                          Copy Code
+                        </button>
+                      )}
                     </div>
                     <p className="text-xs text-gray-500">
-                      Reach out to this email with their unique VIP Pass Code!
+                      {winnerCode 
+                        ? 'Reach out to this email with their unique VIP Pass Code!'
+                        : `Ready to send ${prizeDescription || 'gift voucher'} to this subscriber!`}
                     </p>
                   </motion.div>
                 </motion.div>

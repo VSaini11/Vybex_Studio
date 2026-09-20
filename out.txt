@@ -1,0 +1,2 @@
+Src: d:\startup-landing-page\public\image (1).png (x) -> Cropped: d:\startup-landing-page\public\amazon-clean-crop.png (524x540) ContentBounds: X:122..645 Y:114..653
+Src: d:\startup-landing-page\public\vybex-new-transparent.png (x) -> Cropped: d:\startup-landing-page\public\vybex-clean-crop.png (666x659) ContentBounds: X:0..665 Y:0..658

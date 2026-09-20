@@ -20,6 +20,13 @@ oauth2Client.setCredentials({
   refresh_token: GMAIL_REFRESH_TOKEN,
 });
 
+export interface EmailAttachment {
+  filename: string;
+  contentType: string;
+  content: Buffer | string; // buffer or base64
+  cid: string; // Content-ID for <img src="cid:...">
+}
+
 /**
  * Send an email using Gmail API
  */
@@ -27,10 +34,12 @@ export async function sendEmail({
   to,
   subject,
   html,
+  attachments = [],
 }: {
   to: string;
   subject: string;
   html: string;
+  attachments?: EmailAttachment[];
 }) {
   const gmail = google.gmail({ version: 'v1', auth: oauth2Client });
 
@@ -40,16 +49,51 @@ export async function sendEmail({
   const encodedSubject = Buffer.from(subject, 'utf-8').toString('base64');
   const finalSubject = `=?UTF-8?B?${encodedSubject}?=`;
 
-  // Build the raw email in RFC 2822 format
-  const rawMessage = [
-    `From: Vybex Studio <${senderEmail}>`,
-    `To: ${to}`,
-    `Subject: ${finalSubject}`,
-    'MIME-Version: 1.0',
-    'Content-Type: text/html; charset=utf-8',
-    '',
-    html,
-  ].join('\r\n');
+  let rawMessage = '';
+
+  if (attachments.length > 0) {
+    const boundary = `====_NextPart_${Date.now()}_====`;
+    const messageParts = [
+      `From: Vybex Studio <${senderEmail}>`,
+      `To: ${to}`,
+      `Subject: ${finalSubject}`,
+      'MIME-Version: 1.0',
+      `Content-Type: multipart/related; boundary="${boundary}"`,
+      '',
+      `--${boundary}`,
+      'Content-Type: text/html; charset=utf-8',
+      'Content-Transfer-Encoding: 7bit',
+      '',
+      html,
+    ];
+
+    for (const att of attachments) {
+      const base64Data = Buffer.isBuffer(att.content) 
+        ? att.content.toString('base64') 
+        : att.content;
+      messageParts.push(
+        `--${boundary}`,
+        `Content-Type: ${att.contentType}; name="${att.filename}"`,
+        'Content-Transfer-Encoding: base64',
+        `Content-ID: <${att.cid}>`,
+        `Content-Disposition: inline; filename="${att.filename}"`,
+        '',
+        base64Data
+      );
+    }
+    messageParts.push(`--${boundary}--`);
+    rawMessage = messageParts.join('\r\n');
+  } else {
+    rawMessage = [
+      `From: Vybex Studio <${senderEmail}>`,
+      `To: ${to}`,
+      `Subject: ${finalSubject}`,
+      'MIME-Version: 1.0',
+      'Content-Type: text/html; charset=utf-8',
+      '',
+      html,
+    ].join('\r\n');
+  }
 
   // Base64url encode
   const encodedMessage = Buffer.from(rawMessage)

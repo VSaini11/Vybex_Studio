@@ -209,7 +209,7 @@ export function EarlyAccessPass({
   }
 
   return (
-    <section className="relative w-full overflow-hidden py-16 sm:py-24 border-y border-white/5 bg-[#050505]/80 backdrop-blur-md">
+    <section id="giveaway-section" className="relative w-full overflow-hidden py-16 sm:py-24 border-y border-white/5 bg-[#050505]/80 backdrop-blur-md">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-full bg-blue-500/5 blur-[120px] rounded-full" />
         <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-purple-500/5 blur-[100px] rounded-full" />
